@@ -1,0 +1,15 @@
+<svg width="288" height="288" viewBox="0 0 288 288" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="144" cy="144" r="47.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="71.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="95.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="119.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="143.5" stroke="#EAECF0"/>
+    <rect x="120" y="120" width="48" height="48" rx="24" fill="#FEE4E2"/>
+    <rect x="120" y="120" width="48" height="48" rx="24" stroke="#FEF3F2" stroke-width="8"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M148.138 153H139.858C138.811 153 137.941 152.192 137.863 151.147L136.966 139H151L150.133 151.142C150.058 152.189 149.187 153 148.138 153V153Z" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M144 143V149" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M136 139H152" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M149 139L147.987 136.298C147.694 135.517 146.948 135 146.114 135H141.886C141.052 135 140.306 135.517 140.013 136.298L139 139" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M147.43 143L147 149" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M140.57 143L141 149" stroke="#FF3B30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

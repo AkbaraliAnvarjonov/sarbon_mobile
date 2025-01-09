@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56247822777",
+    "project_id": "sarbon-39a38",
+    "storage_bucket": "sarbon-39a38.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56247822777:android:ca70927bcef72e8a63ee68",
+        "android_client_info": {
+          "package_name": "uz.sarbon.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXV0pYLq4wdRc5Yl1XUKtnFysKyDscsBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

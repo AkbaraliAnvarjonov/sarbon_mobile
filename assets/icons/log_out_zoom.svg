@@ -1,0 +1,14 @@
+<svg width="288" height="288" viewBox="0 0 288 288" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="144" cy="144" r="47.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="71.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="95.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="119.5" stroke="#EAECF0"/>
+    <circle cx="144" cy="144" r="143.5" stroke="#EAECF0"/>
+    <rect x="120" y="120" width="48" height="48" rx="24" fill="#FF3B30" fill-opacity="0.07"/>
+    <rect x="120" y="120" width="48" height="48" rx="24" stroke="#FF3B30" stroke-opacity="0.15" stroke-width="8"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M143 151.392V139.503C143 138.813 142.645 138.172 142.06 137.807L138.06 135.307C136.728 134.475 135 135.432 135 137.003V148.891C135 149.581 135.355 150.222 135.94 150.587L139.94 153.087C141.272 153.92 143 152.962 143 151.392Z" stroke="#F76659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M147 143H153" stroke="#F76659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M151 145L153 143L151 141" stroke="#F76659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M143 151H147C148.105 151 149 150.105 149 149V148" stroke="#F76659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M149 138V137C149 135.895 148.105 135 147 135H137" stroke="#F76659" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

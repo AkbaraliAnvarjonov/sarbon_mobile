@@ -1,0 +1,78 @@
+part of 'update_active_announcement_bloc.dart';
+
+class UpdateActiveAnnouncementState extends Equatable {
+  const UpdateActiveAnnouncementState({
+    this.typeCarsList = const [],
+    this.getCarTypesStatus = ApiStatus.initial,
+    this.selectedCarType,
+    this.imageFile,
+    this.addressesList = const [],
+    this.currencyList = const [],
+    this.selectedAddress,
+    this.selectedCurrency,
+    this.getAddressesStatus = ApiStatus.initial,
+    this.getCurrencyTypesStatus = ApiStatus.initial,
+    this.updateAnnouncementStatus = ApiStatus.initial,
+    this.announcementStatus = '',
+  });
+
+  final List<TypeCarsListEntity> typeCarsList;
+  final List<AddressesListEntity> addressesList;
+  final List<TypeCurrencyListEntity> currencyList;
+  final TypeCarsListEntity? selectedCarType;
+  final AddressesListEntity? selectedAddress;
+  final TypeCurrencyListEntity? selectedCurrency;
+  final ApiStatus getCarTypesStatus;
+  final ApiStatus getAddressesStatus;
+  final ApiStatus getCurrencyTypesStatus;
+  final ApiStatus updateAnnouncementStatus;
+  final File? imageFile;
+  final String announcementStatus;
+
+  UpdateActiveAnnouncementState copyWith({
+    List<TypeCarsListEntity>? typeCarsList,
+    ApiStatus? getCarTypesStatus,
+    TypeCarsListEntity? selectedCarType,
+    File? imageFile,
+    List<AddressesListEntity>? addressesList,
+    List<TypeCurrencyListEntity>? currencyList,
+    AddressesListEntity? selectedAddress,
+    TypeCurrencyListEntity? selectedCurrency,
+    ApiStatus? getAddressesStatus,
+    ApiStatus? getCurrencyTypesStatus,
+    ApiStatus? updateAnnouncementStatus,
+    String? announcementStatus,
+  }) =>
+      UpdateActiveAnnouncementState(
+        typeCarsList: typeCarsList ?? this.typeCarsList,
+        getCarTypesStatus: getCarTypesStatus ?? this.getCarTypesStatus,
+        selectedCarType: selectedCarType ?? this.selectedCarType,
+        imageFile: imageFile ?? this.imageFile,
+        addressesList: addressesList ?? this.addressesList,
+        currencyList: currencyList ?? this.currencyList,
+        selectedAddress: selectedAddress ?? this.selectedAddress,
+        selectedCurrency: selectedCurrency ?? this.selectedCurrency,
+        getAddressesStatus: getAddressesStatus ?? this.getAddressesStatus,
+        getCurrencyTypesStatus:
+            getCurrencyTypesStatus ?? this.getCurrencyTypesStatus,
+        updateAnnouncementStatus:
+            updateAnnouncementStatus ?? this.updateAnnouncementStatus,
+        announcementStatus: announcementStatus ?? this.announcementStatus,
+      );
+
+  @override
+  List<Object?> get props => [
+        typeCarsList,
+        getCarTypesStatus,
+        selectedCarType,
+        imageFile,
+        addressesList,
+        currencyList,
+        selectedAddress,
+        selectedCurrency,
+        getAddressesStatus,
+        getCurrencyTypesStatus,
+        updateAnnouncementStatus,
+        announcementStatus,
+      ];
+}
