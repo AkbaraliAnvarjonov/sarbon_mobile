@@ -350,5 +350,6 @@
   "incorrect_cargo_information": "Некорректная информация о грузе",
   "unsatisfactory_cargo_condition": "Неудовлетворительное состояние груза",
   "customer_was_unavailable_for_contact": "Заказчик был недоступен для связи",
-  "file_a_complaint": "Подать жалобу"
+  "add_comment": "Добавить комментарий",
+  "share_opinion": "Поделитесь своим мнением или предложением..."
 }

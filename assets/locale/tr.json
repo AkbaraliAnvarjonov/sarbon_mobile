@@ -350,5 +350,6 @@
   "incorrect_cargo_information": "Yanlış kargo bilgisi",
   "unsatisfactory_cargo_condition": "Tatmin edici olmayan kargo durumu",
   "customer_was_unavailable_for_contact": "Müşteri iletişim için müsait değildi",
-  "file_a_complaint": "Şikayette bulunun"
+  "add_comment": "Yorum ekle",
+  "share_opinion": "Görüşünüzü veya önerinizi paylaşın..."
 }

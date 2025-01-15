@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
-import 'package:battery_plus/battery_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sarbon_mobile/features/main/presentation/pages/widgets/auth_bottom_sheet.dart';
 
 import '../../../../constants/icons_constants.dart';
 import '../../../../core/extension/extension.dart';
@@ -26,7 +22,6 @@ import '../../../home/presentation/pages/route/route_page.dart';
 import '../../../orders/presentation/bloc/orders_bloc.dart';
 import '../../../orders/presentation/pages/orders_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
-import '../../data/model/tracking/tracking_request.dart';
 import '../bloc/main_bloc.dart';
 import 'widgets/location_bottom_sheet.dart';
 
@@ -40,10 +35,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin, WidgetsBindingObserver, MainMixin {
-  late TabController tabController;
 
   Future<void> _subscribeTopic() async {
-    // await FirebaseMessaging.instance.subscribeToTopic('furgo_app');
+    await FirebaseMessaging.instance.subscribeToTopic('sarbon');
   }
 
   @override
@@ -60,6 +54,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
         builder: (_, bottomMenu) {
           if (bottomMenu.index != tabController.index) {
             tabController.index = bottomMenu.index;
+            print("bottomMenu.index :${bottomMenu.index}");
+
             tabController.animateTo(bottomMenu.index);
           }
           return WillPopScope(
@@ -117,9 +113,19 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
                     BottomNavigationBar(
                       elevation: 1,
                       currentIndex: bottomMenu.index,
-                      onTap: (index) {
-                        tabController.index = index;
-                        context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[index]));
+                      onTap: (index) async {
+                        if (localSource.userId.isEmpty && index == 2) {
+                          await customModalBottomSheet<void>(
+                            context: context,
+                            maxHeight: 410,
+                            minHeight: 380,
+                            builder: (_, controller) => const AuthBottomSheet(),
+                          );
+                        } else {
+                          tabController.index = index;
+
+                          context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[index]));
+                        }
                       },
                       items: [
                         BottomNavigationBarItem(

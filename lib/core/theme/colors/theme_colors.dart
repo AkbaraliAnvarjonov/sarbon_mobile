@@ -69,6 +69,8 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     required this.pink100,
     required this.grey400,
     required this.error100,
+    required this.quatGrey,
+    required this.textColor2,
   });
 
   final Color lightBlue;
@@ -107,9 +109,12 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   final Color pink100;
   final Color grey400;
   final Color error100;
+  final Color quatGrey;
+  final Color textColor2;
 
   static const ThemeColors light = ThemeColors(
     lightBlue: Color(0xFF008AFF),
+    quatGrey: Color(0xFFDBD8E3),
     primary200: Color(0xFFD7EDFF),
     main: Color(0xFF2B2B30),
     green: Color(0xFF32B141),
@@ -129,6 +134,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     borderColor: Color(0xFFE7EEF4),
     greyText: Color(0xFFA0A9B6),
     textColor: Color(0xFF111126),
+    textColor2: Color(0xFF003399),
     subHeadline: Color(0xFF242424),
     triarity: Color(0xFF92979B),
     pink: Color(0xFFFF2D55),
@@ -150,6 +156,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   static const ThemeColors dark = ThemeColors(
     lightBlue: Color(0xFF008AFF),
     primary200: Color(0xFFD7EDFF),
+    quatGrey: Color(0xFFDBD8E3),
     main: Color(0xFF2B2B30),
     green: Color(0xFF32B141),
     lightGreen: Color(0xFF34C759),
@@ -168,6 +175,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     borderColor: Color(0xFFE7EEF4),
     greyText: Color(0xFFA0A9B6),
     textColor: Color(0xFF111126),
+    textColor2: Color(0xFF003399),
     subHeadline: Color(0xFF242424),
     triarity: Color(0xFF92979B),
     pink: Color(0xFFFF2D55),
@@ -224,9 +232,12 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     Color? pink100,
     Color? grey400,
     Color? error100,
+    Color? quatGrey,
+    Color? textColor2,
   }) =>
       ThemeColors(
         lightBlue: lightBlue ?? this.lightBlue,
+        quatGrey: quatGrey ?? this.quatGrey,
         primary200: primary200 ?? this.primary200,
         green: green ?? this.green,
         lightGreen: lightGreen ?? this.lightGreen,
@@ -240,8 +251,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
         midGray: midGray ?? this.midGray,
         midGray2: midGray2 ?? this.midGray2,
         labelTextColor: labelTextColor ?? this.labelTextColor,
-        backgroundTabBarColor:
-            backgroundTabBarColor ?? this.backgroundTabBarColor,
+        backgroundTabBarColor: backgroundTabBarColor ?? this.backgroundTabBarColor,
         gray950: gray950 ?? this.gray950,
         gray700: gray700 ?? this.gray700,
         borderColor: borderColor ?? this.borderColor,
@@ -263,6 +273,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
         pink100: pink100 ?? this.pink100,
         grey400: grey400 ?? this.grey400,
         error100: error100 ?? this.error100,
+        textColor2: textColor2 ?? this.textColor2,
       );
 
   @override
@@ -275,6 +286,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     }
     return ThemeColors(
       lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
+      quatGrey: Color.lerp(quatGrey, other.quatGrey, t)!,
       primary200: Color.lerp(primary200, other.primary200, t)!,
       green: Color.lerp(green, other.green, t)!,
       lightGreen: Color.lerp(lightGreen, other.lightGreen, t)!,
@@ -288,8 +300,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
       midGray: Color.lerp(midGray, other.midGray, t)!,
       midGray2: Color.lerp(midGray2, other.midGray2, t)!,
       labelTextColor: Color.lerp(labelTextColor, other.labelTextColor, t)!,
-      backgroundTabBarColor:
-          Color.lerp(backgroundTabBarColor, other.backgroundTabBarColor, t)!,
+      backgroundTabBarColor: Color.lerp(backgroundTabBarColor, other.backgroundTabBarColor, t)!,
       gray950: Color.lerp(gray950, other.gray950, t)!,
       gray700: Color.lerp(gray700, other.gray700, t)!,
       borderColor: Color.lerp(borderColor, other.borderColor, t)!,
@@ -311,6 +322,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
       pink100: Color.lerp(pink100, other.pink100, t)!,
       grey400: Color.lerp(grey400, other.grey400, t)!,
       error100: Color.lerp(error100, other.error100, t)!,
+      textColor2: Color.lerp(textColor2, other.textColor2, t)!,
     );
   }
 }

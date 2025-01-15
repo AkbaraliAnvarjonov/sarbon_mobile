@@ -16,21 +16,21 @@ class AlreadyOrderBottomSheet extends StatelessWidget {
         padding: AppUtils.kPaddingHorizontal24,
         child: Column(
           children: [
-            AppUtils.kGap16,
+            AppUtils.kGap12,
             SvgPicture.asset(SvgImage.warningOrder),
-            AppUtils.kGap18,
+            AppUtils.kGap12,
             Text(
               'У вас уже есть\nактивный заказ',
               style: context.textStyle.size15Weight600Black.copyWith(fontSize: 24),
               textAlign: TextAlign.center,
             ),
-            AppUtils.kGap18,
+            AppUtils.kGap12,
             Text(
               "Пожалуйста, завершите текущий заказ или отмените его в разделе 'Заказы', чтобы предложить свои услуги для другого груза",
               style: context.textStyle.size14Weight400Black,
               textAlign: TextAlign.center,
             ),
-            AppUtils.kGap24,
+            AppUtils.kGap20,
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 56),
@@ -40,15 +40,17 @@ class AlreadyOrderBottomSheet extends StatelessWidget {
               },
               child: const Text('Хорошо'),
             ),
-            AppUtils.kGap12,
-            TextButton(
-                onPressed: () {
-                  context
-                    ..read<MainBloc>().add(const MainEventChanged(BottomMenu.orders))
-                    ..pop()
-                    ..pop();
-                },
-                child: const Text('Перейти в заказы')),
+            AppUtils.kGap8,
+            SafeArea(
+              child: TextButton(
+                  onPressed: () {
+                    context
+                      ..read<MainBloc>().add(const MainEventChanged(BottomMenu.orders))
+                      ..pop()
+                      ..pop();
+                  },
+                  child: const Text('Перейти в заказы')),
+            ),
           ],
         ),
       );

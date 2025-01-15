@@ -19,7 +19,14 @@ class _SendOfferAndComplainButton extends StatelessWidget {
                   onPressed: state.status.isLoading || state.signedOrdersStatus.isLoading
                       ? null
                       : () async {
-                          if (state.finishedOrdersCount == 0) {
+                          if (localSource.userId.isEmpty) {
+                            await customModalBottomSheet<void>(
+                              context: context,
+                              maxHeight: 410,
+                              minHeight: 380,
+                              builder: (_, controller) => const AuthBottomSheet(),
+                            );
+                          } else if (state.finishedOrdersCount == 0) {
                             await context
                                 .pushNamed(
                               Routes.oppositeOffer,

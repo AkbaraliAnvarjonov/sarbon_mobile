@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../../constants/constants.dart';
@@ -14,8 +13,8 @@ import '../../../../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart'
 import '../../../../../../../core/widgets/inputs/custom_text_field.dart';
 import '../../../../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../../../../router/app_routes.dart';
+import '../../../../../../main/presentation/bloc/main_bloc.dart';
 import '../../../../../../main/presentation/pages/widgets/location_bottom_sheet.dart';
-import '../../../../../domain/entities/login/get_companies_response_entity.dart';
 import '../../../../../domain/entities/registration/driver/register_driver_request_entity.dart';
 import '../../../../../domain/entities/registration/driver/trailer_type_response_entity.dart';
 import '../../../../bloc/confirmation_user/confirmation_user_bloc.dart';
@@ -66,6 +65,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> with DriverTabI
           listener: (context, state) async {
             if (state.registerStatus.isSuccess) {
               context.goNamed(Routes.main);
+              context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
             } else if (state.registerStatus.isError) {
               await showDialog<void>(
                 context: context,

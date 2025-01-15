@@ -9,6 +9,7 @@ sealed class Routes {
   static const String onBoarding = '/boarding';
   static const String login = '/login';
   static const String forgotPassword = '/forgot_password';
+  static const String selectAuth = '/select_auth';
   static const String register = '/register';
   static const String userAgreement = '/user_agreement';
 

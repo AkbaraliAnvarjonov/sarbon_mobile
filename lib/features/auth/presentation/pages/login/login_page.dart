@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sarbon_mobile/features/main/presentation/bloc/main_bloc.dart';
 
+import '../../../../../constants/image_constants.dart';
 import '../../../../../core/extension/extension.dart';
+import '../../../../../core/theme/themes.dart';
 import '../../../../../core/utils/utils.dart';
 import '../../../../../core/widgets/inputs/custom_text_field.dart';
 import '../../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../../router/app_routes.dart';
 import '../../bloc/login/login_bloc.dart';
+import '../register/widgets/social_widget.dart';
 
 part 'mixin/login_mixin.dart';
 
@@ -44,12 +51,45 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
         listener: (context, state) async {
           if (state.status.isSuccess) {
             if (!context.mounted) return;
-            context.goNamed(Routes.main);
+            context.pushNamed(Routes.main);
+            context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
           }
         },
         child: ModalProgressHUD(
           inAsyncCall: context.watch<LoginBloc>().state.status.isLoading,
           child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(60),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(16), // Adjust the radius as needed
+                  bottomRight: Radius.circular(16),
+                ),
+                child: AppBar(
+                  title: Text(
+                    'Вход',
+                    style: context.textStyle.appBarTitle.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: context.colorScheme.onPrimary,
+                    ),
+                  ),
+                  leading: IconButton(
+                    icon: Icon(
+                      Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      context.pop();
+                    },
+                  ),
+                  centerTitle: false,
+                  systemOverlayStyle: systemUiOverlayStyle,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                  backgroundColor: context.colorScheme.primary,
+                ),
+              ),
+            ),
             backgroundColor: context.colorScheme.surface,
             body: Padding(
               padding: AppUtils.kPaddingAll16,
@@ -58,72 +98,123 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Padding(
-                          padding: EdgeInsets.only(top: context.padding.top + 36),
-                          child: Text(
-                            'enter_logistics'.tr(),
-                            style: context.textStyle.regularTitle1.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
+                        AppUtils.kGap44,
+                        Image.asset(PngImage.appLogoColored, height: 50, width: 180),
+                        AppUtils.kGap48,
+                        Container(
+                          padding: AppUtils.kPaddingAll16,
+                          decoration: const BoxDecoration(
+                            borderRadius: AppUtils.kBorderRadius16,
+                            color: Color(0xFFEDEFF5),
                           ),
-                        ),
-                        AppUtils.kGap24,
-                        CustomTextField(
-                          showEnabledBorder: true,
-                          controller: usernameController,
-                          focusNode: userNameFocus,
-                          showError: context.watch<LoginBloc>().state.status.isError,
-                          errorText: '',
-                          hintText: 'input_username'.tr(),
-                          labelText: 'add_login'.tr(),
-                          onChanged: (value) {
-                            context.read<LoginBloc>().add(
-                                  UsernameEvent(
-                                    username: value,
+                          child: Column(
+                            children: [
+                              AppUtils.kGap24,
+                              CustomTextField(
+                                showEnabledBorder: true,
+                                controller: usernameController,
+                                focusNode: userNameFocus,
+                                showError: context.watch<LoginBloc>().state.status.isError,
+                                errorText: '',
+                                hintText: 'input_username'.tr(),
+                                labelText: 'Login или Телефон',
+                                onChanged: (value) {
+                                  context.read<LoginBloc>().add(
+                                        UsernameEvent(
+                                          username: value,
+                                        ),
+                                      );
+                                },
+                                contentPadding: AppUtils.kPaddingAll16,
+                              ),
+                              if (context.select(
+                                (LoginBloc bloc) => bloc.state.status.isError,
+                              ))
+                                AppUtils.kGap
+                              else
+                                AppUtils.kGap16,
+                              CustomTextField(
+                                showEnabledBorder: true,
+                                controller: passwordController,
+                                focusNode: passwordFocus,
+                                hintText: 'password'.tr(),
+                                labelText: 'password'.tr(),
+                                showError: context.watch<LoginBloc>().state.status.isError,
+                                errorText: 'username_or_code_incorrect'.tr(),
+                                obscure: context.watch<LoginBloc>().state.isPasswordVisible,
+                                onChanged: (value) {
+                                  context.read<LoginBloc>().add(PasswordEvent(password: value));
+                                },
+                                contentPadding: AppUtils.kPaddingAll16,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    context.read<LoginBloc>().add(const ChangePasswordVisibilityEvent());
+                                  },
+                                  icon: Icon(
+                                    context.watch<LoginBloc>().state.isPasswordVisible
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    color: context.colorScheme.primary,
                                   ),
-                                );
-                          },
-                          contentPadding: AppUtils.kPaddingAll12,
-                        ),
-                        if (context.select(
-                          (LoginBloc bloc) => bloc.state.status.isError,
-                        ))
-                          AppUtils.kGap
-                        else
-                          AppUtils.kGap16,
-                        CustomTextField(
-                          showEnabledBorder: true,
-                          controller: passwordController,
-                          focusNode: passwordFocus,
-                          hintText: 'password'.tr(),
-                          labelText: 'password'.tr(),
-                          showError: context.watch<LoginBloc>().state.status.isError,
-                          errorText: 'username_or_code_incorrect'.tr(),
-                          obscure: context.watch<LoginBloc>().state.isPasswordVisible,
-                          onChanged: (value) {
-                            context.read<LoginBloc>().add(PasswordEvent(password: value));
-                          },
-                          contentPadding: AppUtils.kPaddingAll12,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              context.read<LoginBloc>().add(
-                                    const ChangePasswordVisibilityEvent(),
-                                  );
-                            },
-                            icon: Icon(
-                              context.watch<LoginBloc>().state.isPasswordVisible
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
-                              color: context.color.greyText,
-                            ),
+                                ),
+                              ),
+                              AppUtils.kGap10,
+                              const _ForgotPasswordTextWidget(),
+                              AppUtils.kGap24,
+                              const _LoginButtonWidget(),
+                              AppUtils.kGap24,
+                              Row(
+                                children: [
+                                  const Expanded(child: AppUtils.kDivider),
+                                  AppUtils.kGap4,
+                                  Text('Вход через соцсеть', style: context.textStyle.size14Weight400Black),
+                                  AppUtils.kGap4,
+                                  const Expanded(child: AppUtils.kDivider),
+                                ],
+                              ),
+                              AppUtils.kGap16,
+                              Row(
+                                children: [
+                                  SocialWidget(
+                                    icon: PngImage.telegramIc,
+                                    onTap: () {},
+                                  ),
+                                  AppUtils.kGap8,
+                                  SocialWidget(
+                                      icon: PngImage.googleIc,
+                                      onTap: () async {
+                                        // try {
+                                        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+                                        if (googleUser != null) {
+                                          // Optionally, retrieve authentication details
+                                          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+                                          // Use the tokens if needed (e.g., Firebase login)
+                                          final String? idToken = googleAuth.idToken;
+                                          final String? accessToken = googleAuth.accessToken;
+
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            content: Text('Welcome, ${googleUser.displayName}!'),
+                                          ));
+                                          print('idToken: $idToken');
+                                          // Add further logic here (e.g., navigate to another page)
+                                        }
+                                        // } catch (error) {
+                                        //   print(error);
+                                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        //     content: Text('Google Sign-In failed: $error'),
+                                        //   ));
+                                        // }
+                                      }),
+                                  AppUtils.kGap8,
+                                  SocialWidget(icon: PngImage.faceBookIc, onTap: () {}),
+                                  AppUtils.kGap8,
+                                  SocialWidget(icon: PngImage.appleIc, onTap: () {}),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        AppUtils.kGap16,
-                        const _ForgotPasswordTextWidget(),
-                        AppUtils.kGap24,
-                        const _LoginButtonWidget(),
-                        AppUtils.kGap24,
-                        const _NoAccountTextWidget(),
                       ],
                     ),
                   ),

@@ -58,13 +58,13 @@ class _ComplaintWidgetState extends State<ComplaintWidget> {
                           child: Row(
                             children: [
                               SvgPicture.asset(
-                                SvgImage.warningRed,
+                                SvgImage.commentIcon,
                                 height: 24,
                                 width: 24,
                               ),
                               AppUtils.kGap10,
                               Text(
-                                'file_a_complaint'.tr(),
+                                'add_comment'.tr(),
                                 style: context.textStyle.appBarTitle,
                               ),
                               AppUtils.kSpacer,
@@ -86,7 +86,7 @@ class _ComplaintWidgetState extends State<ComplaintWidget> {
                               .copyWith(fontSize: 18, color: const Color(0xFF211F26)),
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
-                            hintText: 'Расскажите о возникшей проблеме...',
+                            hintText: 'share_opinion'.tr(),
                             hintStyle: context.textStyle.size14Weight400Black.copyWith(
                               fontSize: 15,
                               color: const Color(0xFF7E7B86),

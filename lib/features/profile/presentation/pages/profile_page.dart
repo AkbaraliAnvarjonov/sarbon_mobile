@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,8 +7,10 @@ import '../../../../constants/icons_constants.dart';
 import '../../../../core/extension/extension.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart';
+
 import '../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../router/app_routes.dart';
+import '../../../main/presentation/pages/widgets/auth_bottom_sheet.dart';
 import '../../../main/presentation/bloc/main_bloc.dart';
 import '../bloc/profile_bloc.dart';
 import 'widgets/change_language_widget.dart';
@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
             context.read<MainBloc>().add(
                   const MainEventChanged(BottomMenu.home),
                 );
-            context.goNamed(Routes.login);
+            context.goNamed(Routes.selectAuth);
           }
         },
         child: Scaffold(
@@ -80,25 +80,27 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                 parent: AlwaysScrollableScrollPhysics(),
               ),
               slivers: [
-                SliverPadding(
-                  padding: AppUtils.kPaddingAll16,
-                  sliver: SliverToBoxAdapter(
-                    child: ValueListenableBuilder(
-                      valueListenable: localSource.prefers.listenable(
-                        keys: [
-                          AppKeys.phone,
-                          AppKeys.imageUrl,
-                          AppKeys.fullname,
-                        ],
-                      ),
-                      builder: (context, box, widget) => UserInfoWidget(
-                        fullName: localSource.fullName,
-                        phoneNumber: localSource.phoneNumber,
-                        imageUrl: localSource.imageUrl,
+                if (localSource.userId.isNotEmpty)
+                  SliverPadding(
+                    padding: AppUtils.kPaddingAll16,
+                    sliver: SliverToBoxAdapter(
+                      child: ValueListenableBuilder(
+                        valueListenable: localSource.prefers.listenable(
+                          keys: [
+                            AppKeys.phone,
+                            AppKeys.imageUrl,
+                            AppKeys.fullname,
+                          ],
+                        ),
+                        builder: (context, box, widget) => UserInfoWidget(
+                          fullName: localSource.fullName,
+                          phoneNumber: localSource.phoneNumber,
+                          imageUrl: localSource.imageUrl,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                if (localSource.userId.isEmpty) AppUtils.kSliverGap16,
                 SliverPadding(
                   padding: AppUtils.kPaddingHorizontal16,
                   sliver: SliverList(
@@ -120,15 +122,33 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                           text: 'favourites'.tr(),
                           icon: SvgImage.icFavourite,
                           onTap: () async {
-                            await context.pushNamed(Routes.favourites);
+                            if (localSource.userId.isEmpty) {
+                              await customModalBottomSheet<void>(
+                                context: context,
+                                maxHeight: 410,
+                                minHeight: 380,
+                                builder: (_, controller) => const AuthBottomSheet(),
+                              );
+                            } else {
+                              await context.pushNamed(Routes.favourites);
+                            }
                           },
                         ),
                         AppUtils.kPad52Divider,
                         ProfileItemWidget(
                           text: 'my_cars'.tr(),
                           icon: SvgImage.icMyCars,
-                          onTap: () {
-                            unawaited(context.pushNamed(Routes.myCars));
+                          onTap: () async {
+                            if (localSource.userId.isEmpty) {
+                              await customModalBottomSheet<void>(
+                                context: context,
+                                maxHeight: 410,
+                                minHeight: 380,
+                                builder: (_, controller) => const AuthBottomSheet(),
+                              );
+                            } else {
+                              await context.pushNamed(Routes.myCars);
+                            }
                           },
                         ),
                         AppUtils.kPad52Divider,
@@ -160,7 +180,16 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                           text: 'complain'.tr(),
                           icon: SvgImage.icReport,
                           onTap: () async {
-                            await context.pushNamed(Routes.complain);
+                            if (localSource.userId.isEmpty) {
+                              await customModalBottomSheet<void>(
+                                context: context,
+                                maxHeight: 410,
+                                minHeight: 380,
+                                builder: (_, controller) => const AuthBottomSheet(),
+                              );
+                            } else {
+                              await context.pushNamed(Routes.complain);
+                            }
                           },
                         ),
                         AppUtils.kPad52Divider,
@@ -169,8 +198,6 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                           text: 'language'.tr(),
                           icon: SvgImage.icChangeLanguage,
                           onTap: () async {
-                            print('mana hozirgi til');
-                            print(context.locale);
                             await customModalBottomSheet<void>(
                               context: context,
                               builder: (_, controller) => const ChangeLanguageWidget(),
@@ -182,54 +209,55 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                   ),
                 ),
                 AppUtils.kSliverGap16,
-                SliverPadding(
-                  padding: AppUtils.kPaddingHorizontal16,
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        ProfileItemWidget(
-                          isTop: true,
-                          isVisible: false,
-                          text: 'log_out'.tr(),
-                          icon: SvgImage.icLogOut,
-                          onTap: () async {
-                            await showDialog<void>(
-                              context: context,
-                              builder: (_) => LogOutProfileDialog(
-                                onConfirm: () {
-                                  localSource.clear();
-                                  context.read<MainBloc>().add(
-                                        const MainEventChanged(BottomMenu.home),
-                                      );
-                                  context.goNamed(Routes.login);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        AppUtils.kPad52Divider,
-                        ProfileItemWidget(
-                          isBottom: true,
-                          isVisible: false,
-                          text: 'delete_account'.tr(),
-                          icon: SvgImage.icTrash,
-                          onTap: () async {
-                            await showDialog<void>(
-                              context: context,
-                              builder: (_) => DeleteProfileDialog(
-                                onConfirm: () {
-                                  context.read<ProfileBloc>().add(
-                                        const DeleteUserEvent(),
-                                      );
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                if (localSource.userId.isNotEmpty)
+                  SliverPadding(
+                    padding: AppUtils.kPaddingHorizontal16,
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          ProfileItemWidget(
+                            isTop: true,
+                            isVisible: false,
+                            text: 'log_out'.tr(),
+                            icon: SvgImage.icLogOut,
+                            onTap: () async {
+                              await showDialog<void>(
+                                context: context,
+                                builder: (_) => LogOutProfileDialog(
+                                  onConfirm: () {
+                                    localSource.clear();
+                                    context.read<MainBloc>().add(
+                                          const MainEventChanged(BottomMenu.home),
+                                        );
+                                    context.goNamed(Routes.selectAuth);
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          AppUtils.kPad52Divider,
+                          ProfileItemWidget(
+                            isBottom: true,
+                            isVisible: false,
+                            text: 'delete_account'.tr(),
+                            icon: SvgImage.icTrash,
+                            onTap: () async {
+                              await showDialog<void>(
+                                context: context,
+                                builder: (_) => DeleteProfileDialog(
+                                  onConfirm: () {
+                                    context.read<ProfileBloc>().add(
+                                          const DeleteUserEvent(),
+                                        );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 AppUtils.kSliverGap16,
               ],
             ),

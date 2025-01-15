@@ -91,7 +91,7 @@ final ThemeData lightTheme = appTheme.copyWith(
       foregroundColor: WidgetStateProperty.resolveWith(
         (states) {
           if (states.contains(WidgetState.disabled)) {
-            return colorLightScheme.primary;
+            return const Color(0xFF003399);
           }
           return Colors.white;
         },
@@ -99,9 +99,9 @@ final ThemeData lightTheme = appTheme.copyWith(
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
           if (states.contains(WidgetState.disabled)) {
-            return colorLightScheme.primary.withOpacity(0.12);
+            return const Color(0xFF003399).withOpacity(0.12);
           }
-          return colorLightScheme.primary;
+          return const Color(0xFF003399);
         },
       ),
       textStyle: WidgetStatePropertyAll(ThemeTextStyles.light.buttonStyle),
