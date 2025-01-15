@@ -6,6 +6,7 @@ mixin MainMixin on State<MainPage> {
   late AppLifecycleState lifeCycleState = AppLifecycleState.resumed;
   late Timer _timer;
   late final MainBloc bloc;
+  late TabController tabController;
 
   Future<void> initController(WidgetsBindingObserver observer) async {
     bloc = context.read<MainBloc>();
@@ -17,10 +18,12 @@ mixin MainMixin on State<MainPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!mounted) return;
-    foregroundNotificationConfig();
-    getUserCurrentLocation();
-    getUserOrders();
-    putUserLatLong();
+    if (localSource.userId.isNotEmpty) {
+      foregroundNotificationConfig();
+      getUserCurrentLocation();
+      getUserOrders();
+      putUserLatLong();
+    }
   }
 
   void didChangeAppLifecycleState(AppLifecycleState state) {

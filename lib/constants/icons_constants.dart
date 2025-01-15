@@ -69,5 +69,5 @@ class SvgImage {
   static const String kubIcon = 'assets/icons/kub_icon.svg';
   static const String verificationIcon = 'assets/icons/verification_icon.svg';
   static const String warningOrder = 'assets/icons/warning_order.svg';
-  static const String warningRed = 'assets/icons/warning_red.svg';
+  static const String commentIcon = 'assets/icons/comment_icon.svg';
 }

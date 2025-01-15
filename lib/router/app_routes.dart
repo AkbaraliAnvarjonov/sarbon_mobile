@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sarbon_mobile/features/others/presentation/pages/select_auth/select_auth_page.dart';
 
 import '../core/local_source/local_source.dart';
 import '../core/platform/network_info.dart';
@@ -115,7 +116,6 @@ final GoRouter router = GoRouter(
     // final hasUrl = state.uri.toString().contains(Routes.cargoDetailDeepLink);
     // final isDeepLink = state.uri.toString().contains(Constants.deepBaseLink);
 
-
     /// deeplink logic
     // if (isDeepLink) {
     //   if (state.uri.pathSegments.isNotEmpty) {
@@ -175,6 +175,12 @@ final GoRouter router = GoRouter(
         create: (context) => sl<LoginBloc>(),
         child: const LoginPage(),
       ),
+    ),
+    GoRoute(
+      path: Routes.selectAuth,
+      name: Routes.selectAuth,
+      parentNavigatorKey: rootNavigatorKey,
+      builder: (_, __) => const SelectAuthPage(),
     ),
     GoRoute(
       path: Routes.forgotPassword,

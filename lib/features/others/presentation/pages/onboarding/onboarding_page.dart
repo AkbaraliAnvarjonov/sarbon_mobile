@@ -18,11 +18,9 @@ class OnBoardingPage extends StatefulWidget {
   State<OnBoardingPage> createState() => _OnBoardingPageState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage>
-    with SingleTickerProviderStateMixin, OnBoardingMixin {
+class _OnBoardingPageState extends State<OnBoardingPage> with SingleTickerProviderStateMixin, OnBoardingMixin {
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<OnBoardingBloc, OnBoardingState>(
+  Widget build(BuildContext context) => BlocBuilder<OnBoardingBloc, OnBoardingState>(
         builder: (context, state) {
           int currentPage = context.watch<OnBoardingBloc>().state.currentPage;
           return Scaffold(
@@ -35,18 +33,13 @@ class _OnBoardingPageState extends State<OnBoardingPage>
                     itemCount: OnBoardingModel.pages.length,
                     physics: const BouncingScrollPhysics(),
                     onPageChanged: (value) {
-                      context
-                          .read<OnBoardingBloc>()
-                          .add(OnBoardingTabChangedEvent(currentPage: value));
+                      context.read<OnBoardingBloc>().add(OnBoardingTabChangedEvent(currentPage: value));
                       currentPage = value;
                     },
-                    itemBuilder: (context, int index) =>
-                        OnBoardingModel.pages[index],
+                    itemBuilder: (context, int index) => OnBoardingModel.pages[index],
                   ),
                   Positioned(
-                    bottom: currentPage == (OnBoardingModel.pages.length - 1)
-                        ? 0
-                        : 52,
+                    bottom: 52,
                     left: 0,
                     right: 0,
                     child: IndicatorWidget(currentPage: currentPage),
@@ -66,7 +59,7 @@ class _OnBoardingPageState extends State<OnBoardingPage>
                         if (currentPage == (OnBoardingModel.pages.length - 1)) {
                           await localSource.setFirstTime(firstTime: true);
                           if (!context.mounted) return;
-                          context.pushReplacementNamed(Routes.login);
+                          context.pushReplacementNamed(Routes.selectAuth);
                         } else {
                           await pageController.nextPage(
                             duration: const Duration(milliseconds: 800),
@@ -74,29 +67,8 @@ class _OnBoardingPageState extends State<OnBoardingPage>
                           );
                         }
                       },
-                      child: (currentPage == (OnBoardingModel.pages.length - 1))
-                          ? Text('login'.tr())
-                          : Text('continue'.tr()),
+                      child: Text('continue'.tr()),
                     ),
-                    if (currentPage == (OnBoardingModel.pages.length - 1)) ...[
-                      AppUtils.kGap8,
-                      ElevatedButton(
-                        onPressed: () async {
-                          await localSource.setFirstTime(firstTime: true);
-                          if (!context.mounted) return;
-                          context.pushReplacementNamed(Routes.register);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            context.colorScheme.primary.withOpacity(0.15),
-                          ),
-                          foregroundColor: MaterialStateProperty.all(
-                            context.colorScheme.primary,
-                          ),
-                        ),
-                        child: Text('register'.tr()),
-                      ),
-                    ],
                   ],
                 ),
               ),

@@ -16,4 +16,12 @@ class PngImage {
   static const String absoluteLogo = 'assets/images/absolute_logo.png';
   static const String appLogo = 'assets/images/app_logo.png';
   static const String noGpsIcon = 'assets/images/no_gps_icon.png';
+  static const String appleIc = 'assets/icons/apple_ic.png';
+  static const String faceBookIc = 'assets/icons/facebook_ic.png';
+  static const String googleIc = 'assets/icons/google_ic.png';
+  static const String telegramIc = 'assets/icons/telegram_ic.png';
+
+  ///
+  static const String appLogoColored = 'assets/images/app_logo_colored.png';
+  static const String firstPageImage = 'assets/images/first_page_image.png';
 }

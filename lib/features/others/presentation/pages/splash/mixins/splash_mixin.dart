@@ -24,7 +24,7 @@ mixin SplashMixin on State<SplashPage> {
     if (!localSource.hasProfile && !localSource.firstTime) {
       context.pushReplacement(Routes.onBoarding);
     } else if (!localSource.hasProfile && localSource.firstTime) {
-      context.pushReplacement(Routes.login);
+      context.pushReplacement(Routes.selectAuth);
     } else {
       context.goNamed(Routes.main);
     }

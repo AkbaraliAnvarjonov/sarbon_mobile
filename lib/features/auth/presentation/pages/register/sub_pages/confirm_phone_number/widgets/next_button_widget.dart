@@ -8,15 +8,16 @@ class _NextButtonWidget extends StatelessWidget {
   final TextEditingController phoneNumberController;
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        minimum: EdgeInsets.only(
-          bottom: context.viewInsets.bottom + 16,
-          left: 16,
-          right: 16,
-        ),
-        child: BlocBuilder<ConfirmationUserBloc, ConfirmationUserState>(
-          buildWhen: (previous, current) => previous.isValidPhoneNumber != current.isValidPhoneNumber,
-          builder: (context, state) => ElevatedButton(
+  Widget build(BuildContext context) => BlocBuilder<ConfirmationUserBloc, ConfirmationUserState>(
+        buildWhen: (previous, current) => previous.isValidPhoneNumber != current.isValidPhoneNumber,
+        builder: (context, state) => SizedBox(
+          height: 56,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.color.textColor2,
+              disabledBackgroundColor: context.color.textColor2.withOpacity(0.4),
+            ),
             onPressed: state.isValidPhoneNumber
                 ? () async {
                     context.read<ConfirmationUserBloc>().add(
@@ -26,7 +27,13 @@ class _NextButtonWidget extends StatelessWidget {
                         );
                   }
                 : null,
-            child: Text('next'.tr()),
+            child: Text(
+              'next'.tr(),
+              style: context.textStyle.size15Weight500Black.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
           ),
         ),
       );

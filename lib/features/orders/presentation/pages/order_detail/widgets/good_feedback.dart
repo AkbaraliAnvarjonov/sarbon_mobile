@@ -72,33 +72,6 @@ class GoodFeedbackWidget extends StatelessWidget {
               title: 'i_would_work_with_this_client_again'.tr(),
               value: state.ratingReviews.contains('i_would_work_with_this_client_again'),
             ),
-            AppUtils.kGap16,
-            // Text(
-            //   'Комментарий',
-            //   style: context.textStyle.regularHeadline.copyWith(
-            //     color: context.color.textColor,
-            //   ),
-            // ),
-            // AppUtils.kGap8,
-            // Ink(
-            //   decoration: BoxDecoration(
-            //     borderRadius: AppUtils.kBorderRadius12,
-            //     color: context.colorScheme.onPrimary,
-            //   ),
-            //   child: CustomTextField(
-            //     onFieldSubmitted: (value) {
-            //       FocusManager.instance.primaryFocus?.unfocus();
-            //     },
-            //     showEnabledBorder: true,
-            //     controller: commentController,
-            //     contentPadding: AppUtils.kPaddingAll8,
-            //     fillColor: context.colorScheme.onPrimary,
-            //     hintText: 'Введите',
-            //     hintTextStyle: context.textStyle.regularSubheadline.copyWith(
-            //       color: context.color.midGray,
-            //     ),
-            //   ),
-            // ),
           ],
         );
       },

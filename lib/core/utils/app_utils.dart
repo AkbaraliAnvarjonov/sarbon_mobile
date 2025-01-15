@@ -18,6 +18,7 @@ sealed class AppUtils {
   static const kGap32 = Gap(32);
   static const kGap36 = Gap(36);
   static const kGap40 = Gap(40);
+  static const kGap44 = Gap(44);
   static const kGap48 = Gap(48);
   static const kSliverGap8 = SliverGap(8);
   static const kSliverGap12 = SliverGap(12);
@@ -77,6 +78,7 @@ sealed class AppUtils {
   static const kPaddingHorizontal12 = EdgeInsets.symmetric(horizontal: 12);
   static const kPaddingHorizontal14 = EdgeInsets.symmetric(horizontal: 14);
   static const kPaddingHorizontal16 = EdgeInsets.symmetric(horizontal: 16);
+  static const kPaddingHorizontal20 = EdgeInsets.symmetric(horizontal: 20);
   static const kPaddingHorizontal24 = EdgeInsets.symmetric(horizontal: 24);
   static const kPaddingHorizontal32 = EdgeInsets.symmetric(horizontal: 32);
   static const kPaddingVertical4 = EdgeInsets.symmetric(vertical: 4);

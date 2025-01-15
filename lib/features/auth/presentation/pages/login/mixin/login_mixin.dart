@@ -5,12 +5,14 @@ mixin LoginMixin on State<LoginPage> {
   late FocusNode userNameFocus;
   late TextEditingController passwordController;
   late FocusNode passwordFocus;
+  late final GoogleSignIn _googleSignIn;
 
   void initControllers() {
     usernameController = TextEditingController();
     passwordController = TextEditingController();
     userNameFocus = FocusNode();
     passwordFocus = FocusNode();
+    _googleSignIn =  GoogleSignIn();
   }
 
   void disposeControllers() {

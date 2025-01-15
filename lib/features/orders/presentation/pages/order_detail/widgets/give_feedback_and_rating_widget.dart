@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sarbon_mobile/features/orders/presentation/pages/order_detail/widgets/good_feedback.dart';
 
+import '../../../../../../constants/icons_constants.dart';
 import '../../../../../../core/extension/extension.dart';
 import '../../../../../../core/utils/utils.dart';
+import '../../../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../../../../../../core/widgets/rating/rating_bar_widget.dart';
 import '../../../bloc/order_detail/order_details_bloc.dart';
 import 'bad_feedback_widget.dart';
+import 'complaint_widget.dart';
 
 class GiveFeedbackAndRatingDetailPageWidget extends StatefulWidget {
   const GiveFeedbackAndRatingDetailPageWidget({
@@ -88,6 +92,52 @@ class _GiveFeedbackAndRatingDetailPageWidgetState extends State<GiveFeedbackAndR
                           child: state.rating > 3 || state.rating == 0
                               ? const GoodFeedbackWidget()
                               : const BadFeedBackWidget(),
+                        ),
+                        // AppUtils.kGap16,
+                        Padding(
+                          padding: AppUtils.kPaddingHorizontal20,
+                          child: InkWell(
+                            onTap: () async {
+                              await customModalBottomSheet(
+                                enableDrag: false,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (_, controller) => BlocProvider.value(
+                                  value: context.read<OrderDetailsBloc>(),
+                                  child: ComplaintWidget(
+                                    state: state,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  SvgImage.commentIcon,
+                                  height: 24,
+                                  width: 24,
+                                ),
+                                AppUtils.kGap12,
+                                state.complaintString.isEmpty
+                                    ? Text(
+                                        'add_comment'.tr(),
+                                        style: context.textStyle.size15Weight500Black.copyWith(
+                                          fontSize: 16,
+                                          color: context.colorScheme.primary,
+                                        ),
+                                      )
+                                    : Expanded(
+                                        child: Text(
+                                          state.complaintString,
+                                          style: context.textStyle.size14Weight400Black
+                                              .copyWith(color: const Color(0xFF7E7B86)),
+                                          overflow: TextOverflow.fade,
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),

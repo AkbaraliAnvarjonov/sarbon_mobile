@@ -12,6 +12,7 @@ import '../../../../../core/utils/utils.dart';
 import '../../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../../../../../core/widgets/rating/rating_bar_widget.dart';
 import '../../../../../router/app_routes.dart';
+import '../../../../main/presentation/pages/widgets/auth_bottom_sheet.dart';
 import '../../../domain/entities/cargo_details/address_position_cargo_entity.dart';
 import '../../../domain/entities/cargo_details/get_cargo_details_response_entity.dart';
 import '../../bloc/cargo_details/cargo_details_bloc.dart';
