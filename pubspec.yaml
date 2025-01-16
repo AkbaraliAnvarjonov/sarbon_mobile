@@ -82,7 +82,8 @@ dependencies:
   dropdown_search: ^5.0.6
   # google sign in
   google_sign_in: ^6.2.2
-
+  #apple sign in
+  sign_in_with_apple: ^6.1.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

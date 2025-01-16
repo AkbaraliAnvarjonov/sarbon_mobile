@@ -25,8 +25,7 @@ class NotificationDetailPage extends StatelessWidget {
           title: Text('notifications'.tr()),
         ),
         body: BlocBuilder<DetailNotificationBloc, DetailNotificationState>(
-          buildWhen: (previous, current) =>
-              previous.putNotificationStatus != current.putNotificationStatus,
+          buildWhen: (previous, current) => previous.putNotificationStatus != current.putNotificationStatus,
           builder: (context, state) => ModalProgressHUD(
             inAsyncCall: state.putNotificationStatus.isLoading,
             child: CustomScrollView(
@@ -66,19 +65,18 @@ class NotificationDetailPage extends StatelessWidget {
                               AppUtils.kGap8,
                               HtmlWidget(
                                 notification.description,
-                                textStyle:
-                                    context.textStyle.regularCallout.copyWith(
+                                textStyle: context.textStyle.regularCallout.copyWith(
                                   color: context.color.darkGrey5,
                                 ),
                               ),
-                              if (notification.responseId.isNotEmpty) ...[
+                              if (notification.cargoId.isNotEmpty) ...[
                                 AppUtils.kGap16,
                                 ElevatedButton(
                                   onPressed: () async {
                                     await context
                                         .pushNamed(
-                                      Routes.orderByNotification,
-                                      extra: notification.responseId,
+                                      Routes.cargoDetails,
+                                      extra: notification.cargoId,
                                     )
                                         .then(
                                       (value) {

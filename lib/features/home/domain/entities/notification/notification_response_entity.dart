@@ -22,7 +22,7 @@ class NotificationEntity extends Equatable {
     required this.imageUrl,
     required this.usersId,
     required this.type,
-    required this.responseId,
+    required this.cargoId,
     required this.isRead ,
   });
 
@@ -33,7 +33,7 @@ class NotificationEntity extends Equatable {
   final String imageUrl;
   final String usersId;
   final String type;
-  final String responseId;
+  final String cargoId;
   final bool isRead;
 
   @override
@@ -45,7 +45,7 @@ class NotificationEntity extends Equatable {
         imageUrl,
         usersId,
         type,
-        responseId,
+        cargoId,
         isRead,
       ];
 }
@@ -63,7 +63,7 @@ extension NotificationResponseEntityX on NotificationResponse {
                     imageUrl: notification.image ?? '',
                     usersId: notification.userId ?? '',
                     type: notification.type ?? '',
-                    responseId: notification.responseId ?? '',
+                    cargoId: notification.cargoId ?? '',
                   ),
                 )
                 .toList() ??
