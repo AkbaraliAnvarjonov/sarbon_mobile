@@ -213,7 +213,7 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                             content: Text('Welcome, ${googleUser.displayName}!'),
                                           ));
-                                          print('idToken: $idToken');
+                                          print('idToken: $idToken, $accessToken');
                                           // Add further logic here (e.g., navigate to another page)
                                         }
                                         // } catch (error) {
@@ -225,8 +225,8 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
                                       }),
                                   AppUtils.kGap8,
                                   SocialWidget(icon: PngImage.faceBookIc, onTap: () {}),
-                                  AppUtils.kGap8,
-                                  SocialWidget(icon: PngImage.appleIc, onTap: () {}),
+                                  if (Platform.isIOS) AppUtils.kGap8,
+                                  if (Platform.isIOS) SocialWidget(icon: PngImage.appleIc, onTap: () {}),
                                 ],
                               ),
                             ],

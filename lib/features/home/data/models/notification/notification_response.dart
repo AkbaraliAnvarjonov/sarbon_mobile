@@ -91,7 +91,7 @@ class NotificationListResponse {
     this.noteId,
     this.notification,
     this.offer,
-    this.responseId,
+    this.cargoId,
     this.time,
     this.title,
     this.type,
@@ -105,7 +105,7 @@ class NotificationListResponse {
     noteId = json['note_id'];
     notification = json['notification'];
     offer = json['offer'];
-    responseId = json['response_id'];
+    cargoId = json['cargo_id'];
     time = json['time'];
     title = json['title'];
     type = json['type'];
@@ -118,7 +118,7 @@ class NotificationListResponse {
   String? noteId;
   String? notification;
   String? offer;
-  String? responseId;
+  String? cargoId;
   String? time;
   String? title;
   String? type;
@@ -132,7 +132,7 @@ class NotificationListResponse {
     map['note_id'] = noteId;
     map['notification'] = notification;
     map['offer'] = offer;
-    map['response_id'] = responseId;
+    map['cargo_id'] = cargoId;
     map['time'] = time;
     map['title'] = title;
     map['type'] = type;

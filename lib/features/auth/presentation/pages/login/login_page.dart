@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sarbon_mobile/features/main/presentation/bloc/main_bloc.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../../constants/image_constants.dart';
 import '../../../../../core/extension/extension.dart';
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
         listener: (context, state) async {
           if (state.status.isSuccess) {
             if (!context.mounted) return;
-            context.pushNamed(Routes.main);
+            context.goNamed(Routes.main);
             context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
           }
         },
@@ -208,8 +209,20 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
                                       }),
                                   AppUtils.kGap8,
                                   SocialWidget(icon: PngImage.faceBookIc, onTap: () {}),
-                                  AppUtils.kGap8,
-                                  SocialWidget(icon: PngImage.appleIc, onTap: () {}),
+                                  if (Platform.isIOS) AppUtils.kGap8,
+                                  if (Platform.isIOS)
+                                    SocialWidget(
+                                        icon: PngImage.appleIc,
+                                        onTap: () async {
+                                          final credential = await SignInWithApple.getAppleIDCredential(
+                                            scopes: [
+                                              AppleIDAuthorizationScopes.email,
+                                              AppleIDAuthorizationScopes.fullName,
+                                            ],
+                                          );
+
+                                          print(credential);
+                                        }),
                                 ],
                               ),
                             ],
