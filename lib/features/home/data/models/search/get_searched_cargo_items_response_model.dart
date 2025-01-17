@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls, inference_failure_on_untyped_parameter
 
+import '../../../../../core/utils/utils.dart';
+
 class GetSearchedCargoItemsResponseModel {
   String? status;
   String? description;
@@ -331,13 +333,13 @@ class CityData {
     this.nameEn,
   });
 
-  CityData.fromJson(Map json) {
+  CityData.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
     addressId = json['address_id'];
     city = json['city'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
   }

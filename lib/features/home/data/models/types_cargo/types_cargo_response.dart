@@ -1,3 +1,5 @@
+import '../../../../../core/utils/utils.dart';
+
 class TypesCargoResponse {
   TypesCargoResponse({
     this.status,
@@ -89,9 +91,9 @@ class TypeCargoList {
     this.name,
   });
 
-  TypeCargoList.fromJson(Map json) {
+  TypeCargoList.fromJson(Map<String, dynamic> json) {
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
   }
 
   String? guid;

@@ -352,5 +352,7 @@
   "unsatisfactory_cargo_condition": "Yukning holati qoniqarli emas",
   "customer_was_unavailable_for_contact": "Buyurtmachiga bog'lanib bo'lmadi",
   "add_comment": "Izoh qo‘shish",
-  "share_opinion": "Fikringiz yoki taklifingiz bilan o'rtoqlashing..."
+  "share_opinion": "Fikringiz yoki taklifingiz bilan o'rtoqlashing...",
+  "ready_for_loading": "Yuklashga tayyor",
+  "as_soon_as_possible": "Imkon qadar tezroq"
 }

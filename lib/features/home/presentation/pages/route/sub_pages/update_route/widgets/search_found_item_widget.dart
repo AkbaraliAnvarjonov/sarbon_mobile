@@ -34,14 +34,10 @@ class SearchFoundItemRouteUpdatePageWidget extends StatelessWidget {
         },
         title: RichText(
           text: TextSpan(
-            text: (context.locale.languageCode == 'ru'
-                    ? item?.cityNameRu
-                    : item?.cityNameEn) ??
-                '',
+            text: item?.cityName ?? '',
             children: [
               TextSpan(
-                text:
-                    ' ${(context.locale.languageCode == 'ru' ? item?.addressNameRu : item?.addressNameEn) ?? ''}',
+                text: ' ${item?.addressName ?? ''}',
                 style: context.textStyle.regularSubheadline.copyWith(
                   color: context.color.triarity,
                 ),

@@ -1,3 +1,5 @@
+import 'package:sarbon_mobile/core/utils/utils.dart';
+
 class GetTrailerTypesResponseModel {
   String? status;
   String? description;
@@ -87,7 +89,7 @@ class TrailerType {
 
   TrailerType.fromJson(Map<String, dynamic> json) {
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
   }
 
   Map<String, dynamic> toJson() {

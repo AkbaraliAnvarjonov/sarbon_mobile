@@ -77,7 +77,7 @@ class _CargoDirectionShortInfoWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                '${(details?.asSoonAsA ?? false) ? 'Готов к загрузке' : details?.loadTime?.dateMothWeek()} - ${(details?.asSoonAsB ?? false) ? 'Как можно скорее' : details?.date?.dateMothWeek()}',
+                '${(details?.asSoonAsA ?? false) ? 'ready_for_loading'.tr() : details?.loadTime?.dateMothWeek()} - ${(details?.asSoonAsB ?? false) ? 'as_soon_as_possible'.tr() : details?.date?.dateMothWeek()}',
                 style: context.textStyle.size14Weight400Black,
               ),
             ],

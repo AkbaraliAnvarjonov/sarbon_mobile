@@ -190,10 +190,7 @@ class _AllCargoItemState extends State<AllCargoItem> {
                               Text(
                                 (((widget.cargoItem?.addressFull ?? '').split('|').firstOrNull ?? '').isNotEmpty
                                         ? ((widget.cargoItem?.addressFull ?? '').split('|').firstOrNull ?? '')
-                                        : ((context.locale.languageCode == 'ru'
-                                                ? widget.cargoItem?.cityNameRu
-                                                : widget.cargoItem?.cityNameEn) ??
-                                            ''))
+                                        : (widget.cargoItem?.cityName ?? ''))
                                     .split(',')
                                     .first
                                     .cutString(24),
@@ -213,7 +210,7 @@ class _AllCargoItemState extends State<AllCargoItem> {
                             children: [
                               Text(
                                 (widget.cargoItem?.asSoonAsA ?? false)
-                                    ? 'Готов к загрузке'
+                                    ? 'ready_for_loading'.tr()
                                     : '${widget.cargoItem?.loadTime?.dateMoth()}',
                                 style: context.textStyle.size14Weight400Black.copyWith(
                                   color: const Color(0xFF211F26),
@@ -227,10 +224,7 @@ class _AllCargoItemState extends State<AllCargoItem> {
                               Text(
                                 (((widget.cargoItem?.addressFull ?? '').split('|').lastOrNull ?? '').isNotEmpty
                                         ? ((widget.cargoItem?.addressFull ?? '').split('|').lastOrNull ?? '')
-                                        : ((context.locale.languageCode == 'ru'
-                                                ? widget.cargoItem?.city2NameRu
-                                                : widget.cargoItem?.city2NameEn) ??
-                                            ''))
+                                        : (widget.cargoItem?.city2Name ?? ''))
                                     .split(',')
                                     .first
                                     .cutString(24),
@@ -250,7 +244,7 @@ class _AllCargoItemState extends State<AllCargoItem> {
                             children: [
                               Text(
                                 (widget.cargoItem?.asSoonAsB ?? false)
-                                    ? 'Как можно скорее'
+                                    ? 'as_soon_as_possible'.tr()
                                     : '${widget.cargoItem?.date?.dateMoth()}',
                                 style: context.textStyle.size14Weight400Black.copyWith(
                                   color: const Color(0xFF211F26),

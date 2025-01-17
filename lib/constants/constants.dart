@@ -58,7 +58,9 @@ sealed class Constants {
 
   static const ruLan = Locale('ru', 'RU');
   static const uzLan = Locale('uz', 'UZ');
-  static const ozLan = Locale('oz', 'UZ');
+  static const trLan = Locale('tr', 'TR');
+  static const enLan = Locale('en', 'EN');
+  static const chLan = Locale('zh', 'CN');
 
   static List<EcoStandartType> ecoStandartTypes = [
     EcoStandartType(name: 'EURO 1', value: 'EURO_1'),

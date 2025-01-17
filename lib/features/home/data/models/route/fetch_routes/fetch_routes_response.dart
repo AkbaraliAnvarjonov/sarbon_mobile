@@ -1,3 +1,5 @@
+import '../../../../../../core/utils/utils.dart';
+
 class FetchRoutesResponse {
   FetchRoutesResponse({
     this.status,
@@ -108,33 +110,21 @@ class RoutesListResponse {
   RoutesListResponse.fromJson(Map json) {
     addressId = json['address_id'];
     addressId2 = json['address_id_2'];
-    addressId2Data = json['address_id_2_data'] != null
-        ? AddressId2Data.fromJson(json['address_id_2_data'])
-        : null;
-    addressIdData = json['address_id_data'] != null
-        ? AddressIdData.fromJson(json['address_id_data'])
-        : null;
+    addressId2Data = json['address_id_2_data'] != null ? AddressId2Data.fromJson(json['address_id_2_data']) : null;
+    addressIdData = json['address_id_data'] != null ? AddressIdData.fromJson(json['address_id_data']) : null;
     capacity = json['capacity'];
     cityId = json['city_id'];
     cityId2 = json['city_id_2'];
-    cityId2Data = json['city_id_2_data'] != null
-        ? CityId2Data.fromJson(json['city_id_2_data'])
-        : null;
-    cityIdData = json['city_id_data'] != null
-        ? CityIdData.fromJson(json['city_id_data'])
-        : null;
+    cityId2Data = json['city_id_2_data'] != null ? CityId2Data.fromJson(json['city_id_2_data']) : null;
+    cityIdData = json['city_id_data'] != null ? CityIdData.fromJson(json['city_id_data']) : null;
     date = json['date'];
     guid = json['guid'];
     routeId = json['route_id'];
     shortName = json['short_name'];
     usersId = json['users_id'];
-    usersIdData = json['users_id_data'] != null
-        ? UsersIdData.fromJson(json['users_id_data'])
-        : null;
+    usersIdData = json['users_id_data'] != null ? UsersIdData.fromJson(json['users_id_data']) : null;
     vehicleId = json['vehicle_id'];
-    vehicleIdData = json['vehicle_id_data'] != null
-        ? VehicleIdData.fromJson(json['vehicle_id_data'])
-        : null;
+    vehicleIdData = json['vehicle_id_data'] != null ? VehicleIdData.fromJson(json['vehicle_id_data']) : null;
     volume = json['volume'];
   }
 
@@ -239,8 +229,7 @@ class VehicleIdData {
     capacity = json['capacity'];
     carNumber = json['car_number'];
     carPhoto = json['car_photo'];
-    carPosition =
-        json['car_position'] != null ? json['car_position'].cast<String>() : [];
+    carPosition = json['car_position'] != null ? json['car_position'].cast<String>() : [];
     carVinCode = json['car_vin_code'];
     cargoTypeId = json['cargo_type_id'];
     comment = json['comment'];
@@ -393,8 +382,7 @@ class UsersIdData {
     adr = json['adr'] != null ? json['adr'].cast<String>() : [];
     balance = json['balance'];
     birthdate = json['birthdate'];
-    cargoIds =
-        json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
+    cargoIds = json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
     cash = json['cash'];
     clientTypeId = json['client_type_id'];
     companyId = json['company_id'];
@@ -527,13 +515,13 @@ class CityIdData {
     this.nameEn,
   });
 
-  CityIdData.fromJson(Map json) {
+  CityIdData.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
     addressId = json['address_id'];
     city = json['city'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
   }
@@ -573,13 +561,13 @@ class CityId2Data {
     this.nameRu,
   });
 
-  CityId2Data.fromJson(Map json) {
+  CityId2Data.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
     addressId = json['address_id'];
     city = json['city'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     nameEn = json['name_en'];
     nameRu = json['name_ru'];
   }
@@ -622,20 +610,17 @@ class AddressIdData {
     this.type,
   });
 
-  AddressIdData.fromJson(Map json) {
+  AddressIdData.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
-    cargoIds =
-        json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
+    cargoIds = json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
     code = json['code'];
     guid = json['guid'];
-    logistikasendaninvitationtoorderDisable =
-        json['logistika-send-an-invitation-to-order_disable'];
-    name = json['name'];
+    logistikasendaninvitationtoorderDisable = json['logistika-send-an-invitation-to-order_disable'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
-    responseIds =
-        json['response_ids'] != null ? json['response_ids'].cast<String>() : [];
+    responseIds = json['response_ids'] != null ? json['response_ids'].cast<String>() : [];
     type = json['type'] != null ? json['type'].cast<String>() : [];
   }
 
@@ -658,8 +643,7 @@ class AddressIdData {
     map['cargo_ids'] = cargoIds;
     map['code'] = code;
     map['guid'] = guid;
-    map['logistika-send-an-invitation-to-order_disable'] =
-        logistikasendaninvitationtoorderDisable;
+    map['logistika-send-an-invitation-to-order_disable'] = logistikasendaninvitationtoorderDisable;
     map['name'] = name;
     map['name_ru'] = nameRu;
     map['name_en'] = nameEn;
@@ -684,20 +668,17 @@ class AddressId2Data {
     this.type,
   });
 
-  AddressId2Data.fromJson(Map json) {
+  AddressId2Data.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
-    cargoIds =
-        json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
+    cargoIds = json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];
     code = json['code'];
     guid = json['guid'];
-    logistikasendaninvitationtoorderDisable =
-        json['logistika-send-an-invitation-to-order_disable'];
-    name = json['name'];
+    logistikasendaninvitationtoorderDisable = json['logistika-send-an-invitation-to-order_disable'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
-    responseIds =
-        json['response_ids'] != null ? json['response_ids'].cast<String>() : [];
+    responseIds = json['response_ids'] != null ? json['response_ids'].cast<String>() : [];
     type = json['type'] != null ? json['type'].cast<String>() : [];
   }
 
@@ -720,8 +701,7 @@ class AddressId2Data {
     map['cargo_ids'] = cargoIds;
     map['code'] = code;
     map['guid'] = guid;
-    map['logistika-send-an-invitation-to-order_disable'] =
-        logistikasendaninvitationtoorderDisable;
+    map['logistika-send-an-invitation-to-order_disable'] = logistikasendaninvitationtoorderDisable;
     map['name'] = name;
     map['name_ru'] = nameRu;
     map['name_en'] = nameEn;

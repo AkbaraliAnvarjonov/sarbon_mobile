@@ -52,28 +52,27 @@ class ChangeLanguageWidget extends StatelessWidget {
                     )
                   : null,
             ),
-            // AppUtils.kDivider,
-            // ListTile(
-            //   title: Text(
-            //     'Ўзбекча',
-            //     style: context.textStyle.regularCallout,
-            //   ),
-            //   onTap: () async {
-            //     context.setLocale(const Locale('oz', 'UZ'));
-            //     await localSource.setLocale('oz').then((value) {
-            //       if (!context.mounted) return;
-            //       print('mana keyingi til');
-            //       print(context.locale);
-            //       context.pop();
-            //     });
-            //   },
-            //   trailing: context.locale.languageCode == 'oz'
-            //       ? Icon(
-            //           Icons.check,
-            //           color: context.colorScheme.primary,
-            //         )
-            //       : null,
-            // ),
+            AppUtils.kDivider,
+            ListTile(
+              title: Text(
+                'English',
+                style: context.textStyle.regularCallout,
+              ),
+              onTap: () async {
+                print('bosildi');
+                context.setLocale(const Locale('en'));
+                await localSource.setLocale('en').then((value) {
+                  if (!context.mounted) return;
+                  context.pop();
+                });
+              },
+              trailing: context.locale.languageCode == 'en'
+                  ? Icon(
+                      Icons.check,
+                      color: context.colorScheme.primary,
+                    )
+                  : null,
+            ),
             AppUtils.kDivider,
             ListTile(
               title: Text(
@@ -88,6 +87,46 @@ class ChangeLanguageWidget extends StatelessWidget {
                 });
               },
               trailing: context.locale.languageCode == 'ru'
+                  ? Icon(
+                      Icons.check,
+                      color: context.colorScheme.primary,
+                    )
+                  : null,
+            ),
+            AppUtils.kDivider,
+            ListTile(
+              title: Text(
+                'Türkçe',
+                style: context.textStyle.regularCallout,
+              ),
+              onTap: () async {
+                context.setLocale(const Locale('tr'));
+                await localSource.setLocale('tr').then((value) {
+                  if (!context.mounted) return;
+                  context.pop();
+                });
+              },
+              trailing: context.locale.languageCode == 'tr'
+                  ? Icon(
+                      Icons.check,
+                      color: context.colorScheme.primary,
+                    )
+                  : null,
+            ),
+            AppUtils.kDivider,
+            ListTile(
+              title: Text(
+                '中文',
+                style: context.textStyle.regularCallout,
+              ),
+              onTap: () async {
+                context.setLocale(const Locale('zh'));
+                await localSource.setLocale('zh').then((value) {
+                  if (!context.mounted) return;
+                  context.pop();
+                });
+              },
+              trailing: context.locale.languageCode == 'zh'
                   ? Icon(
                       Icons.check,
                       color: context.colorScheme.primary,

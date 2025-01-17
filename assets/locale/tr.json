@@ -351,5 +351,7 @@
   "unsatisfactory_cargo_condition": "Tatmin edici olmayan kargo durumu",
   "customer_was_unavailable_for_contact": "Müşteri iletişim için müsait değildi",
   "add_comment": "Yorum ekle",
-  "share_opinion": "Görüşünüzü veya önerinizi paylaşın..."
+  "share_opinion": "Görüşünüzü veya önerinizi paylaşın...",
+  "ready_for_loading": "Yüklemeye hazır",
+  "as_soon_as_possible": "En kısa sürede"
 }

@@ -6,6 +6,8 @@ String get defaultLocale => switch (defaultSystemLocale) {
       'ru' => 'ru',
       'en' => 'en',
       'uz' => 'uz',
+      'tr' => 'tr',
+      'zh' => 'zh',
       _ => 'ru',
     };
 
@@ -51,3 +53,6 @@ Future<List<SearchItem>> searchByText(String query) async {
   );
   return items;
 }
+
+String getLocalizedName(Map<String, dynamic> json, String keyWord) =>
+    json['${keyWord}_${localSource.locale}'] ?? json[keyWord] ?? '';
