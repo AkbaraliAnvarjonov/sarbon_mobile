@@ -1,9 +1,12 @@
+import '../../../../../core/utils/utils.dart';
+
 class TypesPaymentResponse {
   TypesPaymentResponse({
-      this.status, 
-      this.description, 
-      this.data, 
-      this.customMessage,});
+    this.status,
+    this.description,
+    this.data,
+    this.customMessage,
+  });
 
   TypesPaymentResponse.fromJson(Map json) {
     status = json['status'];
@@ -11,6 +14,7 @@ class TypesPaymentResponse {
     data = json['data'] != null ? MainData.fromJson(json['data']) : null;
     customMessage = json['custom_message'];
   }
+
   String? status;
   String? description;
   MainData? data;
@@ -26,18 +30,19 @@ class TypesPaymentResponse {
     map['custom_message'] = customMessage;
     return map;
   }
-
 }
 
 class MainData {
   MainData({
-      this.tableSlug, 
-      this.data,});
+    this.tableSlug,
+    this.data,
+  });
 
   MainData.fromJson(Map json) {
     tableSlug = json['table_slug'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
+
   String? tableSlug;
   Data? data;
 
@@ -49,13 +54,13 @@ class MainData {
     }
     return map;
   }
-
 }
 
 class Data {
   Data({
-      this.count, 
-      this.response,});
+    this.count,
+    this.response,
+  });
 
   Data.fromJson(Map json) {
     count = json['count'];
@@ -66,6 +71,7 @@ class Data {
       });
     }
   }
+
   num? count;
   List<TypePaymentList>? response;
 
@@ -77,18 +83,20 @@ class Data {
     }
     return map;
   }
-
 }
 
 class TypePaymentList {
   TypePaymentList({
-      this.guid, 
-      this.paymentType,});
+    this.guid,
+    this.paymentType,
+  });
 
-  TypePaymentList.fromJson(Map json) {
+  TypePaymentList.fromJson(Map<String, dynamic> json) {
     guid = json['guid'];
+    paymentType = getLocalizedName(json, 'payment_type');
     paymentType = json['payment_type'];
   }
+
   String? guid;
   String? paymentType;
 
@@ -98,5 +106,4 @@ class TypePaymentList {
     map['payment_type'] = paymentType;
     return map;
   }
-
 }

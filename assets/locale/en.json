@@ -351,5 +351,7 @@
   "unsatisfactory_cargo_condition": "Unsatisfactory cargo condition",
   "customer_was_unavailable_for_contact": "Customer was unavailable for contact",
   "add_comment": "Add comment",
-  "share_opinion": "Share your opinion or suggestion..."
+  "share_opinion": "Share your opinion or suggestion...",
+  "ready_for_loading": "Ready for loading",
+  "as_soon_as_possible": "As soon as possible"
 }

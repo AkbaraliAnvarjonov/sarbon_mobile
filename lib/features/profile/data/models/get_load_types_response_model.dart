@@ -1,3 +1,5 @@
+import '../../../../core/utils/utils.dart';
+
 class GetLoadTypesResponseModel {
   String? status;
   String? description;
@@ -74,31 +76,23 @@ class LoadTypeData {
 }
 
 class LoadType {
-  List<String>? cargoIds;
   String? guid;
   String? name;
-  List<String>? vehicleIds;
 
   LoadType({
-    this.cargoIds,
     this.guid,
     this.name,
-    this.vehicleIds,
   });
 
   LoadType.fromJson(Map<String, dynamic> json) {
-    // cargoIds = json['cargo_ids'].cast<String>();
     guid = json['guid'];
-    name = json['name'];
-    // vehicleIds = json['vehicle_ids'].cast<String>();
+    name = getLocalizedName(json, 'name');
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    // data['cargo_ids'] = cargoIds;
     data['guid'] = guid;
     data['name'] = name;
-    // data['vehicle_ids'] = vehicleIds;
     return data;
   }
 }

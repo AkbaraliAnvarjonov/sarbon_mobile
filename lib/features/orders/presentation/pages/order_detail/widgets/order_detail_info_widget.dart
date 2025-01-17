@@ -18,7 +18,7 @@ class _OrderDetailInfoWidget extends StatelessWidget {
             children: [
               _RowInfoWidget(
                 title: 'date'.tr(),
-                info: '${(details?.asSoonAsA ?? false) ? 'Как можно скорее' : details?.loadTime?.dateMoth()}',
+                info: '${(details?.asSoonAsA ?? false) ? 'as_soon_as_possible'.tr() : details?.loadTime?.dateMoth()}',
               ),
               _RowInfoWidget(
                 title: 'distance'.tr(),

@@ -24,7 +24,9 @@ final class LocalSource {
   Locale get localeObj => switch (locale) {
         'ru' => Constants.ruLan,
         'uz' => Constants.uzLan,
-        'oz' => Constants.ruLan,
+        'tr' => Constants.trLan,
+        'en' => Constants.enLan,
+        'ch' => Constants.chLan,
         _ => Constants.ruLan,
       };
 

@@ -351,5 +351,7 @@
   "unsatisfactory_cargo_condition": "Неудовлетворительное состояние груза",
   "customer_was_unavailable_for_contact": "Заказчик был недоступен для связи",
   "add_comment": "Добавить комментарий",
-  "share_opinion": "Поделитесь своим мнением или предложением..."
+  "share_opinion": "Поделитесь своим мнением или предложением...",
+  "ready_for_loading": "Готов к загрузке",
+  "as_soon_as_possible": "Как можно скорее"
 }

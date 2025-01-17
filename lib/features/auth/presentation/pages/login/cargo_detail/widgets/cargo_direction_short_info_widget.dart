@@ -21,19 +21,13 @@ class _CargoDirectionShortInfoWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (context.locale.languageCode == 'ru'
-                                ? details?.cityNameRu
-                                : details?.cityNameEn) ??
-                            '',
+                        details?.cityName ?? '',
                         style: context.textStyle.regularHeadline.copyWith(
                           color: context.color.textColor,
                         ),
                       ),
                       Text(
-                        (context.locale.languageCode == 'ru'
-                                ? details?.addressDataEntity?.nameRu
-                                : details?.addressDataEntity?.nameEn) ??
-                            '',
+                        details?.addressDataEntity?.name ?? '',
                         style: context.textStyle.regularFootnote.copyWith(
                           color: context.color.gray700,
                         ),
@@ -51,19 +45,13 @@ class _CargoDirectionShortInfoWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (context.locale.languageCode == 'ru'
-                                ? details?.city2NameRu
-                                : details?.city2NameEn) ??
-                            '',
+                        details?.city2Name ?? '',
                         style: context.textStyle.regularHeadline.copyWith(
                           color: context.color.textColor,
                         ),
                       ),
                       Text(
-                        (context.locale.languageCode == 'ru'
-                                ? details?.address2DataEntity?.nameRu
-                                : details?.address2DataEntity?.nameEn) ??
-                            '',
+                        details?.address2DataEntity?.name ?? '',
                         style: context.textStyle.regularFootnote.copyWith(
                           color: context.color.gray700,
                         ),

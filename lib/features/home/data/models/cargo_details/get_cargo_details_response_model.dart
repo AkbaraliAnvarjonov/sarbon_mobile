@@ -1,3 +1,5 @@
+import '../../../../../core/utils/utils.dart';
+
 class GetCargoDetailsResponseModel {
   String? status;
   String? description;
@@ -316,13 +318,13 @@ class CityData {
     this.nameEn,
   });
 
-  CityData.fromJson(Map json) {
+  CityData.fromJson(Map<String, dynamic> json) {
     v = json['__v'];
     id = json['_id'];
     addressId = json['address_id'];
     city = json['city'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
   }
@@ -713,7 +715,7 @@ class AddressIdData {
     addressId = json['address_id'];
     code = json['code'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     nameRu = json['name_ru'];
     nameEn = json['name_en'];
     type = json['type'].cast<String>();
@@ -750,7 +752,7 @@ class CurrencyIdData {
   CurrencyIdData.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     guid = json['guid'];
-    name = json['name'];
+    name = getLocalizedName(json, 'name');
     photo = json['photo'];
     shortName = json['short_name'];
   }
