@@ -58,9 +58,7 @@ sealed class Constants {
 
   static const ruLan = Locale('ru', 'RU');
   static const uzLan = Locale('uz', 'UZ');
-  static const trLan = Locale('tr', 'TR');
-  static const enLan = Locale('en', 'EN');
-  static const chLan = Locale('zh', 'CN');
+  static const ozLan = Locale('oz', 'UZ');
 
   static List<EcoStandartType> ecoStandartTypes = [
     EcoStandartType(name: 'EURO 1', value: 'EURO_1'),
@@ -411,7 +409,6 @@ sealed class TableSlugs {
   static const String carSale = 'car_sale';
   static const String city = 'city';
   static const String cargoItems = 'cargo';
-  static const String cargoFilter = '/logistika-get-cargo-with-filter';
   static const String vehicle = 'vehicle';
   static const String oppositeOffer = 'cargo';
   static const String orders = 'response';
