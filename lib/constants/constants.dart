@@ -17,7 +17,7 @@ sealed class Constants {
 
   // static const String deepBaseLink = 'https://links.furgo.uz';
   // static const String deepLink = '$deepBaseLink/${Routes.cargoDetailDeepLink}';
-  static const String androidAppLink = 'https://play.google.com/store/apps/details?id=uz.udevs.sarbon_mobile';
+  static const String androidAppLink = 'https://play.google.com/store/apps/details?id=uz.sarbon.mobile';
   static const String iosAppLink = 'https://apps.apple.com/uz/app/furgo/id6475668788';
   static final String appLink = Platform.isIOS ? iosAppLink : androidAppLink;
 
