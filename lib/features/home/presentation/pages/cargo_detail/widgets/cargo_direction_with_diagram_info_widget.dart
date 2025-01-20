@@ -56,7 +56,7 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                   child: SizedBox(
                     height: height,
                     width: 20,
-                    child: VerticalDivider(
+                    child: DashedVerticalDivider(
                       color: widget.isFirstItem ? context.colorScheme.primary : context.color.midGrey5,
                       thickness: 1,
                       indent: 2,

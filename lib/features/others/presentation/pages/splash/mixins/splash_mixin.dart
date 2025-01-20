@@ -13,6 +13,7 @@ mixin SplashMixin on State<SplashPage> {
             isForceUpdate: value.$1 == AppUpdate.forceUpdate,
           ).then((value) => nextToNavigation());
         } else {
+          await Future.delayed(const Duration(milliseconds: 2400));
           nextToNavigation();
         }
       },

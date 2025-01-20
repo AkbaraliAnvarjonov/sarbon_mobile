@@ -26,7 +26,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: context.colorScheme.onPrimary,
               ),
             ),
-
             actions: [
               GestureDetector(
                 onTap: () async {
@@ -99,10 +98,6 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               //   ),
               // ),
             ],
-            // bottom: const PreferredSize(
-            //   preferredSize: Size.fromHeight(300),
-            //   child: CargoWidget(),
-            // ),
           ),
         ),
       );
