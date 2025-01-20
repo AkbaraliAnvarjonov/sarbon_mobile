@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../core/mixins/location_mixin.dart';
 import '../features/profile/data/models/eco_standart_type.dart';
-import '../router/app_routes.dart';
 
 sealed class Constants {
   Constants._();
