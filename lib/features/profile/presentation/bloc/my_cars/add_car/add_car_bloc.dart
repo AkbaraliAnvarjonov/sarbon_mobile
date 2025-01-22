@@ -184,6 +184,8 @@ class AddCarBloc extends Bloc<AddCarEvent, AddCarState> {
         (isEmpty) {
           if (!isEmpty) {
             emit(state.copyWith(vehicleStatus: ApiStatus.error));
+          } else {
+            emit(state.copyWith(vehicleStatus: ApiStatus.success));
           }
         },
       );

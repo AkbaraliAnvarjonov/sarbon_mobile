@@ -70,4 +70,6 @@ class SvgImage {
   static const String verificationIcon = 'assets/icons/verification_icon.svg';
   static const String warningOrder = 'assets/icons/warning_order.svg';
   static const String commentIcon = 'assets/icons/comment_icon.svg';
+  static const String loadingCargo = 'assets/icons/loading_cargo.svg';
+  static const String unloadingCargo = 'assets/icons/unloading_cargo.svg';
 }

@@ -15,6 +15,7 @@ sealed class AppUtils {
   static const kGap18 = Gap(18);
   static const kGap20 = Gap(20);
   static const kGap24 = Gap(24);
+  static const kGap30 = Gap(30);
   static const kGap32 = Gap(32);
   static const kGap36 = Gap(36);
   static const kGap40 = Gap(40);

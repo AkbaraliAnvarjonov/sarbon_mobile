@@ -61,6 +61,7 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
   Widget build(BuildContext context) => BlocBuilder<CargoDetailsBloc, CargoDetailsState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar:
                 CustomAppBar(title: '${state.details?.countryCodeFrom ?? ''}-${state.details?.countryCodeTo ?? ''}'),
             body: state.status.isLoading || state.cargoPointStatus.isLoading
@@ -86,6 +87,8 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
                                     _AddressesPointWidget(
                                       addresses: state.addresses,
                                       addressPositions: state.addressPositions.toList(),
+                                      from: state.details?.countryCodeFrom ?? '',
+                                      to: state.details?.countryCodeTo ?? '',
                                     ),
                                     AppUtils.kGap24,
                                     _CargoDetailInfoTitleWidget(

@@ -5,7 +5,6 @@ class DashedVerticalDivider extends StatelessWidget {
   final double thickness;
   final double dashLength;
   final double dashGap;
-  final double height;
   final double indent;
   final double endIndent;
 
@@ -15,15 +14,14 @@ class DashedVerticalDivider extends StatelessWidget {
     this.thickness = 1.0,
     this.dashLength = 4.0,
     this.dashGap = 2.0,
-    this.height = double.infinity,
     this.indent = 0.0,
     this.endIndent = 0.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
+    return Padding(
+      padding: const EdgeInsets.all(5),
       child: CustomPaint(
         painter: DashedLinePainter(
           color: color,

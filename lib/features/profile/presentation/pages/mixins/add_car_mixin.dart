@@ -58,6 +58,7 @@ mixin AddCarMixin on State<AddCarPage> {
           addCarBloc.state.selectedTrailerType != null &&
           addCarBloc.state.selectedFuelType != null &&
           addCarBloc.state.ecoStandartType != null &&
+          !(addCarBloc.state.vehicleStatus.isError || addCarBloc.state.vehicleStatus.isLoading) &&
           addCarBloc.state.selectedLoadType != null;
     } else if (pageController.page == 1) {
       return addCarBloc.state.vehicleFile != null &&
