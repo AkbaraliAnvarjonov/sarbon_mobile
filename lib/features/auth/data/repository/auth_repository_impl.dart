@@ -84,6 +84,24 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, RegisterSocialResponseEntity>> registerSocial(
+    RegisterSocialRequestEntity requestEntity,
+  ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final response = await authRemoteDataSource.registerSocial(
+          requestEntity.toModel,
+        );
+        return Right(response.toEntity());
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return const Left(NoInternetFailure(message: 'No Internet Connection'));
+    }
+  }
+
+  @override
   Future<Either<Failure, RegisterOperatorResponseEntity>> registerOperator(
     RegisterOperatorRequestEntity requestEntity,
   ) async {

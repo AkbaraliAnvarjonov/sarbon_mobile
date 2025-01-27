@@ -17,7 +17,7 @@ class ContactUsWidget extends StatelessWidget {
               AppUtils.kGap24,
               GestureDetector(
                 onTap: () async {
-                  await UrlLauncher.switchPhoneNumber('+998941201212');
+                  await UrlLauncher.switchPhoneNumber('+998950056611');
                 },
                 child: Container(
                   height: 60,

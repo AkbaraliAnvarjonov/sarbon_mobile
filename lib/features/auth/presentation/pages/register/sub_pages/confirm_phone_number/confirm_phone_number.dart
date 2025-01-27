@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../../../../constants/image_constants.dart';
 import '../../../../../../../core/extension/extension.dart';
@@ -13,6 +15,8 @@ import '../../../../../../../core/utils/utils.dart';
 import '../../../../../../../core/widgets/inputs/custom_text_field.dart';
 import '../../../../../../../core/widgets/inputs/masked_text_input_formatter.dart';
 import '../../../../../../../core/widgets/loading/modal_progress_hud.dart';
+import '../../../../../../../router/app_routes.dart';
+import '../../../../../../main/presentation/bloc/main_bloc.dart';
 import '../../../../../data/models/user_role/user_role_model.dart';
 import '../../../../bloc/confirmation_user/confirmation_user_bloc.dart';
 import '../../widgets/social_widget.dart';
@@ -38,8 +42,14 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
   @override
   Widget build(BuildContext context) => BlocListener<ConfirmationUserBloc, ConfirmationUserState>(
         listenWhen: (previous, current) =>
-            previous.getSmsIdStatus != current.getSmsIdStatus || previous.checkUserStatus != current.checkUserStatus,
+            previous.getSmsIdStatus != current.getSmsIdStatus ||
+            previous.checkUserStatus != current.checkUserStatus ||
+            previous.socialStatus != current.socialStatus,
         listener: (context, state) async {
+          if (state.socialStatus.isSuccess) {
+            context.goNamed(Routes.main);
+            context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
+          }
           if (state.checkUserStatus.isSuccess) {
             context.read<ConfirmationUserBloc>().add(
                   SendCodeEvent(
@@ -95,7 +105,7 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
           ),
           body: ModalProgressHUD(
             inAsyncCall: context.select(
-              (ConfirmationUserBloc bloc) => bloc.state.getSmsIdStatus.isLoading,
+              (ConfirmationUserBloc bloc) => bloc.state.getSmsIdStatus.isLoading || bloc.state.socialStatus.isLoading,
             ),
             child: CustomScrollView(
               slivers: [
@@ -206,27 +216,67 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
                                           // Optionally, retrieve authentication details
                                           final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-                                          // Use the tokens if needed (e.g., Firebase login)
-                                          final String? idToken = googleAuth.idToken;
-                                          final String? accessToken = googleAuth.accessToken;
-
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                            content: Text('Welcome, ${googleUser.displayName}!'),
-                                          ));
-                                          print('idToken: $idToken, $accessToken');
-                                          // Add further logic here (e.g., navigate to another page)
+                                          context.read<ConfirmationUserBloc>().add(
+                                                RegisterWithSocialEvent(
+                                                  displayName: googleUser.displayName ?? '',
+                                                  loginType: googleUser.email,
+                                                  idToken: googleAuth.idToken ?? '',
+                                                  accessToken: googleAuth.accessToken ?? '',
+                                                  type: 'register',
+                                                  registerType: 'email',
+                                                  uniqueId: '',
+                                                ),
+                                              );
                                         }
                                         // } catch (error) {
-                                        //   print(error);
                                         //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                         //     content: Text('Google Sign-In failed: $error'),
                                         //   ));
                                         // }
                                       }),
                                   AppUtils.kGap8,
-                                  SocialWidget(icon: PngImage.faceBookIc, onTap: () {}),
+                                  SocialWidget(
+                                      icon: PngImage.faceBookIc,
+                                      onTap: () async {
+                                        final LoginResult loginResult = await FacebookAuth.instance.login();
+
+                                        context.read<ConfirmationUserBloc>().add(
+                                              RegisterWithSocialEvent(
+                                                displayName: '',
+                                                loginType: '${loginResult.accessToken?.tokenString ?? ''}@gmail.com',
+                                                idToken: loginResult.accessToken?.tokenString ?? '',
+                                                accessToken: loginResult.accessToken?.tokenString ?? '',
+                                                type: 'login',
+                                                registerType: 'facebook',
+                                                uniqueId: loginResult.accessToken?.tokenString ?? '',
+                                              ),
+                                            );
+                                      }),
                                   if (Platform.isIOS) AppUtils.kGap8,
-                                  if (Platform.isIOS) SocialWidget(icon: PngImage.appleIc, onTap: () {}),
+                                  if (Platform.isIOS)
+                                    SocialWidget(
+                                      icon: PngImage.appleIc,
+                                      onTap: () async {
+                                        final credential = await SignInWithApple.getAppleIDCredential(
+                                          scopes: [
+                                            AppleIDAuthorizationScopes.email,
+                                            AppleIDAuthorizationScopes.fullName,
+                                          ],
+                                        );
+                                        print('object: ${credential.email}');
+                                        context.read<ConfirmationUserBloc>().add(
+                                              RegisterWithSocialEvent(
+                                                displayName: credential.givenName ?? '',
+                                                loginType: credential.email ?? '',
+                                                idToken: credential.authorizationCode,
+                                                accessToken: credential.authorizationCode,
+                                                type: (credential.email ?? '').isEmpty ? 'login' : 'register',
+                                                registerType: 'apple',
+                                                uniqueId: credential.userIdentifier ?? '',
+                                              ),
+                                            );
+                                      },
+                                    ),
                                 ],
                               ),
                             ],

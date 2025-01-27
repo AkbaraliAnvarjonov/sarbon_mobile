@@ -138,48 +138,48 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                             AppUtils.kGap6,
                             const _DropDownCargoTypeWidget2(),
                             AppUtils.kGap12,
-                            Text(
-                              'view_cargo'.tr(),
-                              style: context.textStyle.size14Weight500Black.copyWith(
-                                color: context.color.gray700,
-                              ),
-                            ),
-                            AppUtils.kGap6,
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: context.kSize.width / 2 - 20,
-                                  child: _CustomCheckBoxWidget(
-                                    onTap: () {
-                                      context.read<HomeBloc>().add(
-                                            ChangeTypeOfCargoEvent(
-                                              isTakeAllUnloads: !state.isTakeAllUnloads,
-                                              isLoadAroundTheClock: false,
-                                            ),
-                                          );
-                                    },
-                                    isChecked: state.isTakeAllUnloads,
-                                    title: 'separated_vehicle'.tr(),
-                                  ),
-                                ),
-                                AppUtils.kGap8,
-                                SizedBox(
-                                  width: context.kSize.width / 2 - 20,
-                                  child: _CustomCheckBoxWidget(
-                                    onTap: () {
-                                      context.read<HomeBloc>().add(
-                                            ChangeTypeOfCargoEvent(
-                                              isTakeAllUnloads: false,
-                                              isLoadAroundTheClock: !state.isLoadAroundTheClock,
-                                            ),
-                                          );
-                                    },
-                                    isChecked: state.isLoadAroundTheClock,
-                                    title: 'loading_possible'.tr(),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Text(
+                            //   'view_cargo'.tr(),
+                            //   style: context.textStyle.size14Weight500Black.copyWith(
+                            //     color: context.color.gray700,
+                            //   ),
+                            // ),
+                            // AppUtils.kGap6,
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: context.kSize.width / 2 - 20,
+                            //       child: _CustomCheckBoxWidget(
+                            //         onTap: () {
+                            //           context.read<HomeBloc>().add(
+                            //                 ChangeTypeOfCargoEvent(
+                            //                   isTakeAllUnloads: !state.isTakeAllUnloads,
+                            //                   isLoadAroundTheClock: false,
+                            //                 ),
+                            //               );
+                            //         },
+                            //         isChecked: state.isTakeAllUnloads,
+                            //         title: 'separated_vehicle'.tr(),
+                            //       ),
+                            //     ),
+                            //     AppUtils.kGap8,
+                            //     SizedBox(
+                            //       width: context.kSize.width / 2 - 20,
+                            //       child: _CustomCheckBoxWidget(
+                            //         onTap: () {
+                            //           context.read<HomeBloc>().add(
+                            //                 ChangeTypeOfCargoEvent(
+                            //                   isTakeAllUnloads: false,
+                            //                   isLoadAroundTheClock: !state.isLoadAroundTheClock,
+                            //                 ),
+                            //               );
+                            //         },
+                            //         isChecked: state.isLoadAroundTheClock,
+                            //         title: 'loading_possible'.tr(),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                             AppUtils.kGap12,
                             Text(
                               'payment_type'.tr(),
@@ -205,11 +205,7 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                               hintText: 'write_weight_of_cargo'.tr(),
                               fillColor: context.colorScheme.surface,
                               onChanged: (value) {
-                                context.read<HomeBloc>().add(
-                                      ChangeWeightEvent(
-                                        weight: value,
-                                      ),
-                                    );
+                                context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
                               },
                               showBorder: false,
                             ),
@@ -251,7 +247,9 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
               minimum: AppUtils.kPaddingAll16,
               child: ElevatedButton(
                 onPressed: state.isFilterEmpty
-                    ? null
+                    ? () {
+                        context.read<HomeBloc>().add(const RemoveFilterEvent());
+                      }
                     : () {
                         context.read<HomeBloc>().add(
                               ApplyFilterEvent(

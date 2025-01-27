@@ -6,6 +6,7 @@ class ConfirmationUserState extends Equatable {
     this.getSmsIdStatus = ApiStatus.initial,
     this.verifyOtpStatus = ApiStatus.initial,
     this.checkUserStatus = ApiStatus.initial,
+    this.socialStatus = ApiStatus.initial,
     this.phoneNumber = '',
     this.otp = '',
     this.selectedRole,
@@ -20,6 +21,7 @@ class ConfirmationUserState extends Equatable {
 
   final bool isValidPhoneNumber;
   final ApiStatus getSmsIdStatus;
+  final ApiStatus socialStatus;
   final ApiStatus checkUserStatus;
   final ApiStatus verifyOtpStatus;
   final String phoneNumber;
@@ -37,6 +39,7 @@ class ConfirmationUserState extends Equatable {
     bool? isValidPhoneNumber,
     ApiStatus? getSmsIdStatus,
     ApiStatus? checkUserStatus,
+    ApiStatus? socialStatus,
     ApiStatus? verifyOtpStatus,
     String? phoneNumber,
     String? otp,
@@ -53,6 +56,7 @@ class ConfirmationUserState extends Equatable {
         isValidPhoneNumber: isValidPhoneNumber ?? this.isValidPhoneNumber,
         getSmsIdStatus: getSmsIdStatus ?? this.getSmsIdStatus,
         phoneNumber: phoneNumber ?? this.phoneNumber,
+        socialStatus: socialStatus ?? this.socialStatus,
         verifyOtpStatus: verifyOtpStatus ?? this.verifyOtpStatus,
         checkUserStatus: checkUserStatus ?? ApiStatus.initial,
         otp: otp ?? this.otp,
@@ -72,6 +76,7 @@ class ConfirmationUserState extends Equatable {
         getSmsIdStatus,
         phoneNumber,
         checkUserStatus,
+        socialStatus,
         verifyOtpStatus,
         otp,
         selectedRole,

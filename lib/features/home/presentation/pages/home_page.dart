@@ -57,57 +57,57 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Home
                           ],
                         )
                       : CustomScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        controller: scrollController,
-                        slivers: [
-                          AppUtils.kSliverGap16,
-                          if (!state.isFilterEmpty)
-                            SliverToBoxAdapter(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    context.read<HomeBloc>().add(const RemoveFilterEvent());
-                                  },
-                                  child: Container(
-                                    margin: AppUtils.kPaddingHorizontal16,
-                                    padding: AppUtils.kPaddingHor24Ver20,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: AppUtils.kBorderRadius12,
-                                      color: Color(0xFFEDF0F5),
-                                    ),
-                                    child: IntrinsicWidth(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(
-                                            Icons.close,
-                                            color: context.colorScheme.onSurface,
-                                            size: 18,
-                                          ),
-                                          AppUtils.kGap4,
-                                          Text(
-                                            'remove_filter'.tr(),
-                                            style: context.textStyle.regularFootnote
-                                                .copyWith(color: context.colorScheme.onSurface),
-                                          ),
-                                        ],
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: scrollController,
+                          slivers: [
+                            AppUtils.kSliverGap16,
+                            if (!state.isFilterEmpty)
+                              SliverToBoxAdapter(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.read<HomeBloc>().add(const RemoveFilterEvent());
+                                    },
+                                    child: Container(
+                                      margin: AppUtils.kPaddingHorizontal16,
+                                      padding: AppUtils.kPaddingAll8,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: AppUtils.kBorderRadius16,
+                                        color: Color(0xFFEDF0F5),
+                                      ),
+                                      child: IntrinsicWidth(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.close,
+                                              color: context.colorScheme.onSurface,
+                                              size: 18,
+                                            ),
+                                            AppUtils.kGap4,
+                                            Text(
+                                              'remove_filter'.tr(),
+                                              style: context.textStyle.regularFootnote
+                                                  .copyWith(color: context.colorScheme.onSurface),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
+                            AppUtils.kSliverGap16,
+                            AllCargosWidget(
+                              cargoItems: state.cargoItems,
+                              cargosCount: state.cargosCount,
+                              withoutFilterCargoItems: state.cargoItemsWithoutFilter,
+                              scrollController: scrollController,
                             ),
-                          AppUtils.kSliverGap16,
-                          AllCargosWidget(
-                            cargoItems: state.cargoItems,
-                            cargosCount: state.cargosCount,
-                            withoutFilterCargoItems: state.cargoItemsWithoutFilter,
-                            scrollController: scrollController,
-                          ),
-                          AppUtils.kSliverGap16,
-                        ],
-                      )),
+                            AppUtils.kSliverGap16,
+                          ],
+                        )),
         ),
       );
 }

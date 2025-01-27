@@ -14,6 +14,8 @@ import '../../models/login/login_request_model.dart';
 import '../../models/login/login_response_model.dart';
 import '../../models/registration/driver/register_driver_request_model.dart';
 import '../../models/registration/driver/register_driver_response_model.dart';
+import '../../models/registration/driver/register_social_model.dart';
+import '../../models/registration/driver/register_social_response.dart';
 import '../../models/registration/driver/trailer_type_response.dart';
 import '../../models/registration/operator/register_operator_request_model.dart';
 import '../../models/registration/operator/register_operator_response_model.dart';
@@ -43,6 +45,10 @@ abstract class AuthRemoteDataSource {
 
   Future<RegisterDriverResponseModel> registerDriver(
     RegisterDriverRequestModel registerDriverRequestModel,
+  );
+
+  Future<RegisterSocialResponseModel> registerSocial(
+    RegisterSocialRequestModel registerSocialRequestModel,
   );
 
   Future<RegisterOperatorResponseModel> registerOperator(

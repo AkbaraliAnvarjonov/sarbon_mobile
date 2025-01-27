@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sarbon_mobile/features/main/presentation/bloc/main_bloc.dart';
@@ -184,45 +185,73 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
                                   SocialWidget(
                                       icon: PngImage.googleIc,
                                       onTap: () async {
-                                        // try {
-                                        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-                                        if (googleUser != null) {
-                                          // Optionally, retrieve authentication details
-                                          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+                                        try {
+                                          final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+                                          if (googleUser != null) {
+                                            // Optionally, retrieve authentication details
+                                            final GoogleSignInAuthentication googleAuth =
+                                                await googleUser.authentication;
 
-                                          // Use the tokens if needed (e.g., Firebase login)
-                                          final String? idToken = googleAuth.idToken;
-                                          final String? accessToken = googleAuth.accessToken;
-
+                                            context.read<LoginBloc>().add(
+                                                  RegisterWithSocialEvent(
+                                                    displayName: googleUser.displayName ?? '',
+                                                    loginType: googleUser.email,
+                                                    idToken: googleAuth.idToken ?? '',
+                                                    accessToken: googleAuth.accessToken ?? '',
+                                                    type: 'login',
+                                                    registerType: 'email',
+                                                    uniqueId: '',
+                                                  ),
+                                                );
+                                          }
+                                        } catch (error) {
                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                            content: Text('Welcome, ${googleUser.displayName}!'),
+                                            content: Text('Google Sign-In failed: $error'),
                                           ));
-                                          print('idToken: $idToken');
-                                          // Add further logic here (e.g., navigate to another page)
                                         }
-                                        // } catch (error) {
-                                        //   print(error);
-                                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                        //     content: Text('Google Sign-In failed: $error'),
-                                        //   ));
-                                        // }
                                       }),
                                   AppUtils.kGap8,
-                                  SocialWidget(icon: PngImage.faceBookIc, onTap: () {}),
+                                  SocialWidget(
+                                      icon: PngImage.faceBookIc,
+                                      onTap: () async {
+                                        final LoginResult loginResult = await FacebookAuth.instance.login();
+
+                                        context.read<LoginBloc>().add(
+                                              RegisterWithSocialEvent(
+                                                displayName: '',
+                                                loginType: '',
+                                                idToken: loginResult.accessToken?.tokenString ?? '',
+                                                accessToken: loginResult.accessToken?.tokenString ?? '',
+                                                type: 'register',
+                                                registerType: 'facebook',
+                                                uniqueId: loginResult.accessToken?.tokenString ?? '',
+                                              ),
+                                            );
+                                      }),
                                   if (Platform.isIOS) AppUtils.kGap8,
                                   if (Platform.isIOS)
                                     SocialWidget(
-                                        icon: PngImage.appleIc,
-                                        onTap: () async {
-                                          final credential = await SignInWithApple.getAppleIDCredential(
-                                            scopes: [
-                                              AppleIDAuthorizationScopes.email,
-                                              AppleIDAuthorizationScopes.fullName,
-                                            ],
-                                          );
-
-                                          print(credential);
-                                        }),
+                                      icon: PngImage.appleIc,
+                                      onTap: () async {
+                                        final credential = await SignInWithApple.getAppleIDCredential(
+                                          scopes: [
+                                            AppleIDAuthorizationScopes.email,
+                                            AppleIDAuthorizationScopes.fullName,
+                                          ],
+                                        );
+                                        context.read<LoginBloc>().add(
+                                              RegisterWithSocialEvent(
+                                                displayName: credential.familyName ?? '',
+                                                loginType: '',
+                                                idToken: credential.authorizationCode,
+                                                accessToken: credential.authorizationCode,
+                                                type: 'login',
+                                                registerType: 'apple',
+                                                uniqueId: credential.userIdentifier ?? '',
+                                              ),
+                                            );
+                                      },
+                                    ),
                                 ],
                               ),
                             ],

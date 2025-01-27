@@ -12,9 +12,11 @@ import '../../../../../router/app_routes.dart';
 import '../../../../../services/api_status.dart';
 import '../../../domain/entities/login/get_client_type_request_entity.dart';
 import '../../../domain/entities/login/login_request_entity.dart';
+import '../../../domain/entities/registration/social/register_social_request_entity.dart';
 import '../../../domain/usecases/get_client_type_id_usecase.dart';
 import '../../../domain/usecases/login_usecase.dart';
 import '../../../domain/usecases/put_fcm_token_usecase.dart';
+import '../../../domain/usecases/register_with_social_use_case.dart';
 
 part 'login_event.dart';
 
@@ -25,16 +27,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with CacheMixin {
     required this.loginUseCase,
     required this.getClientTypeIdUseCase,
     required this.putFcmTokenUseCase,
+    required this.registerWithSocialUseCase,
   }) : super(const LoginState()) {
     on<UsernameEvent>(_username);
     on<PasswordEvent>(_password);
     on<LoginButtonPressedEvent>(_login);
     on<ChangePasswordVisibilityEvent>(_changePasswordVisibility);
+    on<RegisterWithSocialEvent>(_registerWithSocial);
   }
 
   final LoginUseCase loginUseCase;
   final GetClientTypeIdUseCase getClientTypeIdUseCase;
   final PutFcmTokenUseCase putFcmTokenUseCase;
+  final RegisterWithSocialUseCase registerWithSocialUseCase;
 
   void _username(
     UsernameEvent event,
@@ -152,4 +157,43 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with CacheMixin {
     Emitter<LoginState> emit,
   ) =>
       emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
+
+  Future<void> _registerWithSocial(
+    RegisterWithSocialEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(status: ApiStatus.loading));
+    final result = await registerWithSocialUseCase(RegisterSocialRequestEntity(
+      displayName: event.displayName,
+      loginType: event.loginType,
+      accessToken: event.accessToken,
+      idToken: event.idToken,
+      type: event.type,
+      registerType: event.registerType,
+      uniqueId: event.uniqueId,
+    ));
+
+    if (result.isLeft) {
+      emit(
+        state.copyWith(
+          status: ApiStatus.error,
+        ),
+      );
+    } else if (result.isRight) {
+      await localSource.setUser(
+        imageUrl: '',
+        name: result.right.fullName ?? '',
+        phoneNumber: result.right.phone ?? '',
+        id: result.right.guid ?? '',
+        email: result.right.email ?? '',
+        login: result.right.login ?? '',
+        password: result.right.password ?? '',
+        vehicleId: '',
+      );
+      await localSource.setFavouriteCargoes(<String>[]);
+      emit(
+        state.copyWith(status: ApiStatus.success),
+      );
+    }
+  }
 }

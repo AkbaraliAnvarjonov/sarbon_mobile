@@ -12,6 +12,7 @@ import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sarbon_mobile/features/auth/domain/usecases/check_user_usecase.dart';
+import 'package:sarbon_mobile/features/auth/domain/usecases/register_with_social_use_case.dart';
 import 'package:sarbon_mobile/features/profile/domain/usecases/check_vehicle_number_usecase.dart';
 
 import '../features/profile/presentation/bloc/my_cars/add_car/add_car_bloc.dart';
@@ -271,6 +272,7 @@ void authFeature() {
         loginUseCase: sl(),
         getClientTypeIdUseCase: sl(),
         putFcmTokenUseCase: sl(),
+        registerWithSocialUseCase: sl(),
       ),
     )
     ..registerFactory(
@@ -282,6 +284,7 @@ void authFeature() {
         registerDriverUseCase: sl(),
         registerOperatorUseCase: sl(),
         checkUserUseCase: sl(),
+        registerWithSocialUseCase: sl(),
       ),
     )
     ..registerFactory(
@@ -307,6 +310,7 @@ void authFeature() {
     ..registerLazySingleton(() => RegisterOperatorUseCase(sl()))
     ..registerLazySingleton(() => SendCodeUseCase(sl()))
     ..registerLazySingleton(() => CheckUserUseCase(sl()))
+    ..registerLazySingleton(() => RegisterWithSocialUseCase(sl()))
     ..registerLazySingleton(() => VerifyOtpUseCase(sl()))
     ..registerLazySingleton(() => UpdateUserPasswordUseCase(sl()))
     ..registerLazySingleton(() => FetchUserAgreementUseCase(sl()))

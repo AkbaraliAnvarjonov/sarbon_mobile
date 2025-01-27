@@ -146,6 +146,30 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
+  Future<RegisterSocialResponseModel> registerSocial(
+    RegisterSocialRequestModel registerSocialRequestModel,
+  ) async {
+    try {
+      final Response response = await dio.post(
+        '${Constants.baseUrl}${Urls.openFunction}/${TableSlugs.logistikaGetCurrentLocation}',
+        options: Constants.requestOptionsWithoutIds,
+        data: {
+          'data': {'object_data': registerSocialRequestModel.toJson()}
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return RegisterSocialResponseModel.fromJson(response.data);
+      } else {
+        throw ServerException.fromJson(response.data);
+      }
+    } on DioException catch (e) {
+      throw ServerException.fromJson(e.response?.data);
+    } on FormatException {
+      throw const ServerException(message: Validations.somethingWentWrong);
+    }
+  }
+
+  @override
   Future<LoginResponseModel> login(
     LoginRequestModel loginRequestModel,
   ) async {

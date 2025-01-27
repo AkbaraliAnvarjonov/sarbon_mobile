@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sarbon_mobile/core/mixins/location_mixin.dart';
 import 'package:sarbon_mobile/features/auth/domain/entities/check_user/check_user_request_entity.dart';
+import 'package:sarbon_mobile/features/auth/domain/entities/registration/social/register_social_request_entity.dart';
 
 import '../../../../../constants/constants.dart';
 import '../../../../../core/extension/extension.dart';
@@ -25,6 +26,7 @@ import '../../../domain/usecases/get_companies_usecase.dart';
 import '../../../domain/usecases/get_trailer_type_usecase.dart';
 import '../../../domain/usecases/register_driver_usecase.dart';
 import '../../../domain/usecases/register_operator_usecase.dart';
+import '../../../domain/usecases/register_with_social_use_case.dart';
 import '../../../domain/usecases/send_code_usecase.dart';
 import '../../../domain/usecases/verify_otp_usecase.dart';
 
@@ -41,6 +43,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
     required this.registerOperatorUseCase,
     required this.getTrailerTypeUsecase,
     required this.checkUserUseCase,
+    required this.registerWithSocialUseCase,
   }) : super(const ConfirmationUserState()) {
     on<WritePhoneNumberEvent>(_writePhoneNumber);
     on<SendCodeEvent>(_sendCode);
@@ -54,6 +57,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
     on<RegisterDriverEvent>(_userDriverRegister);
     on<RegisterOperatorEvent>(_userOperatorRegister);
     on<GetTrailerTypeEvent>(_getTrailerType);
+    on<RegisterWithSocialEvent>(_registerWithSocial);
   }
 
   final SendCodeUseCase sendCodeUseCase;
@@ -63,6 +67,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
   final GetTrailerTypeUsecase getTrailerTypeUsecase;
   final RegisterDriverUseCase registerDriverUseCase;
   final RegisterOperatorUseCase registerOperatorUseCase;
+  final RegisterWithSocialUseCase registerWithSocialUseCase;
 
   Future<void> _getCompaniesForRegistration(
     GetCompaniesEvent event,
@@ -121,7 +126,6 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
         );
       },
       (r) async {
-        emit(state.copyWith(registerStatus: ApiStatus.success));
         await localSource.deleteSmsId();
         await localSource.setUser(
           imageUrl: '',
@@ -134,6 +138,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
           vehicleId: event.userRegisterInfo.vehicleId ?? '',
         );
         await localSource.setFavouriteCargoes(<String>[]);
+        emit(state.copyWith(registerStatus: ApiStatus.success));
       },
     );
   }
@@ -334,5 +339,46 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
         ),
       ),
     );
+  }
+
+  Future<void> _registerWithSocial(
+    RegisterWithSocialEvent event,
+    Emitter<ConfirmationUserState> emit,
+  ) async {
+    emit(state.copyWith(socialStatus: ApiStatus.loading));
+    final result = await registerWithSocialUseCase(RegisterSocialRequestEntity(
+      displayName: event.displayName,
+      loginType: event.loginType,
+      accessToken: event.accessToken,
+      idToken: event.idToken,
+      type: event.type,
+      registerType: event.registerType,
+      uniqueId: event.uniqueId,
+    ));
+
+    if (result.isLeft) {
+      emit(
+        state.copyWith(
+          socialStatus: ApiStatus.error,
+        ),
+      );
+    } else if (result.isRight) {
+      print('id: ${result.right.guid}');
+      print('email: ${result.right.email}');
+      await localSource.setUser(
+        imageUrl: '',
+        name: result.right.fullName ?? '',
+        phoneNumber: result.right.phone ?? '',
+        id: result.right.guid ?? '',
+        email: result.right.email ?? '',
+        login: result.right.login ?? '',
+        password: result.right.password ?? '',
+        vehicleId: '',
+      );
+      await localSource.setFavouriteCargoes(<String>[]);
+      emit(
+        state.copyWith(socialStatus: ApiStatus.success),
+      );
+    }
   }
 }

@@ -445,7 +445,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (r) {
         emit(
           state.copyWith(
-            typesPayment: r.data,
+            typesPayment: r.data.sublist(0, 2),
             fetchCargoAndPaymentStatus: ApiStatus.success,
           ),
         );
