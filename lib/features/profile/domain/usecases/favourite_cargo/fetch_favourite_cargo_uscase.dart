@@ -6,8 +6,7 @@ import '../../../data/models/favourite_cargo/favourite_cargo_request.dart';
 import '../../entities/favourite_cargo/favourite_cargo_response_entity.dart';
 import '../../repository/profile_repository.dart';
 
-class FetchFavouriteCargoUseCase
-    implements UseCase<FavouriteCargoResponseEntity, NoParams> {
+class FetchFavouriteCargoUseCase implements UseCase<FavouriteCargoResponseEntity, NoParams> {
   FetchFavouriteCargoUseCase(this.profileRepository);
 
   final ProfileRepository profileRepository;

@@ -169,5 +169,10 @@ mixin MainMixin on State<MainPage> {
         }
       },
     );
+    // Detect app termination and stop the position stream
+    AppLifecycleObserver observer = AppLifecycleObserver(() {
+      positionStream.cancel();
+    });
+    WidgetsBinding.instance.addObserver(observer);
   }
 }

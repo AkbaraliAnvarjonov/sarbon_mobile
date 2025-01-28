@@ -126,6 +126,10 @@ class RoutesListResponse {
     vehicleId = json['vehicle_id'];
     vehicleIdData = json['vehicle_id_data'] != null ? VehicleIdData.fromJson(json['vehicle_id_data']) : null;
     volume = json['volume'];
+    from = json['from'];
+    to = json['to'];
+    shortFrom = json['short_name_from'];
+    shortTo = json['short_name_to'];
   }
 
   String? addressId;
@@ -142,6 +146,10 @@ class RoutesListResponse {
   String? routeId;
   String? shortName;
   String? usersId;
+  String? from;
+  String? to;
+  String? shortFrom;
+  String? shortTo;
   UsersIdData? usersIdData;
   String? vehicleId;
   VehicleIdData? vehicleIdData;
@@ -379,7 +387,8 @@ class UsersIdData {
   UsersIdData.fromJson(Map json) {
     v = json['__v'];
     id = json['_id'];
-    adr = json['adr'] != null ? json['adr'].cast<String>() : [];
+    adr = (json['adr'] is String) ? [json['adr']] : (json['adr'] as List?)?.cast<String>() ?? [];
+
     balance = json['balance'];
     birthdate = json['birthdate'];
     cargoIds = json['cargo_ids'] != null ? json['cargo_ids'].cast<String>() : [];

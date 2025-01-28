@@ -156,7 +156,16 @@ class _ProfilePageState extends State<ProfilePage> with ProfileMixin {
                           text: 'sale_car'.tr(),
                           icon: SvgImage.icUsers,
                           onTap: () async {
-                            await context.pushNamed(Routes.carSale);
+                            if (localSource.userId.isEmpty) {
+                              await customModalBottomSheet<void>(
+                                context: context,
+                                maxHeight: 410,
+                                minHeight: 380,
+                                builder: (_, controller) => const AuthBottomSheet(),
+                              );
+                            } else {
+                              await context.pushNamed(Routes.carSale);
+                            }
                           },
                         ),
                         AppUtils.kPad52Divider,

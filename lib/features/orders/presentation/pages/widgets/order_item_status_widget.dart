@@ -39,7 +39,7 @@ class OrderItemStatusWidget extends StatelessWidget {
                             : context.color.primary200,
                         child: Padding(
                           padding: title.isNotEmpty
-                              ? AppUtils.kPaddingHor12Ver7
+                              ? AppUtils.kPaddingHor12Ver8
                               : AppUtils.kPaddingZero,
                           child: Text(
                             title.tr(),

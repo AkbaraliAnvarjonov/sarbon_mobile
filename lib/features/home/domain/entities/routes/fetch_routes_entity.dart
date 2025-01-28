@@ -18,6 +18,10 @@ class RouteEntity extends Equatable {
   final String volume;
   final String carNumber;
   final String vehicleId;
+  final String from;
+  final String to;
+  final String shortFrom;
+  final String shortTo;
   final AddressForRouteEntity fromAddress;
   final AddressForRouteEntity toAddress;
 
@@ -30,6 +34,10 @@ class RouteEntity extends Equatable {
     required this.toAddress,
     required this.carNumber,
     required this.vehicleId,
+    required this.from,
+    required this.to,
+    required this.shortTo,
+    required this.shortFrom,
   });
 
   @override
@@ -42,6 +50,10 @@ class RouteEntity extends Equatable {
         toAddress,
         carNumber,
         vehicleId,
+        from,
+        to,
+        shortTo,
+        shortFrom,
       ];
 }
 
@@ -84,6 +96,10 @@ extension FetchRoutesEntityX on FetchRoutesResponse {
         routes: data?.data?.response
                 ?.map(
                   (e) => RouteEntity(
+                    from: e.from ?? '',
+                    to: e.to ?? '',
+                    shortFrom: e.shortFrom ?? '',
+                    shortTo: e.shortTo ?? '',
                     guid: e.guid ?? '',
                     date: e.date ?? '',
                     capacity: (e.capacity ?? 0).toString(),

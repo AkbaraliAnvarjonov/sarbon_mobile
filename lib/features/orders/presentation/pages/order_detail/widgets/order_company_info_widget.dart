@@ -98,7 +98,7 @@ class _OrderCompanyInfoWidget extends StatelessWidget {
               child: AppUtils.kGap8,
             ),
             Visibility(
-              visible: !isForDeal,
+              visible: (companyInfo?.phoneNumber ?? '').isNotEmpty,
               child: RichText(
                 text: TextSpan(
                   text: '${'for_contact'.tr()}: ',

@@ -41,6 +41,24 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
             context.pop();
           }
         },
+        // appBar: AppBar(
+        //   backgroundColor: context.color.bg2,
+        //   title: Text('filter'.tr()),
+        //   automaticallyImplyLeading: false,
+        //   centerTitle: false,
+        //   actions: [
+        //     Padding(
+        //       padding: AppUtils.kPaddingAll4,
+        //       child: IconButton(
+        //         icon: Icon(
+        //           Icons.close,
+        //           color: context.colorScheme.onSurface,
+        //         ),
+        //         onPressed: () => context.pop(),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         child: Scaffold(
           appBar: AppBar(
             title: Text('filter'.tr()),

@@ -123,46 +123,47 @@ class _AllCargoItemState extends State<AllCargoItem> {
                     //   ),
                     // ),
                     AppUtils.kGap8,
-                    GestureDetector(
-                      onTap: () {
-                        if (widget.cargoItem?.isLiked ?? false) {
-                          context.read<HomeBloc>().add(
-                                DeleteLikeCargoEvent(
-                                  cargo: widget.cargoItem!,
-                                ),
-                              );
-                          widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
-                        } else {
-                          context.read<HomeBloc>().add(
-                                PushLikeCargoEvent(
-                                  cargo: widget.cargoItem!,
-                                ),
-                              );
-                          widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
-                        }
-                        setState(() {});
-                      },
-                      child: Container(
-                        height: 35,
-                        width: 35,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFE2E4EA),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            SvgImage.likeIcon,
-                            colorFilter: ColorFilter.mode(
-                              (widget.cargoItem?.isLiked ?? false)
-                                  ? context.colorScheme.error
-                                  : const Color(0xFF7E7B86),
-                              BlendMode.srcIn,
+                    if (localSource.userId.isNotEmpty)
+                      GestureDetector(
+                        onTap: () {
+                          if (widget.cargoItem?.isLiked ?? false) {
+                            context.read<HomeBloc>().add(
+                                  DeleteLikeCargoEvent(
+                                    cargo: widget.cargoItem!,
+                                  ),
+                                );
+                            widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
+                          } else {
+                            context.read<HomeBloc>().add(
+                                  PushLikeCargoEvent(
+                                    cargo: widget.cargoItem!,
+                                  ),
+                                );
+                            widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFE2E4EA),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              SvgImage.likeIcon,
+                              colorFilter: ColorFilter.mode(
+                                (widget.cargoItem?.isLiked ?? false)
+                                    ? context.colorScheme.error
+                                    : const Color(0xFF7E7B86),
+                                BlendMode.srcIn,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),

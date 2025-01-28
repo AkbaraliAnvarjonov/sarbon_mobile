@@ -60,16 +60,18 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  await context.pushNamed(Routes.notification);
-                },
-                icon: SvgPicture.asset(
-                  SvgImage.icBellNotification,
-                  height: 32,
-                  width: 32,
-                ),
-              ),
+              localSource.userId.isNotEmpty
+                  ? IconButton(
+                      onPressed: () async {
+                        await context.pushNamed(Routes.notification);
+                      },
+                      icon: SvgPicture.asset(
+                        SvgImage.icBellNotification,
+                        height: 32,
+                        width: 32,
+                      ),
+                    )
+                  : AppUtils.kGap12,
               // IconButton(
               //   onPressed: () async {
               //     await context.pushNamed(Routes.route);

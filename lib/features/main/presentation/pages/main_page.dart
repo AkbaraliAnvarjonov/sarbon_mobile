@@ -12,6 +12,7 @@ import '../../../../constants/icons_constants.dart';
 import '../../../../core/extension/extension.dart';
 import '../../../../core/mixins/location_mixin.dart';
 import '../../../../core/platform/network_info.dart';
+import '../../../../core/utils/lifecycle_observer.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../../../../injector_container.dart';
@@ -35,7 +36,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin, WidgetsBindingObserver, MainMixin {
-
   Future<void> _subscribeTopic() async {
     await FirebaseMessaging.instance.subscribeToTopic('sarbon');
   }
@@ -114,7 +114,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
                       elevation: 1,
                       currentIndex: bottomMenu.index,
                       onTap: (index) async {
-                        if (localSource.userId.isEmpty && index == 2) {
+                        if (localSource.userId.isEmpty && (index == 2 || index == 1)) {
                           await customModalBottomSheet<void>(
                             context: context,
                             maxHeight: 410,

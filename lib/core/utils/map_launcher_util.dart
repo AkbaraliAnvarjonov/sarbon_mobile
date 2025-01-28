@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
+import '../../features/main/presentation/pages/widgets/location_bottom_sheet.dart';
 import '../extension/extension.dart';
 import '../mixins/location_mixin.dart';
+import '../widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../widgets/map_launch/maps_bottom_sheet.dart';
 
 Future<void> launchMapOnDeviceMap(
@@ -12,10 +15,26 @@ Future<void> launchMapOnDeviceMap(
 ]) async {
   final List<AvailableMap> maps = await MapLauncher.installedMaps;
   final List<MapIconName> list = [];
+  Point? pos;
   for (final element in maps) {
     list.add(MapIconName(element.mapName, element.icon));
   }
-  final pos = await LocationMixin.instance.determinePosition();
+  final result = await LocationMixin.instance.hasPermission();
+
+  if (result == LocationPermissionHandle.denied || result == LocationPermissionHandle.locationEnabled) {
+    if (!context.mounted) return;
+    await customModalBottomSheet<void>(
+      context: context,
+      builder: (_, controller) => const LocationBottomSheet(),
+    );
+  }
+
+  if (await LocationMixin.instance.onlyCheck() == LocationPermissionHandle.success) {
+    pos = await LocationMixin.instance.determinePosition();
+  } else {
+    return;
+  }
+
   if (!context.mounted) return;
   await showModalBottomSheet<void>(
     context: context,
@@ -28,7 +47,7 @@ Future<void> launchMapOnDeviceMap(
           originTitle: 'my_address'.tr(),
           mapType: maps[index].mapType,
           destination: Coords(startPoint.latitude, startPoint.longitude),
-          origin: Coords(pos.latitude, pos.longitude),
+          origin: Coords(pos?.latitude ?? 0, pos?.longitude ?? 0),
           waypoints: [],
         );
       },

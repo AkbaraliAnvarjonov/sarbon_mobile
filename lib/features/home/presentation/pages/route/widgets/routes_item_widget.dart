@@ -9,7 +9,9 @@ import '../../../bloc/route/routes_bloc.dart';
 import 'delete_route_deialog.dart';
 
 part 'routes_button_widget.dart';
+
 part 'routes_item_info_widget.dart';
+
 part 'routes_name_widget.dart';
 
 class RoutesItemWidget extends StatelessWidget {
@@ -31,26 +33,11 @@ class RoutesItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _RoutesNameWidget(
-                fromAddress: context.locale.languageCode == 'ru'
-                    ? state.routes[index].fromAddress.addressNameRu
-                    : state.routes[index].fromAddress.addressNameEn,
-                toAddress: context.locale.languageCode == 'ru'
-                    ? state.routes[index].toAddress.addressNameRu
-                    : state.routes[index].toAddress.addressNameEn,
-                fromCity: context.locale.languageCode == 'ru'
-                    ? state.routes[index].fromAddress.cityNameRu
-                    : state.routes[index].fromAddress.cityNameEn,
-                toCity: context.locale.languageCode == 'ru'
-                    ? state.routes[index].toAddress.cityNameRu
-                    : state.routes[index].toAddress.cityNameEn,
+                fromAddress: state.routes[index].shortFrom,
+                toAddress: state.routes[index].shortTo,
+                fromCity: state.routes[index].from,
+                toCity: state.routes[index].to,
               ),
-              // AppUtils.kGap4,
-              // Text(
-              //   '764км',
-              //   style: context.textStyle.regularFootnote.copyWith(
-              //     color: context.colorScheme.primary,
-              //   ),
-              // ),
               AppUtils.kGap4,
               AppUtils.kDivider,
               AppUtils.kGap8,

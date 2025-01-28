@@ -10,11 +10,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
+    this.centerTitle = false,
     this.actions,
   });
 
   final List<Widget>? actions;
   final String title;
+  final bool centerTitle;
 
   @override
   Widget build(BuildContext context) => PreferredSize(
@@ -26,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: AppBar(
             systemOverlayStyle: systemUiOverlayStyle,
-            centerTitle: false,
+            centerTitle: centerTitle,
             elevation: 0,
             scrolledUnderElevation: 0,
             leading: IconButton(

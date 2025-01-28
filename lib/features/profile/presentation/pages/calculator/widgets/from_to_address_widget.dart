@@ -4,8 +4,7 @@ class _FromToAddressWidget extends StatelessWidget {
   const _FromToAddressWidget();
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<CalculatorBloc, CalculatorState>(
+  Widget build(BuildContext context) => BlocBuilder<CalculatorBloc, CalculatorState>(
         builder: (context, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -34,7 +33,7 @@ class _FromToAddressWidget extends StatelessWidget {
                     .then(
                   (value) {
                     if (value != null && value is AddressModel) {
-                      if(!context.mounted) return;
+                      if (!context.mounted) return;
                       context.read<CalculatorBloc>().add(
                             SetFromAddressEvent(
                               address: value,
@@ -71,7 +70,7 @@ class _FromToAddressWidget extends StatelessWidget {
                     .then(
                   (value) {
                     if (value != null && value is AddressModel) {
-                      if(!context.mounted) return;
+                      if (!context.mounted) return;
                       context.read<CalculatorBloc>().add(
                             SetToAddressEvent(
                               address: value,

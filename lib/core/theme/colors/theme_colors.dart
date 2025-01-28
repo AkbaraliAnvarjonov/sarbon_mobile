@@ -71,6 +71,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     required this.error100,
     required this.quatGrey,
     required this.textColor2,
+    required this.bg2,
   });
 
   final Color lightBlue;
@@ -111,9 +112,11 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   final Color error100;
   final Color quatGrey;
   final Color textColor2;
+  final Color bg2;
 
   static const ThemeColors light = ThemeColors(
     lightBlue: Color(0xFF008AFF),
+    bg2: Color(0xFFF6F7F8),
     quatGrey: Color(0xFFDBD8E3),
     primary200: Color(0xFFD7EDFF),
     main: Color(0xFF2B2B30),
@@ -155,6 +158,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
 
   static const ThemeColors dark = ThemeColors(
     lightBlue: Color(0xFF008AFF),
+    bg2: Color(0xFFF6F7F8),
     primary200: Color(0xFFD7EDFF),
     quatGrey: Color(0xFFDBD8E3),
     main: Color(0xFF2B2B30),
@@ -197,6 +201,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   @override
   ThemeExtension<ThemeColors> copyWith({
     Color? lightBlue,
+    Color? bg2,
     Color? primary200,
     Color? cardColor,
     Color? main,
@@ -237,6 +242,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   }) =>
       ThemeColors(
         lightBlue: lightBlue ?? this.lightBlue,
+        bg2: bg2 ?? this.bg2,
         quatGrey: quatGrey ?? this.quatGrey,
         primary200: primary200 ?? this.primary200,
         green: green ?? this.green,
@@ -286,6 +292,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     }
     return ThemeColors(
       lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
+      bg2: Color.lerp(bg2, other.bg2, t)!,
       quatGrey: Color.lerp(quatGrey, other.quatGrey, t)!,
       primary200: Color.lerp(primary200, other.primary200, t)!,
       green: Color.lerp(green, other.green, t)!,

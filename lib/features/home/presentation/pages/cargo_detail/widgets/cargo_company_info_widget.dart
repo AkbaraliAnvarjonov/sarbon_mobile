@@ -52,7 +52,7 @@ class _CompanyInfoOfCargoWidget extends StatelessWidget {
                 text: '${'location'.tr()}: ',
                 children: [
                   TextSpan(
-                    text: companyInfo?.buildingAddress ?? '',
+                    text: '\n${companyInfo?.buildingAddress ?? ''}',
                     style: context.textStyle.size14Weight400Black.copyWith(
                       color: context.color.textColor,
                       fontWeight: FontWeight.w500,
@@ -87,24 +87,24 @@ class _CompanyInfoOfCargoWidget extends StatelessWidget {
             //     ),
             //   ),
             // ),
-            // AppUtils.kGap8,
-            // RichText(
-            //   text: TextSpan(
-            //     text: 'Для связи: ',
-            //     children: [
-            //       TextSpan(
-            //         text: companyInfo?.phoneNumber ?? '',
-            //         style: context.textStyle.size14Weight400Black.copyWith(
-            //           color: context.colorScheme.primary,
-            //           fontWeight: FontWeight.w500,
-            //         ),
-            //       ),
-            //     ],
-            //     style: context.textStyle.size14Weight400Black.copyWith(
-            //       color: context.color.midGray.withOpacity(0.8),
-            //     ),
-            //   ),
-            // ),
+            AppUtils.kGap8,
+            RichText(
+              text: TextSpan(
+                text: 'Для связи: ',
+                children: [
+                  TextSpan(
+                    text: companyInfo?.phoneNumber ?? '',
+                    style: context.textStyle.size14Weight400Black.copyWith(
+                      color: context.colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+                style: context.textStyle.size14Weight400Black.copyWith(
+                  color: context.color.midGray.withOpacity(0.8),
+                ),
+              ),
+            ),
           ],
         ),
       );
