@@ -107,21 +107,21 @@ class _AllCargoItemState extends State<AllCargoItem> {
                     AppUtils.kSpacer,
 
                     /// share button
-                    // GestureDetector(
-                    //   onTap: widget.onTapShareButton,
-                    //   child: Container(
-                    //     height: 35,
-                    //     width: 35,
-                    //     clipBehavior: Clip.antiAlias,
-                    //     decoration: const BoxDecoration(
-                    //       color: Color(0xFFE2E4EA),
-                    //       shape: BoxShape.circle,
-                    //     ),
-                    //     child: Center(
-                    //       child: SvgPicture.asset(SvgImage.shareIcon),
-                    //     ),
-                    //   ),
-                    // ),
+                    GestureDetector(
+                      onTap: widget.onTapShareButton,
+                      child: Container(
+                        height: 35,
+                        width: 35,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFE2E4EA),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(SvgImage.shareIcon),
+                        ),
+                      ),
+                    ),
                     AppUtils.kGap8,
                     if (localSource.userId.isNotEmpty)
                       GestureDetector(

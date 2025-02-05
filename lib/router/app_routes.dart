@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sarbon_mobile/features/others/presentation/pages/select_auth/select_auth_page.dart';
 
+import '../constants/constants.dart';
 import '../core/local_source/local_source.dart';
 import '../core/platform/network_info.dart';
 import '../features/auth/presentation/bloc/confirmation_user/confirmation_user_bloc.dart';
@@ -112,21 +113,21 @@ final GoRouter router = GoRouter(
   // ),
   // errorPageBuilder: (context, state) => const Page(name: Routes.noInternet),
   redirect: (context, state) {
-    // final hasProfile = localSource.hasProfile;
-    // final hasUrl = state.uri.toString().contains(Routes.cargoDetailDeepLink);
-    // final isDeepLink = state.uri.toString().contains(Constants.deepBaseLink);
+    final hasProfile = localSource.hasProfile;
+    final hasUrl = state.uri.toString().contains(Routes.cargoDetailDeepLink);
+    final isDeepLink = state.uri.toString().contains(Constants.deepBaseLink);
 
     /// deeplink logic
-    // if (isDeepLink) {
-    //   if (state.uri.pathSegments.isNotEmpty) {
-    //     if (!hasProfile) {
-    //       return '${Routes.login}${!hasUrl ? "" : '/${Routes.cargoDetailsForUnregisterUserpLink}${state.uri.pathSegments.last}'}';
-    //     }
-    //     if (hasProfile) {
-    //       return '${Routes.main}${!hasUrl ? "" : '/${Routes.cargoDetailDeepLink}${state.uri.pathSegments.last}'}';
-    //     }
-    //   }
-    // }
+    if (isDeepLink) {
+      if (state.uri.pathSegments.isNotEmpty) {
+        if (!hasProfile) {
+          return '${Routes.login}${!hasUrl ? "" : '/${Routes.cargoDetailsForUnregisterUserpLink}${state.uri.pathSegments.last}'}';
+        }
+        if (hasProfile) {
+          return '${Routes.main}${!hasUrl ? "" : '/${Routes.cargoDetailDeepLink}${state.uri.pathSegments.last}'}';
+        }
+      }
+    }
     return null;
   },
   routes: <RouteBase>[

@@ -4,10 +4,8 @@ class _AdditionalAddressWidget extends StatelessWidget {
   const _AdditionalAddressWidget();
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<CalculatorBloc, CalculatorState>(
-        buildWhen: (previous, current) =>
-            previous.addAdditionalAddresses != current.addAdditionalAddresses,
+  Widget build(BuildContext context) => BlocBuilder<CalculatorBloc, CalculatorState>(
+        buildWhen: (previous, current) => previous.addAdditionalAddresses != current.addAdditionalAddresses,
         builder: (context, state) => SliverList.separated(
           itemCount: state.addAdditionalAddresses.length,
           itemBuilder: (_, index) => ListTile(
@@ -34,7 +32,7 @@ class _AdditionalAddressWidget extends StatelessWidget {
               state.addAdditionalAddresses[index].name,
               style: context.textStyle.regularCallout,
             ),
-            onTap: (){},
+            onTap: () {},
           ),
           separatorBuilder: (_, index) => AppUtils.kPad12Divider,
         ),

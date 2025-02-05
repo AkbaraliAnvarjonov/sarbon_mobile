@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/usecase/usecase.dart';
 import '../../../../../router/app_routes.dart';
 import '../../../../../services/api_status.dart';
+import '../../../../main/data/data_source/main_remote_data_source.dart';
 import '../../../data/models/opposite_offer/put_opposite_offer_request_model.dart';
 import '../../../domain/entities/opposite_offer/fetch_currency_entity.dart';
 import '../../../domain/entities/opposite_offer/get_vehicle_types_response_entity.dart';
@@ -22,6 +23,7 @@ class OppositeOfferBloc extends Bloc<OppositeOfferEvent, OppositeOfferState> {
     required this.putOppositeOfferUseCase,
     required this.postOppositeOfferUseCase,
     required this.fetchCurrencyUseCase,
+    required this.mainRemoteDataSource,
   }) : super(const OppositeOfferState()) {
     on<GetVehicleTypesEvent>(_getVehicleTypes);
     on<SelectVehicleTypesEvent>(_selectVehicleType);
@@ -44,6 +46,7 @@ class OppositeOfferBloc extends Bloc<OppositeOfferEvent, OppositeOfferState> {
   final PutOppositeOfferUseCase putOppositeOfferUseCase;
   final PostOppositeOfferUseCase postOppositeOfferUseCase;
   final FetchCurrencyUseCase fetchCurrencyUseCase;
+  final MainRemoteDataSource mainRemoteDataSource;
 
   Future<void> _getVehicleTypes(
     GetVehicleTypesEvent event,
@@ -117,6 +120,9 @@ class OppositeOfferBloc extends Bloc<OppositeOfferEvent, OppositeOfferState> {
     Emitter<OppositeOfferState> emit,
   ) async {
     emit(state.copyWith(status: ApiStatus.loading));
+    final result = await mainRemoteDataSource.getDispatcherId();
+
+    await localSource.setDispatcherId(result);
     await _putOppositeOffer(
       guid: event.guid,
       firmId: event.firmId,
@@ -185,7 +191,7 @@ class OppositeOfferBloc extends Bloc<OppositeOfferEvent, OppositeOfferState> {
       ),
     );
     result.fold(
-      (l) => emit(state.copyWith(status: ApiStatus.error)),
+      (l) {},
       (r) {},
     );
   }

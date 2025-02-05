@@ -15,7 +15,7 @@ import '../../../../data/models/apply_filter/apply_filter_request.dart';
 import '../../../../domain/entities/types_cargo/types_cargo_entity.dart';
 import '../../../../domain/entities/types_payment/types_payment_entity.dart';
 import '../../../bloc/home_bloc.dart';
-import '../../widgets/cargo_widget.dart';
+import '../../widgets/filter_item.dart';
 import '../../widgets/search_address_widget.dart';
 
 part 'drop_down_widget.dart';
@@ -41,34 +41,26 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
             context.pop();
           }
         },
-        // appBar: AppBar(
-        //   backgroundColor: context.color.bg2,
-        //   title: Text('filter'.tr()),
-        //   automaticallyImplyLeading: false,
-        //   centerTitle: false,
-        //   actions: [
-        //     Padding(
-        //       padding: AppUtils.kPaddingAll4,
-        //       child: IconButton(
-        //         icon: Icon(
-        //           Icons.close,
-        //           color: context.colorScheme.onSurface,
-        //         ),
-        //         onPressed: () => context.pop(),
-        //       ),
-        //     ),
-        //   ],
-        // ),
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            toolbarHeight: 70,
+            backgroundColor: context.color.bg2,
             title: Text('filter'.tr()),
-            leading: IconButton(
-              icon: Icon(
-                Icons.close,
-                color: context.colorScheme.onSurface,
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            actions: [
+              Padding(
+                padding: AppUtils.kPaddingAll4,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: context.colorScheme.onSurface,
+                  ),
+                  onPressed: () => context.pop(),
+                ),
               ),
-              onPressed: () => context.pop(),
-            ),
+            ],
           ),
           body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
@@ -83,9 +75,10 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                       sliver: SliverList(
                         delegate: SliverChildListDelegate(
                           [
+                            AppUtils.kGap24,
                             BlocBuilder<HomeBloc, HomeState>(
                               buildWhen: (previous, current) => previous.fromAddress != current.fromAddress,
-                              builder: (context, state) => CargoItem(
+                              builder: (context, state) => FilterItem(
                                 onTap: () async {
                                   await customModalBottomSheet<void>(
                                     context: rootNavigatorKey.currentContext!,
@@ -114,10 +107,10 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                                 ),
                               ),
                             ),
-                            AppUtils.kGap6,
+                            AppUtils.kGap40,
                             BlocBuilder<HomeBloc, HomeState>(
                               buildWhen: (previous, current) => previous.toAddress != current.toAddress,
-                              builder: (context, state) => CargoItem(
+                              builder: (context, state) => FilterItem(
                                 onTap: () async {
                                   await customModalBottomSheet<void>(
                                     context: rootNavigatorKey.currentContext!,
@@ -146,7 +139,7 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                                 ),
                               ),
                             ),
-                            AppUtils.kGap6,
+                            AppUtils.kGap40,
                             Text(
                               'type_cargo'.tr(),
                               style: context.textStyle.size14Weight500Black.copyWith(
@@ -198,7 +191,131 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                             //     ),
                             //   ],
                             // ),
-                            AppUtils.kGap12,
+                            AppUtils.kGap40,
+
+                            // Text(
+                            //   'weight_cargo'.tr(),
+                            //   style: context.textStyle.size14Weight500Black.copyWith(
+                            //     color: context.color.gray700,
+                            //   ),
+                            // ),
+                            AppUtils.kGap6,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CustomTextField(
+                                    labelText: 'Объём:',
+                                    showEnabledBorder: true,
+                                    fillColor: context.color.bg2,
+                                    controller: _volumeController,
+                                    textInputType: TextInputType.number,
+                                    textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                                    contentPadding: AppUtils.kPaddingAll16,
+                                    hintText: 'write_volume_cargo'.tr(),
+                                    hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                                      color: const Color(0xFF7E7B86),
+                                    ),
+                                    onChanged: (value) {
+                                      context.read<HomeBloc>().add(
+                                            ChangeVolumeEvent(
+                                              volume: value,
+                                            ),
+                                          );
+                                    },
+                                    showBorder: false,
+                                  ),
+                                ),
+                                AppUtils.kGap20,
+                                Expanded(
+                                  child: CustomTextField(
+                                    labelText: 'Вес:',
+                                    showEnabledBorder: true,
+                                    controller: _weightController,
+                                    textInputType: TextInputType.number,
+                                    textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                                    contentPadding: AppUtils.kPaddingAll16,
+                                    hintText: 'write_weight_of_cargo'.tr(),
+                                    hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                                      color: const Color(0xFF7E7B86),
+                                    ),
+                                    fillColor: context.color.bg2,
+                                    onChanged: (value) {
+                                      context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
+                                    },
+                                    showBorder: false,
+                                  ),
+                                ),
+                                // Expanded(
+                                //   child: CustomTextField(
+                                //     labelText: 'Объём до:',
+                                //     showEnabledBorder: true,
+                                //     fillColor: context.color.bg2,
+                                //     textInputType: TextInputType.number,
+                                //     textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                                //     contentPadding: AppUtils.kPaddingAll16,
+                                //     hintText: 'макс',
+                                //     hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                                //       color: const Color(0xFF7E7B86),
+                                //     ),
+                                //     onChanged: (value) {
+                                //       // context.read<HomeBloc>().add(
+                                //       //       ChangeVolumeEvent(
+                                //       //         volume: value,
+                                //       //       ),
+                                //       //     );
+                                //     },
+                                //     showBorder: false,
+                                //   ),
+                                // ),
+                              ],
+                            ),
+
+                            // AppUtils.kGap40,
+                            // Row(
+                            //   children: [
+                            //     Expanded(
+                            //       child: CustomTextField(
+                            //         labelText: 'Вес от:',
+                            //         showEnabledBorder: true,
+                            //         controller: _weightController,
+                            //         textInputType: TextInputType.number,
+                            //         textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                            //         contentPadding: AppUtils.kPaddingAll16,
+                            //         hintText: 'мин',
+                            //         hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                            //           color: const Color(0xFF7E7B86),
+                            //         ),
+                            //         fillColor: context.color.bg2,
+                            //         onChanged: (value) {
+                            //           context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
+                            //         },
+                            //         showBorder: false,
+                            //       ),
+                            //     ),
+                            //     AppUtils.kGap20,
+                            //     Expanded(
+                            //       child: CustomTextField(
+                            //         labelText: 'Вес до:',
+                            //         showEnabledBorder: true,
+                            //         // controller: _weightController,
+                            //         textInputType: TextInputType.number,
+                            //         textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                            //         contentPadding: AppUtils.kPaddingAll16,
+                            //         hintText: 'макс',
+                            //         hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                            //           color: const Color(0xFF7E7B86),
+                            //         ),
+                            //         fillColor: context.color.bg2,
+                            //         onChanged: (value) {
+                            //           // context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
+                            //         },
+                            //         showBorder: false,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+
+                            AppUtils.kGap40,
                             Text(
                               'payment_type'.tr(),
                               style: context.textStyle.size14Weight500Black.copyWith(
@@ -206,50 +323,37 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                               ),
                             ),
                             AppUtils.kGap6,
-                            const _DropDownPaymentTypeWidget(),
-                            AppUtils.kGap12,
-                            Text(
-                              'weight_cargo'.tr(),
-                              style: context.textStyle.size14Weight500Black.copyWith(
-                                color: context.color.gray700,
-                              ),
-                            ),
-                            AppUtils.kGap6,
-                            CustomTextField(
-                              controller: _weightController,
-                              textInputType: TextInputType.number,
-                              textInputFormatter: FilteringTextInputFormatter.digitsOnly,
-                              contentPadding: AppUtils.kPaddingHorizontal12,
-                              hintText: 'write_weight_of_cargo'.tr(),
-                              fillColor: context.colorScheme.surface,
-                              onChanged: (value) {
-                                context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
-                              },
-                              showBorder: false,
-                            ),
-                            AppUtils.kGap12,
-                            Text(
-                              'volume_cargo'.tr(),
-                              style: context.textStyle.size14Weight500Black.copyWith(
-                                color: context.color.gray700,
-                              ),
-                            ),
-                            AppUtils.kGap6,
-                            CustomTextField(
-                              controller: _volumeController,
-                              textInputType: TextInputType.number,
-                              textInputFormatter: FilteringTextInputFormatter.digitsOnly,
-                              contentPadding: AppUtils.kPaddingHorizontal12,
-                              hintText: 'write_volume_cargo'.tr(),
-                              fillColor: context.colorScheme.surface,
-                              onChanged: (value) {
-                                context.read<HomeBloc>().add(
-                                      ChangeVolumeEvent(
-                                        volume: value,
+                            // const _DropDownPaymentTypeWidget(),
+
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: state.typesPayment.map((type) {
+                                final isSelected = state.selectedTypePayment?.guid == type.guid;
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.read<HomeBloc>().add(
+                                          SelectedPaymentTypeEvent(
+                                            selectedTypePayment: type,
+                                          ),
+                                        );
+                                  },
+                                  child: Container(
+                                    padding: AppUtils.kPaddingHor10Ver6,
+                                    decoration: BoxDecoration(
+                                      color: isSelected ? context.color.blue : context.color.quatGrey,
+                                      borderRadius: AppUtils.kBorderRadius20,
+                                    ),
+                                    child: Text(
+                                      type.paymentType,
+                                      style: context.textStyle.size14Weight400Black.copyWith(
+                                        fontSize: 14,
+                                        color: isSelected ? Colors.white : Colors.black,
                                       ),
-                                    );
-                              },
-                              showBorder: false,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),

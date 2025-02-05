@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:sarbon_mobile/features/main/data/model/dispatcher/dispatcher_model.dart';
+import 'package:sarbon_mobile/router/app_routes.dart';
 import '../../../../constants/constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../model/tracking/post_signed_request.dart';
@@ -18,4 +22,6 @@ abstract class MainRemoteDataSource {
   Future<bool> postSignedUserLocation({
     required PostSignedRequest request,
   });
+
+  Future<String> getDispatcherId();
 }

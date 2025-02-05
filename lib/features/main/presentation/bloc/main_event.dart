@@ -35,3 +35,10 @@ class PutLatLongEvent extends MainEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetDispatcherIdEvent extends MainEvent {
+  const GetDispatcherIdEvent();
+
+  @override
+  List<Object?> get props => [];
+}

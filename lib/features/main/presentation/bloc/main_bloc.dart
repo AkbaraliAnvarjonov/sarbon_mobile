@@ -29,6 +29,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<PutTrackingEvent>(_putTracking);
     on<FetchSignedOrdersCountMainEvent>(_getSignedOrders);
     on<PutLatLongEvent>(_putLatLong);
+    on<GetDispatcherIdEvent>(_getDispatcherId);
   }
 
   final GetOrdersUseCase getOrdersUseCase;
@@ -49,6 +50,15 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       orderId: event.orderId,
     );
     unawaited(mainRemoteDataSource.postSignedUserLocation(request: request));
+  }
+
+  Future<void> _getDispatcherId(
+    GetDispatcherIdEvent event,
+    Emitter<MainState> emit,
+  ) async {
+    final result = await mainRemoteDataSource.getDispatcherId();
+
+    localSource.setDispatcherId(result);
   }
 
   Future<void> _putLatLong(

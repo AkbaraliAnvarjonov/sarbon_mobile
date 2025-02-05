@@ -183,7 +183,7 @@ Future<void> init() async {
               }
             },
           ),
-          if (localSource.hasChuck) chuck.getDioInterceptor(),
+          // if (localSource.hasChuck) chuck.getDioInterceptor(),
         ],
       ),
   );
@@ -487,6 +487,7 @@ void oppositeOfferFeature() {
         putOppositeOfferUseCase: sl(),
         postOppositeOfferUseCase: sl(),
         fetchCurrencyUseCase: sl(),
+        mainRemoteDataSource: sl(),
       ),
     )
 

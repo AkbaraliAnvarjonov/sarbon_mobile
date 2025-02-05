@@ -20,8 +20,26 @@ class _FromToAddressWidget extends StatelessWidget {
                 style: context.textStyle.regularCallout,
               ),
               onTap: () async {
-                final pos = await LocationMixin.instance.determinePosition();
-                // ignore: use_build_context_synchronously
+                context.read<CalculatorBloc>().add(const ChangeStatusEvent(status: ApiStatus.loading));
+                Point? pos;
+
+                final result = await LocationMixin.instance.hasPermission();
+
+                if (result == LocationPermissionHandle.denied || result == LocationPermissionHandle.locationEnabled) {
+                  if (!context.mounted) return;
+                  await customModalBottomSheet<void>(
+                    context: context,
+                    builder: (_, controller) => const LocationBottomSheet(),
+                  );
+                }
+
+                if (await LocationMixin.instance.onlyCheck() == LocationPermissionHandle.success) {
+                  pos = await LocationMixin.instance.determinePosition();
+                } else {
+                  return;
+                }
+                if (!context.mounted) return;
+                context.read<CalculatorBloc>().add(const ChangeStatusEvent(status: ApiStatus.success));
                 await context
                     .pushNamed(
                   Routes.mapForCalculator,
@@ -57,8 +75,28 @@ class _FromToAddressWidget extends StatelessWidget {
                 style: context.textStyle.regularCallout,
               ),
               onTap: () async {
-                final pos = await LocationMixin.instance.determinePosition();
-                // ignore: use_build_context_synchronously
+                context.read<CalculatorBloc>().add(const ChangeStatusEvent(status: ApiStatus.loading));
+                Point? pos;
+
+                final result = await LocationMixin.instance.hasPermission();
+
+                if (result == LocationPermissionHandle.denied || result == LocationPermissionHandle.locationEnabled) {
+                  if (!context.mounted) return;
+                  await customModalBottomSheet<void>(
+                    context: context,
+                    builder: (_, controller) => const LocationBottomSheet(),
+                  );
+                }
+
+                if (await LocationMixin.instance.onlyCheck() == LocationPermissionHandle.success) {
+                  pos = await LocationMixin.instance.determinePosition();
+                } else {
+                  return;
+                }
+
+                if (!context.mounted) return;
+                context.read<CalculatorBloc>().add(const ChangeStatusEvent(status: ApiStatus.success));
+
                 await context
                     .pushNamed(
                   Routes.mapForCalculator,

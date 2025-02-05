@@ -145,6 +145,12 @@ final class LocalSource {
 
   String get userId => box.get(AppKeys.userId, defaultValue: '');
 
+  Future<void> setDispatcherId(String dispatcherId) async {
+    await box.put(AppKeys.dispatcherId, dispatcherId);
+  }
+
+  String get dispatcherId => box.get(AppKeys.dispatcherId, defaultValue: '');
+
   Future<void> setFullName(String firstName) async {
     await box.put(AppKeys.fullname, firstName);
   }
@@ -190,5 +196,6 @@ final class LocalSource {
     await box.delete(AppKeys.imageUrl);
     await box.delete(AppKeys.phone);
     await box.delete(AppKeys.login);
+    await box.delete(AppKeys.dispatcherId);
   }
 }

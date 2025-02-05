@@ -18,10 +18,12 @@ class _DropDownCargoTypeWidget2State extends State<_DropDownCargoTypeWidget2> {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) => DecoratedBox(
+        builder: (context, state) => Container(
+          height: 56,
           decoration: BoxDecoration(
-            borderRadius: AppUtils.kBorderRadius12,
-            color: context.colorScheme.onPrimary,
+            borderRadius: AppUtils.kBorderRadius8,
+            color: context.color.bg2,
+            border: Border.all(color: const Color(0xFFDADADA)),
           ),
           child: DropdownMenu<TypeCargoListEntity>(
             textStyle: context.textStyle.size14Weight400Black,
@@ -35,10 +37,10 @@ class _DropDownCargoTypeWidget2State extends State<_DropDownCargoTypeWidget2> {
               border: InputBorder.none,
             ),
             trailingIcon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
+              Icons.keyboard_arrow_right,
             ),
             selectedTrailingIcon: const Icon(
-              Icons.keyboard_arrow_up_rounded,
+              Icons.keyboard_arrow_right,
             ),
             onSelected: (TypeCargoListEntity? menu) {
               context.read<HomeBloc>().add(
@@ -51,83 +53,6 @@ class _DropDownCargoTypeWidget2State extends State<_DropDownCargoTypeWidget2> {
                 .map<DropdownMenuEntry<TypeCargoListEntity>>(
                     (TypeCargoListEntity menu) => DropdownMenuEntry<TypeCargoListEntity>(value: menu, label: menu.name))
                 .toList(),
-          ),
-        ),
-      );
-}
-
-class _DropDownPaymentTypeWidget extends StatelessWidget {
-  const _DropDownPaymentTypeWidget();
-
-  @override
-  Widget build(BuildContext context) => BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) => DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: AppUtils.kBorderRadius12,
-            color: context.colorScheme.onPrimary,
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton2<TypePaymentListEntity>(
-              isExpanded: true,
-              hint: Text(
-                'select'.tr(),
-                style: context.textStyle.regularSubheadline.copyWith(
-                  color: context.color.greyText,
-                ),
-              ),
-              items: state.typesPayment
-                  .map(
-                    (item) => DropdownMenuItem<TypePaymentListEntity>(
-                      value: item,
-                      child: Text(
-                        item.paymentType,
-                        style: context.textStyle.size14Weight400Black,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  )
-                  .toList(),
-              value: state.typesPayment
-                  .where(
-                    (element) => element.guid == state.selectedTypePayment?.guid,
-                  )
-                  .firstOrNull,
-              onChanged: (value) {
-                context.read<HomeBloc>().add(
-                      SelectedPaymentTypeEvent(
-                        selectedTypePayment: value!,
-                      ),
-                    );
-              },
-              buttonStyleData: ButtonStyleData(
-                height: 50,
-                width: double.maxFinite,
-                padding: AppUtils.kPaddingHorizontal12,
-                decoration: BoxDecoration(
-                  borderRadius: AppUtils.kBorderRadius8,
-                  color: context.colorScheme.onPrimary,
-                ),
-              ),
-              iconStyleData: const IconStyleData(
-                icon: Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                ),
-              ),
-              dropdownStyleData: DropdownStyleData(
-                scrollPadding: AppUtils.kPaddingAll8,
-                maxHeight: 200,
-                decoration: BoxDecoration(
-                  borderRadius: AppUtils.kBorderRadius8,
-                  color: context.colorScheme.onPrimary,
-                ),
-                offset: const Offset(0, -8),
-                scrollbarTheme: ScrollbarThemeData(
-                  radius: const Radius.circular(40),
-                  thickness: WidgetStateProperty.all(6),
-                  thumbVisibility: WidgetStateProperty.all(true),
-                ),
-              ),
-            ),
           ),
         ),
       );

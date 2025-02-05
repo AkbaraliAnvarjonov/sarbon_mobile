@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sarbon_mobile/features/main/presentation/bloc/main_bloc.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../../constants/image_constants.dart';
 import '../../../../../core/extension/extension.dart';
@@ -17,7 +15,6 @@ import '../../../../../core/widgets/inputs/custom_text_field.dart';
 import '../../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../../router/app_routes.dart';
 import '../../bloc/login/login_bloc.dart';
-import '../register/widgets/social_widget.dart';
 
 part 'mixin/login_mixin.dart';
 
@@ -164,96 +161,187 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
                               const _ForgotPasswordTextWidget(),
                               AppUtils.kGap24,
                               const _LoginButtonWidget(),
-                              AppUtils.kGap24,
-                              Row(
-                                children: [
-                                  const Expanded(child: AppUtils.kDivider),
-                                  AppUtils.kGap4,
-                                  Text('Вход через соцсеть', style: context.textStyle.size14Weight400Black),
-                                  AppUtils.kGap4,
-                                  const Expanded(child: AppUtils.kDivider),
-                                ],
-                              ),
-                              AppUtils.kGap16,
-                              Row(
-                                children: [
-                                  SocialWidget(
-                                    icon: PngImage.telegramIc,
-                                    onTap: () {},
-                                  ),
-                                  AppUtils.kGap8,
-                                  SocialWidget(
-                                      icon: PngImage.googleIc,
-                                      onTap: () async {
-                                        try {
-                                          final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-                                          if (googleUser != null) {
-                                            // Optionally, retrieve authentication details
-                                            final GoogleSignInAuthentication googleAuth =
-                                                await googleUser.authentication;
-
-                                            context.read<LoginBloc>().add(
-                                                  RegisterWithSocialEvent(
-                                                    displayName: googleUser.displayName ?? '',
-                                                    loginType: googleUser.email,
-                                                    idToken: googleAuth.idToken ?? '',
-                                                    accessToken: googleAuth.accessToken ?? '',
-                                                    type: 'login',
-                                                    registerType: 'email',
-                                                    uniqueId: '',
-                                                  ),
-                                                );
-                                          }
-                                        } catch (error) {
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                            content: Text('Google Sign-In failed: $error'),
-                                          ));
-                                        }
-                                      }),
-                                  AppUtils.kGap8,
-                                  SocialWidget(
-                                      icon: PngImage.faceBookIc,
-                                      onTap: () async {
-                                        final LoginResult loginResult = await FacebookAuth.instance.login();
-
-                                        context.read<LoginBloc>().add(
-                                              RegisterWithSocialEvent(
-                                                displayName: '',
-                                                loginType: '',
-                                                idToken: loginResult.accessToken?.tokenString ?? '',
-                                                accessToken: loginResult.accessToken?.tokenString ?? '',
-                                                type: 'register',
-                                                registerType: 'facebook',
-                                                uniqueId: loginResult.accessToken?.tokenString ?? '',
-                                              ),
-                                            );
-                                      }),
-                                  if (Platform.isIOS) AppUtils.kGap8,
-                                  if (Platform.isIOS)
-                                    SocialWidget(
-                                      icon: PngImage.appleIc,
-                                      onTap: () async {
-                                        final credential = await SignInWithApple.getAppleIDCredential(
-                                          scopes: [
-                                            AppleIDAuthorizationScopes.email,
-                                            AppleIDAuthorizationScopes.fullName,
-                                          ],
-                                        );
-                                        context.read<LoginBloc>().add(
-                                              RegisterWithSocialEvent(
-                                                displayName: credential.familyName ?? '',
-                                                loginType: '',
-                                                idToken: credential.authorizationCode,
-                                                accessToken: credential.authorizationCode,
-                                                type: 'login',
-                                                registerType: 'apple',
-                                                uniqueId: credential.userIdentifier ?? '',
-                                              ),
-                                            );
-                                      },
-                                    ),
-                                ],
-                              ),
+                              // AppUtils.kGap24,
+                              // Row(
+                              // AppUtils.kGap24,
+                              // Row(
+                              //   children: [
+                              //     const Expanded(child: AppUtils.kDivider),
+                              //     AppUtils.kGap4,
+                              //     Text('Вход через соцсеть', style: context.textStyle.size14Weight400Black),
+                              //     AppUtils.kGap4,
+                              //     const Expanded(child: AppUtils.kDivider),
+                              //   ],
+                              // ),
+                              // AppUtils.kGap16,
+                              // Row(
+                              //   children: [
+                              //     SocialWidget(
+                              //       icon: PngImage.telegramIc,
+                              //       onTap: () {},
+                              //     ),
+                              //     AppUtils.kGap8,
+                              //     SocialWidget(
+                              //         icon: PngImage.googleIc,
+                              //         onTap: () async {
+                              //           try {
+                              //             final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+                              //             if (googleUser != null) {
+                              //               // Optionally, retrieve authentication details
+                              //               final GoogleSignInAuthentication googleAuth =
+                              //                   await googleUser.authentication;
+                              //
+                              //               context.read<LoginBloc>().add(
+                              //                     RegisterWithSocialEvent(
+                              //                       displayName: googleUser.displayName ?? '',
+                              //                       loginType: googleUser.email,
+                              //                       idToken: googleAuth.idToken ?? '',
+                              //                       accessToken: googleAuth.accessToken ?? '',
+                              //                       type: 'login',
+                              //                       registerType: 'email',
+                              //                       uniqueId: '',
+                              //                     ),
+                              //                   );
+                              //             }
+                              //           } catch (error) {
+                              //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              //               content: Text('Google Sign-In failed: $error'),
+                              //             ));
+                              //           }
+                              //         }),
+                              //     /// facebook logic
+                              //     // AppUtils.kGap8,
+                              //     // SocialWidget(
+                              //     //     icon: PngImage.faceBookIc,
+                              //     //     onTap: () async {
+                              //     //       final LoginResult loginResult = await FacebookAuth.instance.login();
+                              //     //
+                              //     //       context.read<LoginBloc>().add(
+                              //     //             RegisterWithSocialEvent(
+                              //     //               displayName: '',
+                              //     //               loginType: '',
+                              //     //               idToken: loginResult.accessToken?.tokenString ?? '',
+                              //     //               accessToken: loginResult.accessToken?.tokenString ?? '',
+                              //     //               type: 'register',
+                              //     //               registerType: 'facebook',
+                              //     //               uniqueId: loginResult.accessToken?.tokenString ?? '',
+                              //     //             ),
+                              //     //           );
+                              //     //     }),
+                              //     if (Platform.isIOS) AppUtils.kGap8,
+                              //     if (Platform.isIOS)
+                              //       SocialWidget(
+                              //         icon: PngImage.appleIc,
+                              //         onTap: () async {
+                              //           final credential = await SignInWithApple.getAppleIDCredential(
+                              //             scopes: [
+                              //               AppleIDAuthorizationScopes.email,
+                              //               AppleIDAuthorizationScopes.fullName,
+                              //             ],
+                              //           );
+                              //           context.read<LoginBloc>().add(
+                              //                 RegisterWithSocialEvent(
+                              //                   displayName: credential.familyName ?? '',
+                              //                   loginType: '',
+                              //                   idToken: credential.authorizationCode,
+                              //                   accessToken: credential.authorizationCode,
+                              //                   type: 'login',
+                              //                   registerType: 'apple',
+                              //                   uniqueId: credential.userIdentifier ?? '',
+                              //                 ),
+                              //               );
+                              //         },
+                              //       ),
+                              //   ],
+                              // ),    //   children: [
+                              //     const Expanded(child: AppUtils.kDivider),
+                              //     AppUtils.kGap4,
+                              //     Text('Вход через соцсеть', style: context.textStyle.size14Weight400Black),
+                              //     AppUtils.kGap4,
+                              //     const Expanded(child: AppUtils.kDivider),
+                              //   ],
+                              // ),
+                              // AppUtils.kGap16,
+                              // Row(
+                              //   children: [
+                              //     SocialWidget(
+                              //       icon: PngImage.telegramIc,
+                              //       onTap: () {},
+                              //     ),
+                              //     AppUtils.kGap8,
+                              //     SocialWidget(
+                              //         icon: PngImage.googleIc,
+                              //         onTap: () async {
+                              //           try {
+                              //             final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+                              //             if (googleUser != null) {
+                              //               // Optionally, retrieve authentication details
+                              //               final GoogleSignInAuthentication googleAuth =
+                              //                   await googleUser.authentication;
+                              //
+                              //               context.read<LoginBloc>().add(
+                              //                     RegisterWithSocialEvent(
+                              //                       displayName: googleUser.displayName ?? '',
+                              //                       loginType: googleUser.email,
+                              //                       idToken: googleAuth.idToken ?? '',
+                              //                       accessToken: googleAuth.accessToken ?? '',
+                              //                       type: 'login',
+                              //                       registerType: 'email',
+                              //                       uniqueId: '',
+                              //                     ),
+                              //                   );
+                              //             }
+                              //           } catch (error) {
+                              //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              //               content: Text('Google Sign-In failed: $error'),
+                              //             ));
+                              //           }
+                              //         }),
+                              //     /// facebook logic
+                              //     // AppUtils.kGap8,
+                              //     // SocialWidget(
+                              //     //     icon: PngImage.faceBookIc,
+                              //     //     onTap: () async {
+                              //     //       final LoginResult loginResult = await FacebookAuth.instance.login();
+                              //     //
+                              //     //       context.read<LoginBloc>().add(
+                              //     //             RegisterWithSocialEvent(
+                              //     //               displayName: '',
+                              //     //               loginType: '',
+                              //     //               idToken: loginResult.accessToken?.tokenString ?? '',
+                              //     //               accessToken: loginResult.accessToken?.tokenString ?? '',
+                              //     //               type: 'register',
+                              //     //               registerType: 'facebook',
+                              //     //               uniqueId: loginResult.accessToken?.tokenString ?? '',
+                              //     //             ),
+                              //     //           );
+                              //     //     }),
+                              //     if (Platform.isIOS) AppUtils.kGap8,
+                              //     if (Platform.isIOS)
+                              //       SocialWidget(
+                              //         icon: PngImage.appleIc,
+                              //         onTap: () async {
+                              //           final credential = await SignInWithApple.getAppleIDCredential(
+                              //             scopes: [
+                              //               AppleIDAuthorizationScopes.email,
+                              //               AppleIDAuthorizationScopes.fullName,
+                              //             ],
+                              //           );
+                              //           context.read<LoginBloc>().add(
+                              //                 RegisterWithSocialEvent(
+                              //                   displayName: credential.familyName ?? '',
+                              //                   loginType: '',
+                              //                   idToken: credential.authorizationCode,
+                              //                   accessToken: credential.authorizationCode,
+                              //                   type: 'login',
+                              //                   registerType: 'apple',
+                              //                   uniqueId: credential.userIdentifier ?? '',
+                              //                 ),
+                              //               );
+                              //         },
+                              //       ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

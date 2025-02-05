@@ -9,6 +9,7 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
     required this.onTap,
     required this.from,
     required this.to,
+    required this.distance,
   });
 
   final FetchListPositionsEntity details;
@@ -17,6 +18,7 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
   final VoidCallback onTap;
   final String from;
   final String to;
+  final String distance;
 
   @override
   State<CargoDirectionWithDiagramInfoWidget> createState() => _CargoDirectionWithDiagramInfoWidgetState();
@@ -97,10 +99,11 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                           ],
                         ),
                       ),
-                      Text(
-                        '~ 28 км',
-                        style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
-                      ),
+                      if (widget.isLastItem)
+                        Text(
+                          '~ ${widget.distance}',
+                          style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
+                        ),
                     ],
                   ),
                 ),

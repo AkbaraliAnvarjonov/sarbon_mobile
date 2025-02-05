@@ -559,37 +559,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         cargoItemsWithoutFilter: [],
       ),
     );
-    final response = await getAllCargosUseCase(
-      GetAllCargoItemsParams(
-        limit: state.limit,
-        offset: 0,
-      ),
-    );
-    response.fold(
-      (failure) => emit(
-        state.copyWith(status: ApiStatus.error),
-      ),
-      (cargoItems) {
-        final List<SearchedCargoItemEntity> newFavouriteCargoes = [];
-        for (final item in cargoItems.searchedCargos) {
-          if (item.isLiked ?? false) {
-            newFavouriteCargoes.add(item);
-          }
-        }
-        if (cargoItems.count == 0) {
-          add(const FetchCargosWithoutFilterPaginationEvent());
-        }
-        emit(
-          state.copyWith(
-            status: ApiStatus.success,
-            cargoItems: cargoItems.searchedCargos,
-            cargosCount: cargoItems.count,
-            cargoIsLikedList: newFavouriteCargoes,
-            cargosPageNumber: state.cargosPageNumber + state.limit,
-          ),
-        );
-      },
-    );
+    add(const GetAllCargosEvent());
+    // final response = await getAllCargosUseCase(
+    //   GetAllCargoItemsParams(
+    //     limit: state.limit,
+    //     offset: 0,
+    //   ),
+    // );
+    // response.fold(
+    //   (failure) => emit(
+    //     state.copyWith(status: ApiStatus.error),
+    //   ),
+    //   (cargoItems) {
+    //     final List<SearchedCargoItemEntity> newFavouriteCargoes = [];
+    //     for (final item in cargoItems.searchedCargos) {
+    //       if (item.isLiked ?? false) {
+    //         newFavouriteCargoes.add(item);
+    //       }
+    //     }
+    //     if (cargoItems.count == 0) {
+    //       add(const FetchCargosWithoutFilterPaginationEvent());
+    //     }
+    //     emit(
+    //       state.copyWith(
+    //         status: ApiStatus.success,
+    //         cargoItems: cargoItems.searchedCargos,
+    //         cargosCount: cargoItems.count,
+    //         cargoIsLikedList: newFavouriteCargoes,
+    //         cargosPageNumber: state.cargosPageNumber + state.limit,
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   Future<void> _getActiveCars(

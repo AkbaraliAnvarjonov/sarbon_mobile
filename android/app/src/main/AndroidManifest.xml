@@ -42,6 +42,7 @@
             <meta-data
                 android:name="com.google.android.gms.maps.API_KEY"
                 android:value="AIzaSyDXV0pYLq4wdRc5Yl1XUKtnFysKyDscsBY" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -56,12 +57,9 @@
                 android:value="true" />
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https" />
-                <!--                <data android:host="links.furgo.uz" />-->
+                <data android:scheme="https" android:host="links.sarbon.me" android:pathPrefix="/cargo_details_deep/" />
             </intent-filter>
         </activity>
         <!-- <service

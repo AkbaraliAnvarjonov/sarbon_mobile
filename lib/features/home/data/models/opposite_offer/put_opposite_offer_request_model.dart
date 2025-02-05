@@ -1,3 +1,5 @@
+import 'package:sarbon_mobile/router/app_routes.dart';
+
 class PutOppositeOfferRequestModel {
   OppositeOfferRequestData? data;
 
@@ -55,6 +57,9 @@ class OppositeOfferRequestData {
     data['comment'] = comment;
     data['payment_type'] = paymentType;
     data['firm_id'] = firmId;
+    if (localSource.dispatcherId.isNotEmpty) {
+      data['users_id_3'] = localSource.dispatcherId;
+    }
     data['provisions'] = ['new', 'approve_by_customer'];
     return data;
   }

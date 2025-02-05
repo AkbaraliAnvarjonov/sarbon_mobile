@@ -66,4 +66,30 @@ class MainRemoteDataSourceImpl implements MainRemoteDataSource {
       throw const ServerException(message: Validations.somethingWentWrong);
     }
   }
+
+  @override
+  Future<String> getDispatcherId() async {
+    try {
+      final Response response = await dio.get(
+        Constants.baseUrl + Urls.objectSlim + TableSlugs.dispatcherDrivers,
+        options: Constants.requestOptionsWithoutIds,
+        queryParameters: {
+          'data': jsonEncode(
+            {
+              'users_id': localSource.userId,
+            },
+          ),
+        },
+      );
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return DispatcherModel.fromJson(response.data).data.data.response.firstOrNull?.usersId2 ?? '';
+      } else {
+        throw ServerException.fromJson(response.data);
+      }
+    } on DioException catch (e) {
+      throw ServerException.fromJson(e.response?.data);
+    } on FormatException {
+      throw const ServerException(message: Validations.somethingWentWrong);
+    }
+  }
 }

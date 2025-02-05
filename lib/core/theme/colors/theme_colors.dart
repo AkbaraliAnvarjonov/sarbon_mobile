@@ -11,7 +11,7 @@ const colorLightScheme = ColorScheme(
   onSecondary: Color(0xFF020000),
   error: Color(0xFFE30021),
   onError: Colors.white,
-  surfaceVariant: Color(0xFFF5F5F5),
+  surfaceContainerHighest: Color(0xFFF5F5F5),
   background: Color(0xFFF3F6FB),
   onBackground: Color(0xFF020000),
 );
@@ -34,6 +34,7 @@ const colorDarkScheme = ColorScheme(
 class ThemeColors extends ThemeExtension<ThemeColors> {
   const ThemeColors({
     required this.lightBlue,
+    required this.blue,
     required this.primary200,
     required this.main,
     required this.cardColor,
@@ -75,6 +76,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   });
 
   final Color lightBlue;
+  final Color blue;
   final Color primary200;
   final Color main;
   final Color cardColor;
@@ -116,6 +118,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
 
   static const ThemeColors light = ThemeColors(
     lightBlue: Color(0xFF008AFF),
+    blue: Color(0xFF007AFF),
     bg2: Color(0xFFF6F7F8),
     quatGrey: Color(0xFFDBD8E3),
     primary200: Color(0xFFD7EDFF),
@@ -158,6 +161,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
 
   static const ThemeColors dark = ThemeColors(
     lightBlue: Color(0xFF008AFF),
+    blue: Color(0xFF007AFF),
     bg2: Color(0xFFF6F7F8),
     primary200: Color(0xFFD7EDFF),
     quatGrey: Color(0xFFDBD8E3),
@@ -201,6 +205,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   @override
   ThemeExtension<ThemeColors> copyWith({
     Color? lightBlue,
+    Color? blue,
     Color? bg2,
     Color? primary200,
     Color? cardColor,
@@ -242,6 +247,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   }) =>
       ThemeColors(
         lightBlue: lightBlue ?? this.lightBlue,
+        blue: blue ?? this.blue,
         bg2: bg2 ?? this.bg2,
         quatGrey: quatGrey ?? this.quatGrey,
         primary200: primary200 ?? this.primary200,
@@ -292,6 +298,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     }
     return ThemeColors(
       lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
+      blue: Color.lerp(blue, other.blue, t)!,
       bg2: Color.lerp(bg2, other.bg2, t)!,
       quatGrey: Color.lerp(quatGrey, other.quatGrey, t)!,
       primary200: Color.lerp(primary200, other.primary200, t)!,

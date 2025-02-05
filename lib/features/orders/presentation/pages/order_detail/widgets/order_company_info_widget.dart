@@ -99,20 +99,25 @@ class _OrderCompanyInfoWidget extends StatelessWidget {
             ),
             Visibility(
               visible: (companyInfo?.phoneNumber ?? '').isNotEmpty,
-              child: RichText(
-                text: TextSpan(
-                  text: '${'for_contact'.tr()}: ',
-                  children: [
-                    TextSpan(
-                      text: companyInfo?.phoneNumber ?? '',
-                      style: context.textStyle.size14Weight400Black.copyWith(
-                        color: context.colorScheme.primary,
-                        fontWeight: FontWeight.w500,
+              child: GestureDetector(
+                onTap: () async {
+                  await UrlLauncher.switchPhoneNumber(companyInfo?.phoneNumber ?? '');
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: '${'for_contact'.tr()}: ',
+                    children: [
+                      TextSpan(
+                        text: companyInfo?.phoneNumber ?? '',
+                        style: context.textStyle.size14Weight400Black.copyWith(
+                          color: context.colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
+                    ],
+                    style: context.textStyle.size14Weight400Black.copyWith(
+                      color: context.color.midGray.withOpacity(0.8),
                     ),
-                  ],
-                  style: context.textStyle.size14Weight400Black.copyWith(
-                    color: context.color.midGray.withOpacity(0.8),
                   ),
                 ),
               ),

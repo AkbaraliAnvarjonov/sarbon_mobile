@@ -12,7 +12,6 @@ import '../../../../constants/icons_constants.dart';
 import '../../../../core/extension/extension.dart';
 import '../../../../core/mixins/location_mixin.dart';
 import '../../../../core/platform/network_info.dart';
-import '../../../../core/utils/lifecycle_observer.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../../../../injector_container.dart';
@@ -43,7 +42,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
   @override
   void initState() {
     super.initState();
-    unawaited(initController(this));
+    initController(this);
     tabController = TabController(length: 4, vsync: this);
     unawaited(_subscribeTopic());
   }

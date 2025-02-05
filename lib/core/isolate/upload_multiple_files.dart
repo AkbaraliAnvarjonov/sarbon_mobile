@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image/image.dart' as img;
 
@@ -21,7 +22,7 @@ Future<Map<File, String>> uploadMultipleFiles(List<File?> files) async {
         final String type = file.path.split('.').last;
         File processedFile = file;
         if (type == 'jpg' || type == 'png') {
-          processedFile = await processImage(file);
+          processedFile = await compute(processImage, file);
         }
 
         int retryCount = 0;

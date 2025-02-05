@@ -88,20 +88,25 @@ class _CompanyInfoOfCargoWidget extends StatelessWidget {
             //   ),
             // ),
             AppUtils.kGap8,
-            RichText(
-              text: TextSpan(
-                text: 'Для связи: ',
-                children: [
-                  TextSpan(
-                    text: companyInfo?.phoneNumber ?? '',
-                    style: context.textStyle.size14Weight400Black.copyWith(
-                      color: context.colorScheme.primary,
-                      fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () async {
+                await UrlLauncher.switchPhoneNumber(companyInfo?.phoneNumber ?? '');
+              },
+              child: RichText(
+                text: TextSpan(
+                  text: 'Для связи: ',
+                  children: [
+                    TextSpan(
+                      text: companyInfo?.phoneNumber ?? '',
+                      style: context.textStyle.size14Weight400Black.copyWith(
+                        color: context.colorScheme.primary,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                  ],
+                  style: context.textStyle.size14Weight400Black.copyWith(
+                    color: context.color.midGray.withOpacity(0.8),
                   ),
-                ],
-                style: context.textStyle.size14Weight400Black.copyWith(
-                  color: context.color.midGray.withOpacity(0.8),
                 ),
               ),
             ),

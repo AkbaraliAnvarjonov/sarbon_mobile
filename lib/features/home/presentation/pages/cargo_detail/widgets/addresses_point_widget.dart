@@ -4,14 +4,13 @@ class _AddressesPointWidget extends StatelessWidget {
   const _AddressesPointWidget({
     required this.addresses,
     required this.addressPositions,
-    required this.from,
-    required this.to,
+    required this.details,
   });
 
   final List<CargoAddressesPoint> addresses;
   final List<FetchListPositionsEntity> addressPositions;
-  final String from;
-  final String to;
+
+  final GetCargoDetailsResponseEntity? details;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -21,8 +20,9 @@ class _AddressesPointWidget extends StatelessWidget {
             details: addressPositions[index],
             isLastItem: index == addressPositions.length - 1,
             isFirstItem: index == 0,
-            from: from,
-            to: to,
+            from: details?.countryCodeFrom ?? '',
+            to: details?.countryCodeTo ?? '',
+            distance: details?.distance ?? '',
             onTap: () async {
               await launchMapOnDeviceMap(
                 Points(latitude: addressPositions[index].lat, longitude: addressPositions[index].long),

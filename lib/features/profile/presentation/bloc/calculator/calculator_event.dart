@@ -39,3 +39,11 @@ class RemoveAdditionalAddressEvent extends CalculatorEvent {
   @override
   List<Object> get props => [addressIndex];
 }
+class ChangeStatusEvent extends CalculatorEvent {
+  const ChangeStatusEvent({required this.status});
+
+  final ApiStatus status;
+
+  @override
+  List<Object> get props => [status];
+}

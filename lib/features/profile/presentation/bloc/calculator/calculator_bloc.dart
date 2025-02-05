@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sarbon_mobile/services/api_status.dart';
 
 import '../../../data/models/address/address_model.dart';
 
@@ -13,6 +14,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     on<SetToAddressEvent>(_setToAddress);
     on<AddAdditionalAddressEvent>(_addAdditionalAddress);
     on<RemoveAdditionalAddressEvent>(_removeAdditionalAddress);
+    on<ChangeStatusEvent>(_changeStatus);
   }
 
   void _setFromAddress(
@@ -20,6 +22,13 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     Emitter<CalculatorState> emit,
   ) {
     emit(state.copyWith(fromAddress: event.address));
+  }
+
+  void _changeStatus(
+    ChangeStatusEvent event,
+    Emitter<CalculatorState> emit,
+  ) {
+    emit(state.copyWith(status: event.status));
   }
 
   void _setToAddress(

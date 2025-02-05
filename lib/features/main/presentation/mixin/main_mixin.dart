@@ -8,7 +8,7 @@ mixin MainMixin on State<MainPage> {
   late final MainBloc bloc;
   late TabController tabController;
 
-  Future<void> initController(WidgetsBindingObserver observer) async {
+  initController(WidgetsBindingObserver observer) {
     bloc = context.read<MainBloc>();
     if (!mounted) return;
     WidgetsBinding.instance.addObserver(observer);
@@ -23,6 +23,10 @@ mixin MainMixin on State<MainPage> {
       getUserCurrentLocation();
       getUserOrders();
       putUserLatLong();
+    }
+
+    if (localSource.dispatcherId.isEmpty) {
+      bloc.add(const GetDispatcherIdEvent());
     }
   }
 
@@ -161,6 +165,10 @@ mixin MainMixin on State<MainPage> {
         distanceFilter: 100,
       );
     }
+    // AppLifecycleObserver observer = AppLifecycleObserver(() {
+    //   positionStream.cancel();
+    // });
+    // WidgetsBinding.instance.addObserver(observer);
     positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
       (position) async {
         if (localSource.hasProfile && await networkInfo.isConnected) {
@@ -170,9 +178,5 @@ mixin MainMixin on State<MainPage> {
       },
     );
     // Detect app termination and stop the position stream
-    AppLifecycleObserver observer = AppLifecycleObserver(() {
-      positionStream.cancel();
-    });
-    WidgetsBinding.instance.addObserver(observer);
   }
 }

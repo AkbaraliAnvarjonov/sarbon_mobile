@@ -87,8 +87,7 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
                                     _AddressesPointWidget(
                                       addresses: state.addresses,
                                       addressPositions: state.addressPositions.toList(),
-                                      from: state.details?.countryCodeFrom ?? '',
-                                      to: state.details?.countryCodeTo ?? '',
+                                      details: state.details,
                                     ),
                                     AppUtils.kGap24,
                                     _CargoDetailInfoTitleWidget(

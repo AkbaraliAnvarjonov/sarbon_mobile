@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sarbon_mobile/core/extension/extension.dart';
+import 'package:share_plus/share_plus.dart';
 
+import '../../../../../constants/constants.dart';
 import '../../../../../core/debaouncer/debouncer.dart';
 import '../../../../../core/utils/utils.dart';
 import '../../../../../router/app_routes.dart';
@@ -44,9 +47,17 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
               itemBuilder: (context, index) {
                 if (index > widget.cargoItems.length - 1) {
                   if (homeBloc.state.status.isPaginationLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
+                    return widget.cargoItems.isNotEmpty
+                        ? const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          )
+                        : Center(
+                            child: SizedBox(
+                              height: context.kSize.height * 0.8,
+                              width: context.kSize.width,
+                              child: const CircularProgressIndicator.adaptive(),
+                            ),
+                          );
                   }
                   return const SizedBox();
                 }
@@ -67,10 +78,10 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
                     );
                   },
                   onTapShareButton: () async {
-                    // await Share.share(
-                    //   '''${Constants.deepLink}${widget.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].cityNameRu : widget.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].city2NameRu : widget.cargoItems[index].city2NameEn) ?? ''}; ${widget.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${widget.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})\n${'download_our_app'.tr()}\nios: ${Constants.iosAppLink}\nandroid: ${Constants.androidAppLink}''',
-                    //   subject: 'share_cargo'.tr(),
-                    // );
+                    await Share.share(
+                      '''${Constants.deepLink}${widget.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].cityNameRu : widget.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].city2NameRu : widget.cargoItems[index].city2NameEn) ?? ''}; ${widget.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${widget.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})''',
+                      subject: 'share_cargo'.tr(),
+                    );
                   },
                   cargoItem: widget.cargoItems[index],
                 );
@@ -110,10 +121,10 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
                           );
                         },
                         onTapShareButton: () async {
-                          // await Share.share(
-                          //   '''${Constants.deepLink}${widget.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].cityNameRu : widget.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? widget.cargoItems[index].city2NameRu : widget.cargoItems[index].city2NameEn) ?? ''}; ${widget.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${widget.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})\n${'download_our_app'.tr()}\nios: ${Constants.iosAppLink}\nandroid: ${Constants.androidAppLink}''',
-                          //   subject: 'share_cargo'.tr(),
-                          // );
+                          await Share.share(
+                            '''${Constants.deepLink}${widget.withoutFilterCargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? widget.withoutFilterCargoItems[index].cityNameRu : widget.withoutFilterCargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? widget.withoutFilterCargoItems[index].city2NameRu : widget.withoutFilterCargoItems[index].city2NameEn) ?? ''}; ${widget.withoutFilterCargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${widget.withoutFilterCargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})''',
+                            subject: 'share_cargo'.tr(),
+                          );
                         },
                         cargoItem: widget.withoutFilterCargoItems[index],
                       )

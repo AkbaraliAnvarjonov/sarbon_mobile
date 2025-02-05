@@ -70,6 +70,8 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     Emitter<OrdersState> emit,
   ) async {
     emit(state.copyWith(newOrdersStatus: ApiStatus.loading));
+    print('kirdi');
+    print(state.newOrdersStatus);
     final response = await getOrdersUseCase(
       GetOrdersParams(
         ordersType: ['new'],

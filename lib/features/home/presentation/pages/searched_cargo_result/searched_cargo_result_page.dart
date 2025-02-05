@@ -89,10 +89,10 @@ class _SearchedCargoResultsPageState extends State<SearchedCargoResultsPage> {
                           sliver: SliverList.separated(
                             itemBuilder: (_, index) => SearchedCargoItem(
                               onTapShareButton: () async {
-                                // await Share.share(
-                                //   '''${Constants.deepLink}${state.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? state.cargoItems[index].cityNameRu : state.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? state.cargoItems[index].city2NameRu : state.cargoItems[index].city2NameEn) ?? ''}; ${state.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${state.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})\n${'download_our_app'.tr()}\nios: ${Constants.iosAppLink}\nandroid: ${Constants.androidAppLink}''',
-                                //   subject: 'share_cargo'.tr(),
-                                // );
+                                await Share.share(
+                                  '''${Constants.deepLink}${state.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? state.cargoItems[index].cityNameRu : state.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? state.cargoItems[index].city2NameRu : state.cargoItems[index].city2NameEn) ?? ''}; ${state.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${state.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})''',
+                                  subject: 'share_cargo'.tr(),
+                                );
                               },
                               onTap: () async {
                                 await context

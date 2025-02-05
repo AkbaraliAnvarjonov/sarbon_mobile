@@ -179,14 +179,14 @@ class CustomTextField extends StatelessWidget {
                           ),
                         )
                       : null),
-              focusedBorder: (readOnly ?? false) || !showBorder
-                  ? null
-                  : OutlineInputBorder(
+              focusedBorder: showEnabledBorder || !((readOnly ?? false) || !showBorder)
+                  ? OutlineInputBorder(
                       borderRadius: AppUtils.kBorderRadius12,
                       borderSide: BorderSide(
                         color: context.colorScheme.primary,
                       ),
-                    ),
+                    )
+                  : null,
               focusedErrorBorder: showBorder
                   ? const OutlineInputBorder(
                       borderRadius: AppUtils.kBorderRadius12,
