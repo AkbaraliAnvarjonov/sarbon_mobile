@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../../router/app_routes.dart';
+import '../../../data/models/search/filter_cargo_response_model.dart';
 import '../../../data/models/search/get_searched_cargo_items_response_model.dart';
 
 class GetSearchedCargoItemsResponseEntity extends Equatable {
@@ -277,5 +278,99 @@ extension GetSearchedCargoItemsResponseEntityX on GetSearchedCargoItemsResponseM
                 )
                 .toList() ??
             [],
+      );
+}
+
+extension GetSearchedCargoItemsResponseEntityY on FilteredCargoResponseModel {
+  GetSearchedCargoItemsResponseEntity toEntity() => GetSearchedCargoItemsResponseEntity(
+        count: data.data.count.firstOrNull?.totalCount ?? 0,
+        searchedCargos: data.data.response
+            .map(
+              (cargo) => SearchedCargoItemEntity(
+                countryCodeFrom: cargo.countryCodeFrom,
+                countryCodeTo: cargo.countryCodeTo,
+                addressFull: '',
+                currencyPersentage: 0,
+                vehicleId: cargo.vehicleTypeId,
+                addressId: '',
+                // fullName: cargo.fullName ?? '',
+                // addressId2: cargo.addressId2 ?? '',
+                // isLiked: localSource.favouriteCargoes.contains(cargo.guid),
+                rating: cargo.rating,
+                // request: cargo.request ?? false,
+                cityName: cargo.from,
+                // cityNameRu: cargo.cityIdData?.nameRu ?? '',
+                // cityNameEn: cargo.cityIdData?.nameEn ?? '',
+                city2Name: cargo.to,
+                // city2NameRu: cargo.cityId2Data?.nameRu ?? '',
+                // city2NameEn: cargo.cityId2Data?.nameEn ?? '',
+                distance: '${cargo.distance.toInt()} км',
+                // difference: '${cargo.difference ?? 0} км',
+                // addressDataEntity: AddressDataEntity(
+                //   addressId: cargo.addressIdData?.addressId ?? '',
+                //   code: cargo.addressIdData?.code ?? '',
+                //   guid: cargo.addressIdData?.guid ?? '',
+                //   name: cargo.addressIdData?.name ?? '',
+                //   nameRu: cargo.addressIdData?.nameRu ?? '',
+                //   nameEn: cargo.addressIdData?.nameEn ?? '',
+                //   type: cargo.addressIdData?.type ?? [],
+                // ),
+                // address2DataEntity: AddressDataEntity(
+                //   addressId: cargo.addressId2Data?.addressId ?? '',
+                //   code: cargo.addressId2Data?.code ?? '',
+                //   guid: cargo.addressId2Data?.guid ?? '',
+                //   name: cargo.addressId2Data?.name ?? '',
+                //   nameRu: cargo.addressId2Data?.nameRu ?? '',
+                //   nameEn: cargo.addressId2Data?.nameEn ?? '',
+                //   type: cargo.addressId2Data?.type ?? [],
+                // ),
+                currencyDataEntity: CurrencyDataEntity(
+                  code: cargo.currencyIdData.firstOrNull?.code ?? '',
+                  guid: cargo.currencyIdData.firstOrNull?.guid ?? '',
+                  name: cargo.currencyIdData.firstOrNull?.code ?? '',
+                  photo: '',
+                  shortName: '',
+                ),
+                // companyDataEntity: CompanyDataEntity(
+                //   addressId: cargo.company?.addressId ?? '',
+                //   aliasName: cargo.companyIdData?.aliasName ?? '',
+                //   bankDetails: cargo.companyIdData?.bankDetails ?? '',
+                //   buildingAddress: cargo.companyIdData?.buildingAddress ?? '',
+                //   companyDirection: cargo.companyIdData?.companyDirection ?? [],
+                //   companyType: cargo.companyIdData?.companyType ?? [],
+                //   email: cargo.companyIdData?.email ?? '',
+                //   fullName: cargo.companyIdData?.fullName ?? '',
+                //   guid: cargo.companyIdData?.guid ?? '',
+                //   name: cargo.companyIdData?.name ?? '',
+                //   phoneNumber: cargo.companyIdData?.phoneNumber ?? '',
+                //   photoUrl: cargo.companyIdData?.photoUrl ?? '',
+                //   tin: cargo.companyIdData?.tin ?? '',
+                // ),
+                bidCash: cargo.bidCash,
+                asSoonAsA: cargo.asSoonAsA,
+                asSoonAsB: cargo.asSoonAsB,
+                // dimWithSpecial: cargo.dimWithSpecial ?? 0,
+                // bargainType: cargo.bargainType ?? [],
+                // bodyTypeId: cargo.bodyTypeId ?? '',
+                // cargoTypeId: cargo.cargoTypeId ?? '',
+                cardoTypeName: cargo.productType,
+                vehicleTypeName: cargo.carType,
+                // comment: cargo.comment ?? '',
+                // conditions: cargo.conditions ?? [],
+                date: cargo.date,
+                guid: cargo.guid,
+                loadTime: cargo.loadTime,
+                // loadCapacity: cargo.loadCapacity ?? 0,
+                // loadLocation: cargo.loadLocation ?? '',
+                // measurementId: cargo.measurementId ?? '',
+                // numberOfCars: cargo.numberOfCars ?? 0,
+                // status: cargo.status ?? [],
+                // unloadLocation: cargo.unloadLocation ?? '',
+                usersId: cargo.usersId,
+                volumeM3: cargo.volumeM3,
+                weight: cargo.weight,
+              ),
+            )
+            .toList(),
       );
 }

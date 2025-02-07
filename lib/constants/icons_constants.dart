@@ -72,4 +72,9 @@ class SvgImage {
   static const String commentIcon = 'assets/icons/comment_icon.svg';
   static const String loadingCargo = 'assets/icons/loading_cargo.svg';
   static const String unloadingCargo = 'assets/icons/unloading_cargo.svg';
+  static const String icBox = 'assets/icons/ic_box.svg';
+  static const String icCamera2 = 'assets/icons/ic_camera_2.svg';
+  static const String icComment = 'assets/icons/ic_comment.svg';
+  static const String icPrice = 'assets/icons/ic_price.svg';
+  static const String icTruckFilled = 'assets/icons/ic_truck_filled.svg';
 }

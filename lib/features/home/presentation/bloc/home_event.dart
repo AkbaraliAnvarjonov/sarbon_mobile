@@ -194,8 +194,34 @@ class ChangeVolumeEvent extends HomeEvent {
       ];
 }
 
+class ChangeVolume2Event extends HomeEvent {
+  const ChangeVolume2Event({
+    required this.volume,
+  });
+
+  final String volume;
+
+  @override
+  List<Object> get props => [
+        volume,
+      ];
+}
+
 class ChangeWeightEvent extends HomeEvent {
   const ChangeWeightEvent({
+    required this.weight,
+  });
+
+  final String weight;
+
+  @override
+  List<Object> get props => [
+        weight,
+      ];
+}
+
+class ChangeWeight2Event extends HomeEvent {
+  const ChangeWeight2Event({
     required this.weight,
   });
 
@@ -233,7 +259,9 @@ class HomeRefresh extends HomeEvent {
 
   @override
   List<Object> get props => [];
-}class GetVehicleType extends HomeEvent {
+}
+
+class GetVehicleType extends HomeEvent {
   const GetVehicleType();
 
   @override

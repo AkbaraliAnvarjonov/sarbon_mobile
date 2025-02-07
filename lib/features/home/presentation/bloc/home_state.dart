@@ -28,7 +28,9 @@ class HomeState extends Equatable {
     this.selectedTypePayment,
     this.fetchCargoAndPaymentStatus = ApiStatus.initial,
     this.saveVolume = '',
+    this.saveVolume2 = '',
     this.saveWeight = '',
+    this.saveWeight2 = '',
     this.cargosWithoutFilterPageNumber = 0,
     this.cargosWithoutFilterCount = 0,
   });
@@ -63,7 +65,9 @@ class HomeState extends Equatable {
   final TypePaymentListEntity? selectedTypePayment;
   final ApiStatus fetchCargoAndPaymentStatus;
   final String saveVolume;
+  final String saveVolume2;
   final String saveWeight;
+  final String saveWeight2;
 
   @override
   List<Object?> get props => [
@@ -95,7 +99,9 @@ class HomeState extends Equatable {
         selectedTypePayment,
         fetchCargoAndPaymentStatus,
         saveVolume,
+        saveVolume2,
         saveWeight,
+        saveWeight2,
       ];
 
   HomeState copyWith({
@@ -127,7 +133,9 @@ class HomeState extends Equatable {
     TypePaymentListEntity? selectedTypePayment,
     ApiStatus? fetchCargoAndPaymentStatus,
     String? saveVolume,
+    String? saveVolume2,
     String? saveWeight,
+    String? saveWeight2,
     bool? isRemoveFilter,
     bool? isRemoveFromAddress,
     bool? isRemoveToAddress,
@@ -162,14 +170,18 @@ class HomeState extends Equatable {
         selectedTypePayment: (isRemoveFilter ?? false) ? null : selectedTypePayment ?? this.selectedTypePayment,
         fetchCargoAndPaymentStatus: fetchCargoAndPaymentStatus ?? ApiStatus.initial,
         saveVolume: saveVolume ?? this.saveVolume,
+        saveVolume2: saveVolume2 ?? this.saveVolume2,
         saveWeight: saveWeight ?? this.saveWeight,
+        saveWeight2: saveWeight2 ?? this.saveWeight2,
       );
 
   bool get isFilterEmpty =>
       selectedTypeCargo == null &&
       selectedTypePayment == null &&
       saveVolume.isEmpty &&
+      saveVolume2.isEmpty &&
       saveWeight.isEmpty &&
+      saveWeight2.isEmpty &&
       (!isTakeAllUnloads || !isLoadAroundTheClock) &&
       toAddress == '' &&
       fromAddress == '';

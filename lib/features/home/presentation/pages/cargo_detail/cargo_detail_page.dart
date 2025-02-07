@@ -79,51 +79,31 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
                               slivers: [
                                 SliverList.list(
                                   children: [
-                                    _CargoDirectionShortInfoWidget(
-                                      details: state.details,
-                                      addressPositions: state.addressPositions.toList(),
-                                    ),
+                                    // _CargoDirectionShortInfoWidget(
+                                    //   details: state.details,
+                                    //   addressPositions: state.addressPositions.toList(),
+                                    // ),
                                     AppUtils.kGap8,
                                     _AddressesPointWidget(
                                       addresses: state.addresses,
                                       addressPositions: state.addressPositions.toList(),
                                       details: state.details,
                                     ),
-                                    AppUtils.kGap24,
-                                    _CargoDetailInfoTitleWidget(
-                                      isCmr: state.details?.cmr ?? false,
-                                      isT1: state.details?.t1 ?? false,
-                                      isTir: state.details?.tir ?? false,
-                                      adr: state.details?.permission ?? [],
-                                    ),
-                                    AppUtils.kGap8,
+                                    // AppUtils.kGap24,
+                                    // _CargoDetailInfoTitleWidget(
+                                    //   isCmr: state.details?.cmr ?? false,
+                                    //   isT1: state.details?.t1 ?? false,
+                                    //   isTir: state.details?.tir ?? false,
+                                    //   adr: state.details?.permission ?? [],
+                                    // ),
                                     _CargoDetailInfoWidget(
                                       details: state.details,
                                     ),
-                                    AppUtils.kGap16,
-                                    if ((state.details?.comment ?? '').isNotEmpty)
-                                      Text(
-                                        'comment'.tr(),
-                                        style: context.textStyle.regularHeadline.copyWith(
-                                          color: context.color.textColor,
-                                        ),
-                                      ),
-                                    if ((state.details?.comment ?? '').isNotEmpty) AppUtils.kGap8,
-                                    if ((state.details?.comment ?? '').isNotEmpty)
-                                      _SendCommentWidget(
-                                        comment: state.details?.comment ?? '',
-                                      ),
-                                    AppUtils.kGap16,
-                                    Text(
-                                      'company'.tr(),
-                                      style: context.textStyle.regularHeadline.copyWith(
-                                        color: context.color.textColor,
-                                      ),
-                                    ),
-                                    AppUtils.kGap8,
+                                    AppUtils.kGap24,
                                     _CompanyInfoOfCargoWidget(
                                       companyInfo: state.details?.companyDataEntity,
                                     ),
+                                    AppUtils.kDivider,
                                   ],
                                 ),
                               ],

@@ -73,6 +73,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     required this.quatGrey,
     required this.textColor2,
     required this.bg2,
+    required this.dark1,
   });
 
   final Color lightBlue;
@@ -115,6 +116,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
   final Color quatGrey;
   final Color textColor2;
   final Color bg2;
+  final Color dark1;
 
   static const ThemeColors light = ThemeColors(
     lightBlue: Color(0xFF008AFF),
@@ -123,6 +125,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     quatGrey: Color(0xFFDBD8E3),
     primary200: Color(0xFFD7EDFF),
     main: Color(0xFF2B2B30),
+    dark1: Color(0xFF211F26),
     green: Color(0xFF32B141),
     lightGreen: Color(0xFF34C759),
     greenG100: Color(0xFFEBFFF1),
@@ -166,6 +169,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     primary200: Color(0xFFD7EDFF),
     quatGrey: Color(0xFFDBD8E3),
     main: Color(0xFF2B2B30),
+    dark1: Color(0xFF211F26),
     green: Color(0xFF32B141),
     lightGreen: Color(0xFF34C759),
     greenG100: Color(0xFFEBFFF1),
@@ -244,9 +248,11 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     Color? error100,
     Color? quatGrey,
     Color? textColor2,
+    Color? dark1,
   }) =>
       ThemeColors(
         lightBlue: lightBlue ?? this.lightBlue,
+        dark1: dark1 ?? this.dark1,
         blue: blue ?? this.blue,
         bg2: bg2 ?? this.bg2,
         quatGrey: quatGrey ?? this.quatGrey,
@@ -298,6 +304,7 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     }
     return ThemeColors(
       lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
+      dark1: Color.lerp(dark1, other.dark1, t)!,
       blue: Color.lerp(blue, other.blue, t)!,
       bg2: Color.lerp(bg2, other.bg2, t)!,
       quatGrey: Color.lerp(quatGrey, other.quatGrey, t)!,

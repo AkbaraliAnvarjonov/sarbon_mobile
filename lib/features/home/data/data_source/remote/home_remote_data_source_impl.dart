@@ -430,19 +430,19 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<GetSearchedCargoItemsResponseModel> fetchCargoFromFilter({
+  Future<FilteredCargoResponseModel> fetchCargoFromFilter({
     required ApplyFilterRequest request,
   }) async {
     try {
-      final Response response = await dio.get(
-        Constants.baseUrl + Urls.objectSlim + TableSlugs.cargoItems,
+      final Response response = await dio.post(
+        Constants.baseUrl + Urls.openFunction + TableSlugs.cargoFilter,
         options: Constants.requestOptionsWithoutIds,
-        queryParameters: {
-          'data': jsonEncode(request.toJson()),
+        data: {
+          'data': {'object_data': request.toJson()},
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return GetSearchedCargoItemsResponseModel.fromJson(response.data);
+        return FilteredCargoResponseModel.fromJson(response.data);
       } else {
         throw ServerException.fromJson(response.data);
       }

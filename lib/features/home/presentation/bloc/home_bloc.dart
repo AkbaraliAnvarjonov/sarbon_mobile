@@ -63,7 +63,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<SelectedPaymentTypeEvent>(_selectTypePayment);
     on<ApplyFilterEvent>(_fetchCargoFromFilterResults);
     on<ChangeVolumeEvent>(_changeVolume);
+    on<ChangeVolume2Event>(_changeVolume2);
     on<ChangeWeightEvent>(_changeWeight);
+    on<ChangeWeight2Event>(_changeWeight2);
     on<HomeEventClearFromAddress>(_homeClearFromAddress);
     on<HomeEventClearToAddress>(_homeClearToAddress);
     on<GetVehicleType>(_getActiveCars);
@@ -490,6 +492,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
+  void _changeVolume2(
+    ChangeVolume2Event event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        saveVolume2: event.volume,
+      ),
+    );
+  }
+
   void _changeWeight(
     ChangeWeightEvent event,
     Emitter<HomeState> emit,
@@ -497,6 +510,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(
       state.copyWith(
         saveWeight: event.weight,
+      ),
+    );
+  }
+
+  void _changeWeight2(
+    ChangeWeight2Event event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        saveWeight2: event.weight,
       ),
     );
   }
@@ -509,6 +533,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       state.copyWith(
         saveVolume: '',
         saveWeight: '',
+        saveWeight2: '',
+        saveVolume2: '',
         isTakeAllUnloads: false,
         isLoadAroundTheClock: false,
         isRemoveFilter: true,

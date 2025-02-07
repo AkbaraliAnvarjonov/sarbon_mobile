@@ -411,6 +411,7 @@ sealed class TableSlugs {
   static const String carSale = 'car_sale';
   static const String city = 'city';
   static const String cargoItems = 'cargo';
+  static const String cargoFilter = '/logistika-get-cargo-with-filter';
   static const String vehicle = 'vehicle';
   static const String oppositeOffer = 'cargo';
   static const String orders = 'response';

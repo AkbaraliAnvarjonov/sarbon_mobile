@@ -7,18 +7,14 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
     required this.isLastItem,
     required this.isFirstItem,
     required this.onTap,
-    required this.from,
-    required this.to,
-    required this.distance,
+    this.detailsCargo,
   });
 
   final FetchListPositionsEntity details;
   final bool isLastItem;
   final bool isFirstItem;
   final VoidCallback onTap;
-  final String from;
-  final String to;
-  final String distance;
+  final GetCargoDetailsResponseEntity? detailsCargo;
 
   @override
   State<CargoDirectionWithDiagramInfoWidget> createState() => _CargoDirectionWithDiagramInfoWidgetState();
@@ -77,31 +73,36 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                 SizedBox(
                   width: context.kSize.width - 72,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: widget.details.addressType.checkStringLength(24),
-                              style: context.textStyle.buttonStyle.copyWith(
-                                color: const Color(0xFF211F26),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            if (widget.isFirstItem || widget.isLastItem)
+                      SizedBox(
+                        width: context.kSize.width * 0.48,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
                               TextSpan(
-                                text: ' - ${(widget.isFirstItem ? widget.from : widget.to)}',
-                                style: context.textStyle.size14Weight400Black.copyWith(
-                                  color: context.color.midGray,
+                                text: widget.details.addressType.cutString(13),
+                                style: context.textStyle.buttonStyle.copyWith(
+                                  color: const Color(0xFF211F26),
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                          ],
+                              if (widget.isFirstItem || widget.isLastItem)
+                                TextSpan(
+                                  text:
+                                      ' - ${(widget.isFirstItem ? widget.detailsCargo?.countryCodeFrom : widget.detailsCargo?.countryCodeTo)}',
+                                  style: context.textStyle.size14Weight400Black.copyWith(
+                                    color: context.color.midGray,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                       if (widget.isLastItem)
                         Text(
-                          '~ ${widget.distance}',
+                          '~ ${widget.detailsCargo?.distance}',
                           style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
                         ),
                     ],
@@ -110,15 +111,23 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                 SizedBox(
                   width: context.kSize.width - 72,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: context.kSize.width * 0.6,
+                        width: context.kSize.width * 0.48,
                         child: Text(
                           widget.details.addressType.afterFirstComma,
                           style: context.textStyle.size14Weight400Black.copyWith(
                             color: context.color.midGray,
                           ),
                           overflow: TextOverflow.fade,
+                        ),
+                      ),
+                      Text(
+                        '${widget.isFirstItem ? (widget.detailsCargo?.asSoonAsA ?? false) ? 'ready_for_loading'.tr() : widget.detailsCargo?.loadTime?.dateMothWeek() : (widget.detailsCargo?.asSoonAsB ?? false) ? 'as_soon_as_possible'.tr() : widget.detailsCargo?.date?.dateMothWeek()}',
+                        style: context.textStyle.size14Weight400Black.copyWith(
+                          color: context.color.dark1,
                         ),
                       ),
                     ],

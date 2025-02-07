@@ -31,7 +31,9 @@ class FilterCargoBottomSheet extends StatefulWidget {
 
 class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
   final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _weightController2 = TextEditingController();
   final TextEditingController _volumeController = TextEditingController();
+  final TextEditingController _volumeController2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) => BlocListener<HomeBloc, HomeState>(
@@ -204,14 +206,14 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                               children: [
                                 Expanded(
                                   child: CustomTextField(
-                                    labelText: 'Объём:',
+                                    labelText: 'Объём от:',
                                     showEnabledBorder: true,
                                     fillColor: context.color.bg2,
                                     controller: _volumeController,
                                     textInputType: TextInputType.number,
                                     textInputFormatter: FilteringTextInputFormatter.digitsOnly,
                                     contentPadding: AppUtils.kPaddingAll16,
-                                    hintText: 'write_volume_cargo'.tr(),
+                                    hintText: 'мин',
                                     hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
                                       color: const Color(0xFF7E7B86),
                                     ),
@@ -228,13 +230,38 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                                 AppUtils.kGap20,
                                 Expanded(
                                   child: CustomTextField(
+                                    labelText: 'Объём до:',
+                                    controller: _volumeController2,
+                                    showEnabledBorder: true,
+                                    fillColor: context.color.bg2,
+                                    textInputType: TextInputType.number,
+                                    textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                                    contentPadding: AppUtils.kPaddingAll16,
+                                    hintText: 'макс',
+                                    hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                                      color: const Color(0xFF7E7B86),
+                                    ),
+                                    onChanged: (value) {
+                                      context.read<HomeBloc>().add(ChangeVolume2Event(volume: value));
+                                    },
+                                    showBorder: false,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            AppUtils.kGap40,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CustomTextField(
                                     labelText: 'Вес:',
                                     showEnabledBorder: true,
                                     controller: _weightController,
                                     textInputType: TextInputType.number,
                                     textInputFormatter: FilteringTextInputFormatter.digitsOnly,
                                     contentPadding: AppUtils.kPaddingAll16,
-                                    hintText: 'write_weight_of_cargo'.tr(),
+                                    hintText: 'мин',
                                     hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
                                       color: const Color(0xFF7E7B86),
                                     ),
@@ -245,75 +272,28 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                                     showBorder: false,
                                   ),
                                 ),
-                                // Expanded(
-                                //   child: CustomTextField(
-                                //     labelText: 'Объём до:',
-                                //     showEnabledBorder: true,
-                                //     fillColor: context.color.bg2,
-                                //     textInputType: TextInputType.number,
-                                //     textInputFormatter: FilteringTextInputFormatter.digitsOnly,
-                                //     contentPadding: AppUtils.kPaddingAll16,
-                                //     hintText: 'макс',
-                                //     hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
-                                //       color: const Color(0xFF7E7B86),
-                                //     ),
-                                //     onChanged: (value) {
-                                //       // context.read<HomeBloc>().add(
-                                //       //       ChangeVolumeEvent(
-                                //       //         volume: value,
-                                //       //       ),
-                                //       //     );
-                                //     },
-                                //     showBorder: false,
-                                //   ),
-                                // ),
+                                AppUtils.kGap20,
+                                Expanded(
+                                  child: CustomTextField(
+                                    labelText: 'Вес до:',
+                                    showEnabledBorder: true,
+                                    controller: _weightController2,
+                                    textInputType: TextInputType.number,
+                                    textInputFormatter: FilteringTextInputFormatter.digitsOnly,
+                                    contentPadding: AppUtils.kPaddingAll16,
+                                    hintText: 'макс',
+                                    hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
+                                      color: const Color(0xFF7E7B86),
+                                    ),
+                                    fillColor: context.color.bg2,
+                                    onChanged: (value) {
+                                      context.read<HomeBloc>().add(ChangeWeight2Event(weight: value));
+                                    },
+                                    showBorder: false,
+                                  ),
+                                ),
                               ],
                             ),
-
-                            // AppUtils.kGap40,
-                            // Row(
-                            //   children: [
-                            //     Expanded(
-                            //       child: CustomTextField(
-                            //         labelText: 'Вес от:',
-                            //         showEnabledBorder: true,
-                            //         controller: _weightController,
-                            //         textInputType: TextInputType.number,
-                            //         textInputFormatter: FilteringTextInputFormatter.digitsOnly,
-                            //         contentPadding: AppUtils.kPaddingAll16,
-                            //         hintText: 'мин',
-                            //         hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
-                            //           color: const Color(0xFF7E7B86),
-                            //         ),
-                            //         fillColor: context.color.bg2,
-                            //         onChanged: (value) {
-                            //           context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
-                            //         },
-                            //         showBorder: false,
-                            //       ),
-                            //     ),
-                            //     AppUtils.kGap20,
-                            //     Expanded(
-                            //       child: CustomTextField(
-                            //         labelText: 'Вес до:',
-                            //         showEnabledBorder: true,
-                            //         // controller: _weightController,
-                            //         textInputType: TextInputType.number,
-                            //         textInputFormatter: FilteringTextInputFormatter.digitsOnly,
-                            //         contentPadding: AppUtils.kPaddingAll16,
-                            //         hintText: 'макс',
-                            //         hintTextStyle: context.textStyle.size14Weight400Black.copyWith(
-                            //           color: const Color(0xFF7E7B86),
-                            //         ),
-                            //         fillColor: context.color.bg2,
-                            //         onChanged: (value) {
-                            //           // context.read<HomeBloc>().add(ChangeWeightEvent(weight: value));
-                            //         },
-                            //         showBorder: false,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
 
                             AppUtils.kGap40,
                             Text(
@@ -383,7 +363,11 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                                   mapId: state.selectedTypePayment?.guid,
                                   volumeM3:
                                       _volumeController.text.isEmpty ? null : double.parse(_volumeController.text),
+                                  volumeM32:
+                                      _volumeController2.text.isEmpty ? null : double.parse(_volumeController2.text),
                                   weight: _weightController.text.isEmpty ? null : double.parse(_weightController.text),
+                                  weight2:
+                                      _weightController2.text.isEmpty ? null : double.parse(_weightController2.text),
                                   cityId: state.fromAddress.isNotEmpty ? state.fromAddress : null,
                                   cityId2: state.toAddress.isNotEmpty ? state.toAddress : null,
                                 ),

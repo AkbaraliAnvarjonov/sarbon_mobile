@@ -66,7 +66,7 @@ class SearchedCargoData {
   });
 
   SearchedCargoData.fromJson(Map<String, dynamic> json) {
-    count = json['count'];
+    // count = json['count'];
     if (json['response'] != null) {
       response = <SearchedCargoItem>[];
       json['response'].forEach((v) {

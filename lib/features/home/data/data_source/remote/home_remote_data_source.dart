@@ -28,6 +28,7 @@ import '../../models/route/create_route/create_route_request.dart';
 import '../../models/route/fetch_routes/fetch_routes_request.dart';
 import '../../models/route/fetch_routes/fetch_routes_response.dart';
 import '../../models/route/update_route/update_route_request.dart';
+import '../../models/search/filter_cargo_response_model.dart';
 import '../../models/search/get_addresses_response_model.dart';
 import '../../models/search/get_searched_cargo_items_request_model.dart';
 import '../../models/search/get_searched_cargo_items_response_model.dart';
@@ -144,7 +145,7 @@ abstract class HomeRemoteDataSource {
 
   Future<TypesPaymentResponse> fetchPaymentTypes();
 
-  Future<GetSearchedCargoItemsResponseModel> fetchCargoFromFilter({
+  Future<FilteredCargoResponseModel> fetchCargoFromFilter({
     required ApplyFilterRequest request,
   });
 }

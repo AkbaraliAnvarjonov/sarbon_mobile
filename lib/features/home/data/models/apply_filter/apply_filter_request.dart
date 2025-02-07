@@ -5,7 +5,9 @@ class ApplyFilterRequest {
     this.cargoTypeId,
     this.mapId,
     this.weight,
+    this.weight2,
     this.volumeM3,
+    this.volumeM32,
     this.takeAllUnloads,
     this.withRelations,
     this.loadAroundTheClock,
@@ -15,7 +17,7 @@ class ApplyFilterRequest {
   });
 
   ApplyFilterRequest.fromJson(Map json) {
-    cargoTypeId = json['cargo_type_id'];
+    cargoTypeId = json['vehicle_type_id'];
     mapId = json['map_id'];
     weight = json['weight'];
     volumeM3 = json['volume_m3'];
@@ -30,7 +32,9 @@ class ApplyFilterRequest {
   String? cargoTypeId;
   String? mapId;
   num? weight;
+  num? weight2;
   num? volumeM3;
+  num? volumeM32;
   bool? takeAllUnloads;
   bool? loadAroundTheClock;
   bool? withRelations;
@@ -41,16 +45,23 @@ class ApplyFilterRequest {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (cargoTypeId != null) {
-      map['cargo_type_id'] = cargoTypeId;
+      map['vehicle_type_id'] = cargoTypeId;
     }
     if (mapId != null) {
       map['map_id'] = mapId;
     }
     if (weight != null) {
-      map['weight'] = weight;
+      map['min_weight'] = weight;
+    }
+
+    if (weight2 != null) {
+      map['max_weight'] = weight2;
     }
     if (volumeM3 != null) {
-      map['volume_m3'] = volumeM3;
+      map['min_volume'] = volumeM3;
+    }
+    if (volumeM32 != null) {
+      map['max_volume'] = volumeM32;
     }
     if (takeAllUnloads != null && takeAllUnloads == true) {
       map['take_all_unloads'] = takeAllUnloads;
