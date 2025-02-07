@@ -183,7 +183,7 @@ Future<void> init() async {
               }
             },
           ),
-          // if (localSource.hasChuck) chuck.getDioInterceptor(),
+          if (localSource.hasChuck) chuck.getDioInterceptor(),
         ],
       ),
   );
