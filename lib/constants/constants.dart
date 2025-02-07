@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../core/mixins/location_mixin.dart';
 import '../features/profile/data/models/eco_standart_type.dart';
+import '../router/app_routes.dart';
 
 sealed class Constants {
   Constants._();
@@ -14,9 +15,9 @@ sealed class Constants {
   static const String baseUrl = 'https://api.admin.furgo.uz/';
   static const String authUrl = 'https://api.auth.furgo.uz/v2/';
 
-  // static const String deepBaseLink = 'https://links.furgo.uz';
-  // static const String deepLink = '$deepBaseLink/${Routes.cargoDetailDeepLink}';
-  static const String androidAppLink = 'https://play.google.com/store/apps/details?id=uz.sarbon.mobile';
+  static const String deepBaseLink = 'https://links.sarbon.me';
+  static const String deepLink = '$deepBaseLink/${Routes.cargoDetailDeepLink}';
+  static const String androidAppLink = 'https://play.google.com/store/apps/details?id=uz.udevs.sarbon_mobile';
   static const String iosAppLink = 'https://apps.apple.com/uz/app/furgo/id6475668788';
   static final String appLink = Platform.isIOS ? iosAppLink : androidAppLink;
 
@@ -58,7 +59,9 @@ sealed class Constants {
 
   static const ruLan = Locale('ru', 'RU');
   static const uzLan = Locale('uz', 'UZ');
-  static const ozLan = Locale('oz', 'UZ');
+  static const trLan = Locale('tr', 'TR');
+  static const enLan = Locale('en', 'EN');
+  static const chLan = Locale('zh', 'CN');
 
   static List<EcoStandartType> ecoStandartTypes = [
     EcoStandartType(name: 'EURO 1', value: 'EURO_1'),
@@ -408,7 +411,9 @@ sealed class TableSlugs {
   static const String users = 'users';
   static const String carSale = 'car_sale';
   static const String city = 'city';
+  static const String dispatcherDrivers = 'dispatcher_drivers';
   static const String cargoItems = 'cargo';
+  static const String cargoFilter = '/logistika-get-cargo-with-filter';
   static const String vehicle = 'vehicle';
   static const String oppositeOffer = 'cargo';
   static const String orders = 'response';
@@ -450,6 +455,7 @@ sealed class AppKeys {
   static const String locale = 'locale';
   static const String accessToken = 'access_token';
   static const String userId = 'user_id';
+  static const String dispatcherId = 'dispatcher_id';
   static const String fullname = 'firstname';
   static const String lastname = 'lastname';
   static const String email = 'email';
