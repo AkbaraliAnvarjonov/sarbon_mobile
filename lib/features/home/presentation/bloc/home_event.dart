@@ -261,8 +261,24 @@ class HomeRefresh extends HomeEvent {
   List<Object> get props => [];
 }
 
+class GetUserCarType extends HomeEvent {
+  const GetUserCarType();
+
+  @override
+  List<Object> get props => [];
+}
+
 class GetVehicleType extends HomeEvent {
   const GetVehicleType();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SelectTrailerTypeEvent extends HomeEvent {
+  const SelectTrailerTypeEvent({required this.type});
+
+  final TrailerTypeItem type;
 
   @override
   List<Object> get props => [];

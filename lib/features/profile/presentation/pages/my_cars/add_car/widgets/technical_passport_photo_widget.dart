@@ -109,8 +109,7 @@ class _TechnicalPassportPhotoWidget extends StatelessWidget {
             },
             child: BlocBuilder<AddCarBloc, AddCarState>(
               buildWhen: (previous, current) =>
-                  previous.technicalPassportFileFront !=
-                  current.technicalPassportFileFront,
+                  previous.technicalPassportFileFront != current.technicalPassportFileFront,
               builder: (context, state) => Material(
                 borderRadius: AppUtils.kBorderRadius12,
                 color: context.colorScheme.surface,
@@ -131,8 +130,7 @@ class _TechnicalPassportPhotoWidget extends StatelessWidget {
                               AppUtils.kGap6,
                               Text(
                                 'add_photo'.tr(),
-                                style:
-                                    context.textStyle.regularCallout.copyWith(
+                                style: context.textStyle.regularCallout.copyWith(
                                   color: context.colorScheme.primary,
                                 ),
                               ),
@@ -240,9 +238,7 @@ class _TechnicalPassportPhotoWidget extends StatelessWidget {
               );
             },
             child: BlocBuilder<AddCarBloc, AddCarState>(
-              buildWhen: (previous, current) =>
-                  previous.technicalPassportFileBack !=
-                  current.technicalPassportFileBack,
+              buildWhen: (previous, current) => previous.technicalPassportFileBack != current.technicalPassportFileBack,
               builder: (context, state) => Material(
                 borderRadius: AppUtils.kBorderRadius12,
                 color: context.colorScheme.surface,
@@ -263,8 +259,7 @@ class _TechnicalPassportPhotoWidget extends StatelessWidget {
                               AppUtils.kGap6,
                               Text(
                                 'add_photo'.tr(),
-                                style:
-                                    context.textStyle.regularCallout.copyWith(
+                                style: context.textStyle.regularCallout.copyWith(
                                   color: context.colorScheme.primary,
                                 ),
                               ),

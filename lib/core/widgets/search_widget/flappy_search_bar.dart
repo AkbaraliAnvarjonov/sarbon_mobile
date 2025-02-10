@@ -323,6 +323,7 @@ class FlappySearchBarState<T> extends State<FlappySearchBar<T>> with TickerProvi
           _loading = false;
           animate = false;
         });
+        widget.onSearch.call('');
       }
     });
   }
@@ -388,6 +389,7 @@ class FlappySearchBarState<T> extends State<FlappySearchBar<T>> with TickerProvi
                   widget.onChanged?.call(value);
                   _onTextChanged(value);
                 },
+                autofocus: true,
                 style: widget.textStyle ??
                     const TextStyle(
                       fontSize: 14,

@@ -180,17 +180,31 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with CacheMixin {
         ),
       );
     } else if (result.isRight) {
-      await localSource.setUser(
-        imageUrl: '',
-        name: result.right.fullName ?? '',
-        phoneNumber: result.right.phone ?? '',
-        id: result.right.guid ?? '',
-        email: result.right.email ?? '',
-        login: result.right.login ?? '',
-        password: result.right.password ?? '',
-        vehicleId: '',
-      );
-      await localSource.setFavouriteCargoes(<String>[]);
+      final String? fcmToken = kDebugMode ? '' : await FirebaseMessaging.instance.getToken();
+      final String? deviceId = await _getId();
+
+      await Future.wait([
+        putFcmTokenUseCase(
+          PutFcmTokenParams(
+            fcmToken: fcmToken ?? '',
+            loginId: deviceId ?? '',
+            userId: result.right.guid ?? '',
+            registerId: result.right.yourId ?? '',
+          ),
+        ),
+        localSource.setUser(
+          imageUrl: '',
+          name: result.right.fullName ?? '',
+          phoneNumber: result.right.phone ?? '',
+          id: result.right.guid ?? '',
+          email: result.right.email ?? '',
+          login: result.right.login ?? '',
+          password: result.right.password ?? '',
+          vehicleId: '',
+        ),
+        localSource.setFavouriteCargoes(<String>[])
+      ]);
+
       emit(
         state.copyWith(status: ApiStatus.success),
       );

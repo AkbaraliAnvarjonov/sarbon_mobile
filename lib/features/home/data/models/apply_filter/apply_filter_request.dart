@@ -29,7 +29,7 @@ class ApplyFilterRequest {
     cityId2 = json['city_id_2'];
   }
 
-  String? cargoTypeId;
+  List<String>? cargoTypeId;
   String? mapId;
   num? weight;
   num? weight2;

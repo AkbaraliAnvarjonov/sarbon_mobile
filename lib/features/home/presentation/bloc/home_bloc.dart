@@ -5,6 +5,8 @@ import '../../../../core/extension/extension.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../../../router/app_routes.dart';
 import '../../../../services/api_status.dart';
+import '../../../auth/domain/entities/registration/driver/trailer_type_response_entity.dart';
+import '../../../auth/domain/usecases/get_trailer_type_usecase.dart';
 import '../../../profile/domain/usecases/get_user_cars_usecase.dart';
 import '../../data/models/apply_filter/apply_filter_request.dart';
 import '../../data/models/favourites/put_favourite_request_home.dart';
@@ -38,6 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required this.fetchCargoFromFilterUseCase,
     required this.getAllCargosWithoutFilterUseCase,
     required this.getUserCarsUseCase,
+    required this.getTrailerTypeUseCase,
   }) : super(const HomeState()) {
     on<InitialEvent>(_initial);
     on<SelectInitialAddressesEvent>(_selectInitialAddress);
@@ -68,7 +71,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeWeight2Event>(_changeWeight2);
     on<HomeEventClearFromAddress>(_homeClearFromAddress);
     on<HomeEventClearToAddress>(_homeClearToAddress);
-    on<GetVehicleType>(_getActiveCars);
+    on<GetUserCarType>(_getActiveCars);
+    on<GetVehicleType>(_getVehicleType);
+    on<SelectTrailerTypeEvent>(_selectTrailerType);
   }
 
   final GetAllNewsUseCase getAllNewsUseCase;
@@ -80,6 +85,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final FetchCargoFromFilterUseCase fetchCargoFromFilterUseCase;
   final GetAllCargosWithoutFilterUseCase getAllCargosWithoutFilterUseCase;
   final GetUserCarsUseCase getUserCarsUseCase;
+  final GetTrailerTypeUsecase getTrailerTypeUseCase;
 
   Future<void> _initial(
     InitialEvent event,
@@ -542,6 +548,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         cargosCount: 0,
         cargosWithoutFilterCount: 0,
         cargoItems: [],
+        selectedTrailers: [],
       ),
     );
     add(const GetAllCargosEvent());
@@ -620,7 +627,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _getActiveCars(
-    GetVehicleType event,
+    GetUserCarType event,
     Emitter<HomeState> emit,
   ) async {
     final response = await getUserCarsUseCase(
@@ -639,5 +646,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     }
+  }
+
+  Future<void> _getVehicleType(
+    GetVehicleType event,
+    Emitter<HomeState> emit,
+  ) async {
+    final result = await getTrailerTypeUseCase({});
+    result.fold(
+      (l) {},
+      (r) => emit(
+        state.copyWith(trailerTypes: r.trailerTypes),
+      ),
+    );
+  }
+
+  void _selectTrailerType(
+    SelectTrailerTypeEvent event,
+    Emitter<HomeState> emit,
+  ) {
+    final trailers = [...state.selectedTrailers];
+    bool exists = trailers.any((t) => t.guid == event.type.guid);
+    if (!exists) {
+      trailers.add(event.type);
+    } else {
+      trailers.remove(event.type);
+    }
+
+    emit(state.copyWith(selectedTrailers: trailers));
   }
 }

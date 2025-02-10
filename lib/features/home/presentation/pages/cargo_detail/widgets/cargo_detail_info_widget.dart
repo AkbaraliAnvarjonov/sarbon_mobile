@@ -11,151 +11,61 @@ class _CargoDetailInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) => Material(
         borderRadius: AppUtils.kBorderRadius12,
         color: context.colorScheme.surface,
-        child: Column(
-          children: [
-            Padding(
-              padding: AppUtils.kPaddingVertical16,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(SvgImage.icTruckFilled),
-                  AppUtils.kGap16,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        details?.vehicleDataEntity?.name ?? '',
-                        style: context.textStyle.size14Weight500Black.copyWith(
-                          fontSize: 17,
-                        ),
-                      ),
-                      AppUtils.kGap4,
-                      Text(
-                        '${details?.numberOfCars.toString() ?? '0'} машина',
-                        style: context.textStyle.size14Weight400Black,
-                      )
-                    ],
-                  )
-                ],
+        child: Padding(
+          padding: AppUtils.kPaddingAll12,
+          child: Column(
+            children: [
+              // _RowInfoWidget(
+              //   title: 'date'.tr(),
+              //   info: '${details?.loadTime?.day()}${details?.date?.dateMoth()}',
+              // ),
+
+              _RowInfoWidget(
+                title: '${'weight'.tr()} / ${'volume'.tr()}',
+                info: '${details?.weight} т / ${details?.volumeM3} м³',
               ),
-            ),
-            AppUtils.kDivider,
-            Padding(
-              padding: AppUtils.kPaddingVertical16,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(SvgImage.icBox),
-                  AppUtils.kGap16,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            SvgImage.dumbellIcon,
-                            height: 16,
-                            width: 16,
-                            colorFilter: ColorFilter.mode(
-                              context.color.dark1,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          Text(
-                            ' ${details?.weight} т.  ',
-                            style: context.textStyle.size14Weight500Black.copyWith(
-                              fontSize: 17,
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            SvgImage.kubIcon,
-                            height: 16,
-                            width: 16,
-                            colorFilter: ColorFilter.mode(
-                              context.color.dark1,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          Text(
-                            ' ${details?.volumeM3} м³',
-                            style: context.textStyle.size14Weight500Black.copyWith(
-                              fontSize: 17,
-                            ),
-                          ),
-                        ],
-                      ),
-                      AppUtils.kGap4,
-                      Text(
-                        '${details?.cargoTypeDetailsData?.name ?? ''}, ${(details?.hasAdditionalLoad ?? false) ? 'additional_loading_possible'.tr() : 'additional_loading_not_possible'.tr()}',
-                        style: context.textStyle.size14Weight400Black,
-                      ),
-                    ],
-                  )
-                ],
+              _RowInfoWidget(
+                title: 'distance'.tr(),
+                info: details?.distance ?? '',
               ),
-            ),
-            AppUtils.kDivider,
-            Padding(
-              padding: AppUtils.kPaddingVertical16,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(SvgImage.icPrice),
-                  AppUtils.kGap16,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${details?.bidCash?.toInt().moneyFormat} ${details?.currencyDataEntity?.code}',
-                        style: context.textStyle.size14Weight500Black.copyWith(
-                          fontSize: 17,
-                        ),
-                      ),
-                      AppUtils.kGap4,
-                      Text(
-                        details?.companyDataEntity?.paymentType ?? '',
-                        style: context.textStyle.size14Weight400Black,
-                      )
-                    ],
-                  ),
-                  AppUtils.kSpacer,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'prepayment'.tr(),
-                        style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
-                      ),
-                      AppUtils.kGap4,
-                      Text(
-                        '${details?.companyDataEntity?.rateInterest.toString() ?? ''} ${details?.currencyDataEntity?.code ?? ''}',
-                        style: context.textStyle.size14Weight400Black,
-                      )
-                    ],
-                  ),
-                ],
+              // _RowInfoWidget(
+              //   title: 'volume'.tr(),
+              //   info: '${details?.volumeM3} м³',
+              // ),
+              _RowInfoWidget(
+                title: 'product'.tr(),
+                info: details?.cargoTypeDetailsData?.name ?? '',
               ),
-            ),
-            AppUtils.kDivider,
-            if ((details?.comment ?? '').isNotEmpty)
-              Padding(
-                padding: AppUtils.kPaddingVertical16,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SvgPicture.asset(SvgImage.icComment),
-                    AppUtils.kGap16,
-                    Expanded(
-                      child: HtmlWidget(
-                        details?.comment ?? '',
-                        textStyle: context.textStyle.size14Weight400Black,
-                      ),
-                    ),
-                  ],
-                ),
+              _RowInfoWidget(
+                title: 'view'.tr(),
+                info: (details?.hasAdditionalLoad ?? false)
+                    ? 'additional_loading_possible'.tr()
+                    : 'additional_loading_not_possible'.tr(),
               ),
-            AppUtils.kGap16,
-          ],
+              _RowInfoWidget(
+                title: 'total_price'.tr(),
+                info: '${details?.bidCash?.toInt().moneyFormat} ${details?.currencyDataEntity?.code}',
+              ),
+              _RowInfoWidget(
+                title: 'payment_type'.tr(),
+                info: details?.companyDataEntity?.paymentType ?? '',
+              ),
+              _RowInfoWidget(
+                title: 'prepayment'.tr(),
+                info:
+                    '${details?.companyDataEntity?.rateInterest.toString() ?? ''} ${details?.currencyDataEntity?.code ?? ''}',
+              ),
+              _RowInfoWidget(
+                title: 'type_vehicle'.tr(),
+                info: details?.vehicleDataEntity?.name ?? '',
+              ),
+              _RowInfoWidget(
+                title: 'quantity_car'.tr(),
+                info: details?.numberOfCars.toString() ?? '',
+                isLastItem: true,
+              ),
+            ],
+          ),
         ),
       );
 }
@@ -176,6 +86,13 @@ class _CargoDetailInfoTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: [
+          Text(
+            'detail'.tr(),
+            style: context.textStyle.regularHeadline.copyWith(
+              color: context.color.textColor,
+            ),
+          ),
+          AppUtils.kSpacer,
           if (isCmr)
             Padding(
               padding: AppUtils.kPaddingL8,
@@ -244,6 +161,49 @@ class _CargoDetailInfoTitleWidget extends StatelessWidget {
                 ),
               ),
             ),
+        ],
+      );
+}
+
+class _RowInfoWidget extends StatelessWidget {
+  const _RowInfoWidget({
+    required this.title,
+    required this.info,
+    this.isLastItem = false,
+  });
+
+  final String title;
+  final String info;
+  final bool isLastItem;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$title:',
+                style: context.textStyle.size15Weight500Black.copyWith(
+                  color: context.color.greyText,
+                ),
+              ),
+              Flexible(
+                child: SizedBox(
+                  width: context.kSize.width * 0.4,
+                  child: Text(
+                    info,
+                    style: context.textStyle.size15Weight500Black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (!isLastItem) ...[
+            AppUtils.kGap12,
+            AppUtils.kDivider,
+            AppUtils.kGap12,
+          ],
         ],
       );
 }

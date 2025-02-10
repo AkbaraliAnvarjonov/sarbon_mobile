@@ -7,14 +7,12 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
     required this.isLastItem,
     required this.isFirstItem,
     required this.onTap,
-    this.detailsCargo,
   });
 
   final FetchListPositionsEntity details;
   final bool isLastItem;
   final bool isFirstItem;
   final VoidCallback onTap;
-  final GetCargoDetailsResponseEntity? detailsCargo;
 
   @override
   State<CargoDirectionWithDiagramInfoWidget> createState() => _CargoDirectionWithDiagramInfoWidgetState();
@@ -45,17 +43,20 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                SvgPicture.asset(
-                  widget.isFirstItem ? SvgImage.loadingCargo : SvgImage.unloadingCargo,
-                  width: 24,
-                  height: 20,
+                CircleAvatar(
+                  radius: 10,
+                  backgroundColor: widget.isFirstItem ? context.colorScheme.primary : context.color.greyText,
+                  child: CircleAvatar(
+                    radius: 4,
+                    backgroundColor: context.colorScheme.onPrimary,
+                  ),
                 ),
                 Visibility(
                   visible: !widget.isLastItem,
                   child: SizedBox(
                     height: height,
                     width: 20,
-                    child: DashedVerticalDivider(
+                    child: VerticalDivider(
                       color: widget.isFirstItem ? context.colorScheme.primary : context.color.midGrey5,
                       thickness: 1,
                       indent: 2,
@@ -68,72 +69,57 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
             AppUtils.kGap12,
             Column(
               key: heightKey,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: context.kSize.width - 72,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: context.kSize.width * 0.48,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: widget.details.addressType.cutString(13),
-                                style: context.textStyle.buttonStyle.copyWith(
-                                  color: const Color(0xFF211F26),
-                                  fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: context.kSize.width - 140,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: widget.details.addressType,
+                                  style: context.textStyle.size15Weight600Black.copyWith(
+                                    color: context.color.textColor,
+                                  ),
                                 ),
-                              ),
-                              if (widget.isFirstItem || widget.isLastItem)
                                 TextSpan(
                                   text:
-                                      ' - ${(widget.isFirstItem ? widget.detailsCargo?.countryCodeFrom : widget.detailsCargo?.countryCodeTo)}',
-                                  style: context.textStyle.size14Weight400Black.copyWith(
+                                      ' (${(widget.details.type == 'shipper' ? 'loading_status' : 'unloading_status').tr()})',
+                                  style: context.textStyle.size10Weight400Black.copyWith(
                                     color: context.color.midGray,
                                   ),
                                 ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
+                      ],
+                    ),
+                    AppUtils.kGap36,
+                    Visibility(
+                      visible: !widget.isFirstItem,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: context.color.greyText,
                       ),
-                      if (widget.isLastItem)
-                        Text(
-                          '~ ${widget.detailsCargo?.distance}',
-                          style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
-                        ),
-                    ],
+                    ),
+                  ],
+                ),
+                AppUtils.kGap8,
+                Visibility(
+                  visible: !widget.isLastItem,
+                  child: SizedBox(
+                    width: context.kSize.width - 90,
+                    child: AppUtils.kDivider,
                   ),
                 ),
-                SizedBox(
-                  width: context.kSize.width - 72,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: context.kSize.width * 0.48,
-                        child: Text(
-                          widget.details.addressType.afterFirstComma,
-                          style: context.textStyle.size14Weight400Black.copyWith(
-                            color: context.color.midGray,
-                          ),
-                          overflow: TextOverflow.fade,
-                        ),
-                      ),
-                      Text(
-                        '${widget.isFirstItem ? (widget.detailsCargo?.asSoonAsA ?? false) ? 'ready_for_loading'.tr() : widget.detailsCargo?.loadTime?.dateMothWeek() : (widget.detailsCargo?.asSoonAsB ?? false) ? 'as_soon_as_possible'.tr() : widget.detailsCargo?.date?.dateMothWeek()}',
-                        style: context.textStyle.size14Weight400Black.copyWith(
-                          color: context.color.dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                AppUtils.kGap12,
               ],
             ),
           ],

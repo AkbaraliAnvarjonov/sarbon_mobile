@@ -183,7 +183,7 @@ Future<void> init() async {
               }
             },
           ),
-          if (localSource.hasChuck) chuck.getDioInterceptor(),
+          // if (localSource.hasChuck) chuck.getDioInterceptor(),
         ],
       ),
   );
@@ -285,6 +285,7 @@ void authFeature() {
         registerOperatorUseCase: sl(),
         checkUserUseCase: sl(),
         registerWithSocialUseCase: sl(),
+        putFcmTokenUseCase: sl(),
       ),
     )
     ..registerFactory(
@@ -352,6 +353,7 @@ void homeFeature() {
       fetchCargoFromFilterUseCase: sl(),
       getAllCargosWithoutFilterUseCase: sl(),
       getUserCarsUseCase: sl(),
+      getTrailerTypeUseCase: sl(),
     ),
   );
 

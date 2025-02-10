@@ -1,8 +1,8 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sarbon_mobile/features/home/presentation/pages/searched_cargo_result/widget/select_vehicle.dart';
 
 import '../../../../../../constants/icons_constants.dart';
 import '../../../../../../core/extension/extension.dart';
@@ -13,10 +13,10 @@ import '../../../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../../../router/app_routes.dart';
 import '../../../../data/models/apply_filter/apply_filter_request.dart';
 import '../../../../domain/entities/types_cargo/types_cargo_entity.dart';
-import '../../../../domain/entities/types_payment/types_payment_entity.dart';
 import '../../../bloc/home_bloc.dart';
 import '../../widgets/filter_item.dart';
 import '../../widgets/search_address_widget.dart';
+import '../../widgets/vehicle_select_bottom_sheet.dart';
 
 part 'drop_down_widget.dart';
 
@@ -143,13 +143,33 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                             ),
                             AppUtils.kGap40,
                             Text(
-                              'type_cargo'.tr(),
+                              'transport'.tr(),
                               style: context.textStyle.size14Weight500Black.copyWith(
                                 color: context.color.gray700,
                               ),
                             ),
                             AppUtils.kGap6,
-                            const _DropDownCargoTypeWidget2(),
+                            SelectVehicleWidget(
+                              title: state.selectedTrailers.isEmpty
+                                  ? 'Все типы'
+                                  : state.selectedTrailers.map((type) => type.fullName ?? '').join(', '),
+                              onTap: () async {
+                                await customModalBottomSheet<void>(
+                                  context: rootNavigatorKey.currentContext!,
+                                  builder: (_, controller) => BlocProvider.value(
+                                    value: context.read<HomeBloc>(),
+                                    child: SelectVehicleBottomSheet(
+                                      isForInitialPointOfAddress: false,
+                                      scrollController: controller,
+                                    ),
+                                  ),
+                                  enableDrag: false,
+                                  isScrollControlled: true,
+                                );
+                              },
+                            ),
+
+                            // const _DropDownCargoTypeWidget2(),
                             AppUtils.kGap12,
                             // Text(
                             //   'view_cargo'.tr(),
@@ -357,7 +377,7 @@ class _FilterCargoBottomSheetState extends State<FilterCargoBottomSheet> {
                               ApplyFilterEvent(
                                 request: ApplyFilterRequest(
                                   withRelations: true,
-                                  cargoTypeId: state.selectedTypeCargo?.guid,
+                                  cargoTypeId: state.selectedTrailers.map((type) => type.guid ?? '').toList(),
                                   loadAroundTheClock: state.isLoadAroundTheClock,
                                   takeAllUnloads: state.isTakeAllUnloads,
                                   mapId: state.selectedTypePayment?.guid,

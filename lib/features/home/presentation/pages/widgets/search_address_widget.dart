@@ -69,6 +69,7 @@ class _SearchAddressWidgetState extends State<SearchAddressWidget> {
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) => FlappySearchBar<SearchItem>(
             searchBarPadding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            focusNode: FocusNode(),
             hintText: 'search_address'.tr(),
             filled: true,
             prefixIcon: Icon(
@@ -81,7 +82,7 @@ class _SearchAddressWidgetState extends State<SearchAddressWidget> {
                 controller.text = '';
                 setState(() {});
               },
-              icon: Icon(Icons.cancel, color: context.color.greyText),
+              icon: controller.text.isNotEmpty ? Icon(Icons.cancel, color: context.color.greyText) : const SizedBox(),
             ),
             hintStyle: context.textStyle.regularCallout.copyWith(
               color: context.color.greyText,
@@ -99,15 +100,17 @@ class _SearchAddressWidgetState extends State<SearchAddressWidget> {
             //   )
             // :
             onSearch: (text) async {
+              setState(() {});
+
               final items = await searchByText(text ?? '');
-              if (items.isNotEmpty) {}
+
               return items;
             },
             onItemFound: (item, index) => SearchFoundItemWidget(
               item: item,
               isForInitialPointOfAddress: widget.isForInitialPointOfAddress,
             ),
-            emptyWidget: const SearchEmptyWidget(),
+            emptyWidget: controller.text.isNotEmpty ? const SearchEmptyWidget() : const SizedBox(),
           ),
         ),
       );

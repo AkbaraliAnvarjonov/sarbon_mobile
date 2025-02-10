@@ -23,6 +23,8 @@ class HomeState extends Equatable {
     this.isLoadAroundTheClock = false,
     this.isUpdate = false,
     this.typesCargo = const [],
+    this.trailerTypes = const [],
+    this.selectedTrailers = const [],
     this.typesPayment = const [],
     this.selectedTypeCargo,
     this.selectedTypePayment,
@@ -40,6 +42,8 @@ class HomeState extends Equatable {
   final bool isUpdate;
   final ApiStatus putFavouriteStatus;
   final List<NewsItemEntity> news;
+  final List<TrailerTypeItem> trailerTypes;
+  final List<TrailerTypeItem> selectedTrailers;
   final List<AddressItemEntity> addresses;
   final List<SearchedCargoItemEntity> cargoItems;
   final List<SearchedCargoItemEntity> cargoItemsWithoutFilter;
@@ -98,6 +102,8 @@ class HomeState extends Equatable {
         selectedTypeCargo,
         selectedTypePayment,
         fetchCargoAndPaymentStatus,
+        trailerTypes,
+        selectedTrailers,
         saveVolume,
         saveVolume2,
         saveWeight,
@@ -112,6 +118,8 @@ class HomeState extends Equatable {
     int? cargosWithoutFilterPageNumber,
     List<NewsItemEntity>? news,
     List<AddressItemEntity>? addresses,
+    List<TrailerTypeItem>? trailerTypes,
+    List<TrailerTypeItem>? selectedTrailers,
     List<SearchedCargoItemEntity>? cargoItems,
     List<SearchedCargoItemEntity>? cargoItemsWithoutFilter,
     List<SearchedCargoItemEntity>? cargoIsLikedList,
@@ -142,6 +150,8 @@ class HomeState extends Equatable {
   }) =>
       HomeState(
         status: status ?? this.status,
+        trailerTypes: trailerTypes ?? this.trailerTypes,
+        selectedTrailers: selectedTrailers ?? this.selectedTrailers,
         isUpdate: isUpdate ?? this.isUpdate,
         cargosWithoutFilterPageNumber: cargosWithoutFilterPageNumber ?? this.cargosWithoutFilterPageNumber,
         putFavouriteStatus: putFavouriteStatus ?? this.putFavouriteStatus,
@@ -180,6 +190,7 @@ class HomeState extends Equatable {
       selectedTypePayment == null &&
       saveVolume.isEmpty &&
       saveVolume2.isEmpty &&
+      selectedTrailers.isEmpty &&
       saveWeight.isEmpty &&
       saveWeight2.isEmpty &&
       (!isTakeAllUnloads || !isLoadAroundTheClock) &&

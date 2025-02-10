@@ -44,7 +44,7 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
             previous.socialStatus != current.socialStatus,
         listener: (context, state) async {
           if (state.socialStatus.isSuccess) {
-            context.goNamed(Routes.main);
+            context.pushReplacement(Routes.main);
             context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
           }
           if (state.checkUserStatus.isSuccess) {

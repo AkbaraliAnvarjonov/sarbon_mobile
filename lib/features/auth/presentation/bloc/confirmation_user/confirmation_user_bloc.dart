@@ -24,6 +24,7 @@ import '../../../domain/entities/send_code/send_code_request_entity.dart';
 import '../../../domain/usecases/check_user_usecase.dart';
 import '../../../domain/usecases/get_companies_usecase.dart';
 import '../../../domain/usecases/get_trailer_type_usecase.dart';
+import '../../../domain/usecases/put_fcm_token_usecase.dart';
 import '../../../domain/usecases/register_driver_usecase.dart';
 import '../../../domain/usecases/register_operator_usecase.dart';
 import '../../../domain/usecases/register_with_social_use_case.dart';
@@ -44,6 +45,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
     required this.getTrailerTypeUsecase,
     required this.checkUserUseCase,
     required this.registerWithSocialUseCase,
+    required this.putFcmTokenUseCase,
   }) : super(const ConfirmationUserState()) {
     on<WritePhoneNumberEvent>(_writePhoneNumber);
     on<SendCodeEvent>(_sendCode);
@@ -63,6 +65,7 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
   final SendCodeUseCase sendCodeUseCase;
   final VerifyOtpUseCase verifyOtpUseCase;
   final CheckUserUseCase checkUserUseCase;
+  final PutFcmTokenUseCase putFcmTokenUseCase;
   final GetCompaniesUseCase getCompaniesUseCase;
   final GetTrailerTypeUsecase getTrailerTypeUsecase;
   final RegisterDriverUseCase registerDriverUseCase;
@@ -365,17 +368,31 @@ class ConfirmationUserBloc extends Bloc<ConfirmationUserEvent, ConfirmationUserS
     } else if (result.isRight) {
       print('id: ${result.right.guid}');
       print('email: ${result.right.email}');
-      await localSource.setUser(
-        imageUrl: '',
-        name: result.right.fullName ?? '',
-        phoneNumber: result.right.phone ?? '',
-        id: result.right.guid ?? '',
-        email: result.right.email ?? '',
-        login: result.right.login ?? '',
-        password: result.right.password ?? '',
-        vehicleId: '',
-      );
-      await localSource.setFavouriteCargoes(<String>[]);
+      final String? fcmToken = kDebugMode ? '' : await FirebaseMessaging.instance.getToken();
+      final String? deviceId = await _getId();
+
+      await Future.wait([
+        localSource.setUser(
+          imageUrl: '',
+          name: result.right.fullName ?? '',
+          phoneNumber: result.right.phone ?? '',
+          id: result.right.guid ?? '',
+          email: result.right.email ?? '',
+          login: result.right.login ?? '',
+          password: result.right.password ?? '',
+          vehicleId: '',
+        ),
+        putFcmTokenUseCase(
+          PutFcmTokenParams(
+            fcmToken: fcmToken ?? '',
+            loginId: deviceId ?? '',
+            userId: result.right.guid ?? '',
+            registerId: result.right.yourId ?? '',
+          ),
+        ),
+        localSource.setFavouriteCargoes(<String>[]),
+      ]);
+
       emit(
         state.copyWith(socialStatus: ApiStatus.success),
       );

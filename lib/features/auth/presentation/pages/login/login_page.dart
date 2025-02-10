@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
         listener: (context, state) async {
           if (state.status.isSuccess) {
             if (!context.mounted) return;
-            context.goNamed(Routes.main);
+            context.pushReplacement(Routes.main);
             context.read<MainBloc>().add(MainEventChanged(BottomMenu.values[0]));
           }
         },

@@ -18,6 +18,7 @@ mixin MainMixin on State<MainPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!mounted) return;
+    print('mana men');
     if (localSource.userId.isNotEmpty) {
       foregroundNotificationConfig();
       getUserCurrentLocation();
