@@ -18,13 +18,13 @@ mixin CalculateRouteMixin on State<CalculateRoutePage> {
   }
 
   Future<void> _init() async {
-     _handleResult(await widget.arguments.result);
+    _handleResult(await widget.arguments.result);
   }
 
   void _handleResult(DrivingSessionResult result) {
     setState(
       () {
-          result.routes!.asMap().forEach(
+        result.routes!.asMap().forEach(
           (i, route) {
             addressDistanceTimeModels.addAll(
               [

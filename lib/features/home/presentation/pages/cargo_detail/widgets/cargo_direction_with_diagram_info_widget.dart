@@ -7,12 +7,18 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
     required this.isLastItem,
     required this.isFirstItem,
     required this.onTap,
+    required this.from,
+    required this.to,
+    required this.distance,
   });
 
   final FetchListPositionsEntity details;
   final bool isLastItem;
   final bool isFirstItem;
   final VoidCallback onTap;
+  final String from;
+  final String to;
+  final String distance;
 
   @override
   State<CargoDirectionWithDiagramInfoWidget> createState() => _CargoDirectionWithDiagramInfoWidgetState();
@@ -43,20 +49,17 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircleAvatar(
-                  radius: 10,
-                  backgroundColor: widget.isFirstItem ? context.colorScheme.primary : context.color.greyText,
-                  child: CircleAvatar(
-                    radius: 4,
-                    backgroundColor: context.colorScheme.onPrimary,
-                  ),
+                SvgPicture.asset(
+                  widget.isFirstItem ? SvgImage.loadingCargo : SvgImage.unloadingCargo,
+                  width: 24,
+                  height: 20,
                 ),
                 Visibility(
                   visible: !widget.isLastItem,
                   child: SizedBox(
                     height: height,
                     width: 20,
-                    child: VerticalDivider(
+                    child: DashedVerticalDivider(
                       color: widget.isFirstItem ? context.colorScheme.primary : context.color.midGrey5,
                       thickness: 1,
                       indent: 2,
@@ -69,57 +72,59 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
             AppUtils.kGap12,
             Column(
               key: heightKey,
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: context.kSize.width - 140,
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: widget.details.addressType,
-                                  style: context.textStyle.size15Weight600Black.copyWith(
-                                    color: context.color.textColor,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text:
-                                      ' (${(widget.details.type == 'shipper' ? 'loading_status' : 'unloading_status').tr()})',
-                                  style: context.textStyle.size10Weight400Black.copyWith(
-                                    color: context.color.midGray,
-                                  ),
-                                ),
-                              ],
+                SizedBox(
+                  width: context.kSize.width - 72,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: widget.details.addressType.checkStringLength(24),
+                              style: context.textStyle.buttonStyle.copyWith(
+                                color: const Color(0xFF211F26),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
+                            if (widget.isFirstItem || widget.isLastItem)
+                              TextSpan(
+                                text: ' - ${(widget.isFirstItem ? widget.from : widget.to)}',
+                                style: context.textStyle.size14Weight400Black.copyWith(
+                                  color: context.color.midGray,
+                                ),
+                              ),
+                          ],
                         ),
-                      ],
-                    ),
-                    AppUtils.kGap36,
-                    Visibility(
-                      visible: !widget.isFirstItem,
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: context.color.greyText,
                       ),
-                    ),
-                  ],
-                ),
-                AppUtils.kGap8,
-                Visibility(
-                  visible: !widget.isLastItem,
-                  child: SizedBox(
-                    width: context.kSize.width - 90,
-                    child: AppUtils.kDivider,
+                      if (widget.isLastItem)
+                        Text(
+                          '~ ${widget.distance}',
+                          style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
+                        ),
+                    ],
                   ),
                 ),
+                SizedBox(
+                  width: context.kSize.width - 72,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: context.kSize.width * 0.6,
+                        child: Text(
+                          widget.details.addressType.afterFirstComma,
+                          style: context.textStyle.size14Weight400Black.copyWith(
+                            color: context.color.midGray,
+                          ),
+                          overflow: TextOverflow.fade,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AppUtils.kGap12,
               ],
             ),
           ],
