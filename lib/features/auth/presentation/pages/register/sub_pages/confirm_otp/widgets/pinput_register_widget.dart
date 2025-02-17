@@ -23,8 +23,7 @@ class _PinPutRegisterWidget extends StatelessWidget {
             context.read<ConfirmationUserBloc>().add(
                   VerifyOtpChangedEvent(
                     otp: value,
-                    phoneNumber:
-                        '+998${phoneNumber.replaceAll(' ', '').trim()}',
+                    phoneNumber: '+998${phoneNumber.replaceAll(' ', '').trim()}',
                   ),
                 );
           },
@@ -45,8 +44,8 @@ class _PinPutRegisterWidget extends StatelessWidget {
           defaultPinTheme: defaultPinTheme,
           focusedPinTheme: defaultPinTheme.copyWith(
             decoration: defaultPinTheme.decoration!.copyWith(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              color: context.colorScheme.onPrimary,
+              borderRadius: AppUtils.kBorderRadius8,
               border: Border.all(
                 color: context.colorScheme.primary,
               ),
@@ -55,13 +54,16 @@ class _PinPutRegisterWidget extends StatelessWidget {
           submittedPinTheme: defaultPinTheme.copyWith(
             decoration: defaultPinTheme.decoration!.copyWith(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppUtils.kBorderRadius8,
               border: Border.all(
                 color: context.colorScheme.primary,
               ),
             ),
           ),
-          errorText: 'un_correct_code'.tr(),
+          errorTextStyle: context.textStyle.size14Weight400Black.copyWith(
+            color: context.colorScheme.error,
+          ),
+          errorText: 'Код неверный, попробуйте снова',
           forceErrorState: context.select(
             (ConfirmationUserBloc bloc) => bloc.state.verifyOtpStatus.isError,
           ),

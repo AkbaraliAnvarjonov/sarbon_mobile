@@ -16,6 +16,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: AppBar(
             systemOverlayStyle: systemUiOverlayStyle,
             centerTitle: false,
+            automaticallyImplyLeading: false,
             elevation: 0,
             scrolledUnderElevation: 0,
             backgroundColor: context.colorScheme.primary,

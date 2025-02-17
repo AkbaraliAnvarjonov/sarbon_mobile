@@ -420,7 +420,7 @@ class _AllCargoItemState extends State<AllCargoItem> {
                           ),
                         ),
                         Text(
-                          'Наличные',
+                          widget.cargoItem?.paymentType ?? '',
                           style: context.textStyle.size14Weight500Black.copyWith(
                             color: const Color(0xFF211F26),
                           ),

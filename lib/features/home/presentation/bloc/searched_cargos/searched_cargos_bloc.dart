@@ -15,7 +15,6 @@ import '../../../domain/usecases/filter/fetch_type_cargo_usecase.dart';
 import '../../../domain/usecases/filter/fetch_type_payment_usecase.dart';
 import '../../../domain/usecases/get_searched_cargo_items_usecase.dart';
 import '../../../domain/usecases/put_favourite_cargo_home_usecase.dart';
-import '../home_bloc.dart';
 
 part 'searched_cargos_event.dart';
 
@@ -203,7 +202,6 @@ class SearchedCargosBloc extends Bloc<SearchedCargosEvent, SearchedCargosState> 
             fetchCargoAndPaymentStatus: ApiStatus.success,
           ),
         );
-        add(const FetchPaymentTypesEvent());
       },
     );
   }

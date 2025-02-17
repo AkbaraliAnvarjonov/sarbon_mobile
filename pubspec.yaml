@@ -75,7 +75,7 @@ dependencies:
   device_info_plus: ^9.1.2
   battery_plus: ^6.0.1
   # image
-  image_cropper: ^5.0.1
+  image_cropper: ^9.0.0
   # http parser
   http_parser: ^4.0.2
   share_plus: ^10.1.4
@@ -104,6 +104,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/gifs/
+    - assets/sounds/
 
   fonts:
     - family: AppIcons

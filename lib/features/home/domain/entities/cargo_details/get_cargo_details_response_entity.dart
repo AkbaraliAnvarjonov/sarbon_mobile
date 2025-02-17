@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sarbon_mobile/router/app_routes.dart';
 
 import '../../../data/models/cargo_details/get_cargo_details_response_model.dart';
 
@@ -28,6 +29,7 @@ class GetCargoDetailsResponseEntity extends Equatable {
   final String? loadTime;
   final bool? asSoonAsA;
   final bool? asSoonAsB;
+  bool isLiked;
   final num? loadCapacity;
   final String? loadLocation;
   final String? measurementId;
@@ -55,7 +57,7 @@ class GetCargoDetailsResponseEntity extends Equatable {
   final String? firmId;
   final bool? noHaggling;
 
-  const GetCargoDetailsResponseEntity({
+  GetCargoDetailsResponseEntity({
     this.addressId,
     this.addressId2,
     this.firmId,
@@ -72,6 +74,7 @@ class GetCargoDetailsResponseEntity extends Equatable {
     this.statuses,
     this.bidCash,
     this.paymentType,
+    required this.isLiked,
     this.dimWithSpecial,
     this.companyId,
     this.bargainType,
@@ -160,6 +163,7 @@ class GetCargoDetailsResponseEntity extends Equatable {
         city2NameEn,
         distance,
         noHaggling,
+        isLiked,
       ];
 }
 
@@ -342,12 +346,11 @@ extension GetCargoDetailsResponseEntityX on GetCargoDetailsResponseModel {
             statuses: (cargo?.indicateStatus is List<String>) ? cargo?.indicateStatus ?? [] : [],
             bidCash: cargo?.bidCash ?? 0,
             paymentType: cargo?.paymentType ?? '',
+            isLiked: localSource.favouriteCargoes.contains(cargo?.guid ?? ''),
             dimWithSpecial: cargo?.dimWithSpecial ?? 0,
-            // bargainType: cargo?.bargainType ?? [],
             bodyTypeId: cargo?.bodyTypeId ?? '',
             cargoTypeId: cargo?.cargoTypeId ?? '',
             comment: cargo?.comment ?? '',
-            // conditions: cargo?.conditions ?? [],
             date: cargo?.date ?? '',
             guid: cargo?.guid ?? '',
             loadTime: cargo?.loadTime ?? '',
@@ -355,13 +358,11 @@ extension GetCargoDetailsResponseEntityX on GetCargoDetailsResponseModel {
             loadLocation: cargo?.loadLocation ?? '',
             measurementId: cargo?.measurementId ?? '',
             numberOfCars: cargo?.numberOfCars ?? 0,
-            // status: cargo?.status ?? [],
             unloadLocation: cargo?.unloadLocation ?? '',
             usersId: cargo?.usersId ?? '',
             volumeM3: cargo?.volumeM3 ?? 0,
             weight: cargo?.weight ?? 0,
             prePaymentPercentage: cargo?.prePaymentPercentage ?? 0,
-            // paymentAfterLoading: cargo?.paymentAfterLoading ?? 0,
             hasAdditionalLoad: cargo?.loadAroundTheClock ?? false,
           )
         : null;

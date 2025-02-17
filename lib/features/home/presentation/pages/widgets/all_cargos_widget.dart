@@ -51,11 +51,11 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
                         ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
-                        : Center(
-                            child: SizedBox(
-                              height: context.kSize.height * 0.8,
-                              width: context.kSize.width,
-                              child: const CircularProgressIndicator.adaptive(),
+                        : SizedBox(
+                            height: context.kSize.height * 0.8,
+                            width: context.kSize.width,
+                            child: const Center(
+                              child: CircularProgressIndicator.adaptive(),
                             ),
                           );
                   }
@@ -68,14 +68,12 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
                       Routes.cargoDetails,
                       extra: widget.cargoItems[index].guid ?? '',
                     )
-                        .then(
-                      (value) {
-                        if (value != null && value == true) {
-                          if (!context.mounted) return;
-                          context.pop(true);
-                        }
-                      },
-                    );
+                        .then((value) {
+                      if (value != null && value == true) {
+                        if (!context.mounted) return;
+                        context.pop(true);
+                      }
+                    });
                   },
                   onTapShareButton: () async {
                     await Share.share(
@@ -111,14 +109,12 @@ class _AllCargosWidgetState extends State<AllCargosWidget> with CargosMixin {
                             Routes.cargoDetails,
                             extra: widget.withoutFilterCargoItems[index].guid ?? '',
                           )
-                              .then(
-                            (value) {
-                              if (value != null && value == true) {
-                                if (!context.mounted) return;
-                                context.pop(true);
-                              }
-                            },
-                          );
+                              .then((value) {
+                            if (value != null && value == true) {
+                              if (!context.mounted) return;
+                              context.pop(true);
+                            }
+                          });
                         },
                         onTapShareButton: () async {
                           await Share.share(

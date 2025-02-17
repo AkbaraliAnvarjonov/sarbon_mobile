@@ -24,6 +24,7 @@ import '../../../orders/presentation/pages/orders_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 import '../bloc/main_bloc.dart';
 import 'widgets/location_bottom_sheet.dart';
+import 'widgets/order_count_widget.dart';
 
 part '../mixin/main_mixin.dart';
 
@@ -174,27 +175,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
                                   width: 24,
                                   height: 24,
                                 ),
-                                if (state.signedOrderCount > 0)
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      width: 14,
-                                      height: 14,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Text(
-                                        state.signedOrderCount.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                if (state.signedOrderCount > 0) OrderCountBadge(count: state.signedOrderCount),
                               ],
                             ),
                           ),
@@ -210,27 +191,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin, Widg
                                     BlendMode.srcIn,
                                   ),
                                 ),
-                                if (state.signedOrderCount > 0)
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      width: 14,
-                                      height: 14,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Text(
-                                        state.signedOrderCount.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                if (state.signedOrderCount > 0) OrderCountBadge(count: state.signedOrderCount),
                               ],
                             ),
                           ),

@@ -12,6 +12,7 @@ import '../../models/login/get_client_type_response_model.dart';
 import '../../models/login/get_companies_response_model.dart';
 import '../../models/login/login_request_model.dart';
 import '../../models/login/login_response_model.dart';
+import '../../models/registration/driver/check_user_response_model.dart';
 import '../../models/registration/driver/register_driver_request_model.dart';
 import '../../models/registration/driver/register_driver_response_model.dart';
 import '../../models/registration/driver/register_social_model.dart';
@@ -46,6 +47,10 @@ abstract class AuthRemoteDataSource {
   Future<RegisterDriverResponseModel> registerDriver(
     RegisterDriverRequestModel registerDriverRequestModel,
   );
+
+  Future<bool> checkRegisterUser({
+    required String phoneNumber,
+  });
 
   Future<RegisterSocialResponseModel> registerSocial(
     RegisterSocialRequestModel registerSocialRequestModel,

@@ -32,3 +32,29 @@ class GetDriverOrdersEvent extends CargoDetailsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DeleteLikeCargoEvent extends CargoDetailsEvent {
+  const DeleteLikeCargoEvent({
+    required this.cargoId,
+  });
+
+  final String cargoId;
+
+  @override
+  List<Object> get props => [
+        cargoId,
+      ];
+}
+
+class PushLikeCargoEvent extends CargoDetailsEvent {
+  const PushLikeCargoEvent({
+    required this.cargoId,
+  });
+
+  final String cargoId;
+
+  @override
+  List<Object> get props => [
+        cargoId,
+      ];
+}

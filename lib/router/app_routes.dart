@@ -12,7 +12,6 @@ import '../features/auth/presentation/bloc/confirmation_user/confirmation_user_b
 import '../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import '../features/auth/presentation/bloc/login/login_bloc.dart';
 import '../features/auth/presentation/bloc/user_agreement/user_agreement_bloc.dart';
-import '../features/auth/presentation/pages/login/cargo_detail/cargo_detail_page.dart';
 import '../features/auth/presentation/pages/login/login_page.dart';
 import '../features/auth/presentation/pages/login/sub_pages/forgot_password/forgot_password_page.dart';
 import '../features/auth/presentation/pages/register/register_page.dart';
@@ -121,7 +120,7 @@ final GoRouter router = GoRouter(
     if (isDeepLink) {
       if (state.uri.pathSegments.isNotEmpty) {
         if (!hasProfile) {
-          return '${Routes.login}${!hasUrl ? "" : '/${Routes.cargoDetailsForUnregisterUserpLink}${state.uri.pathSegments.last}'}';
+          return '${Routes.selectAuth}${!hasUrl ? "" : '/${Routes.cargoDetailsForUnregisterUserpLink}${state.uri.pathSegments.last}'}';
         }
         if (hasProfile) {
           return '${Routes.main}${!hasUrl ? "" : '/${Routes.cargoDetailDeepLink}${state.uri.pathSegments.last}'}';
@@ -155,6 +154,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Routes.login,
       name: Routes.login,
+      parentNavigatorKey: rootNavigatorKey,
+      builder: (_, __) => BlocProvider(
+        create: (context) => sl<LoginBloc>(),
+        child: const LoginPage(),
+      ),
+    ),
+    GoRoute(
+      path: Routes.selectAuth,
+      name: Routes.selectAuth,
+      // parentNavigatorKey: rootNavigatorKey,
       routes: [
         GoRoute(
           path: Routes.cargoDetailsForUnregisterUser,
@@ -164,23 +173,13 @@ final GoRouter router = GoRouter(
             final String? id = state.pathParameters['id'];
             return BlocProvider(
               create: (context) => sl<CargoDetailsBloc>(),
-              child: CargoDetailForUnregisterUserPage(
+              child: CargoDetailPage(
                 cargoId: id ?? '',
               ),
             );
           },
         ),
       ],
-      // parentNavigatorKey: rootNavigatorKey,
-      builder: (_, __) => BlocProvider(
-        create: (context) => sl<LoginBloc>(),
-        child: const LoginPage(),
-      ),
-    ),
-    GoRoute(
-      path: Routes.selectAuth,
-      name: Routes.selectAuth,
-      parentNavigatorKey: rootNavigatorKey,
       builder: (_, __) => const SelectAuthPage(),
     ),
     GoRoute(
@@ -225,11 +224,10 @@ final GoRouter router = GoRouter(
           builder: (_, state) {
             final String? id = state.pathParameters['id'];
             return BlocProvider(
-              create: (context) => sl<CargoDetailsBloc>(),
-              child: CargoDetailPage(
-                cargoId: id ?? '',
-              ),
-            );
+                create: (context) => sl<CargoDetailsBloc>(),
+                child: CargoDetailPage(
+                  cargoId: id ?? '',
+                ));
           },
         ),
       ],

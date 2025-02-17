@@ -8,11 +8,11 @@ import '../mixins/location_mixin.dart';
 import '../widgets/bottom_sheet/custom_bottom_sheet.dart';
 import '../widgets/map_launch/maps_bottom_sheet.dart';
 
-Future<void> launchMapOnDeviceMap(
-  Points startPoint,
-  BuildContext context, [
-  String? title,
-]) async {
+Future<void> launchMapOnDeviceMap({
+  required Points startPoint,
+  Points? endPoint,
+  required BuildContext context,
+}) async {
   final List<AvailableMap> maps = await MapLauncher.installedMaps;
   final List<MapIconName> list = [];
   Point? pos;
@@ -29,10 +29,14 @@ Future<void> launchMapOnDeviceMap(
     );
   }
 
-  if (await LocationMixin.instance.onlyCheck() == LocationPermissionHandle.success) {
-    pos = await LocationMixin.instance.determinePosition();
+  if (endPoint == null) {
+    if (await LocationMixin.instance.onlyCheck() == LocationPermissionHandle.success) {
+      pos = await LocationMixin.instance.determinePosition();
+    } else {
+      return;
+    }
   } else {
-    return;
+    pos = Point(latitude: endPoint.latitude, longitude: endPoint.longitude);
   }
 
   if (!context.mounted) return;

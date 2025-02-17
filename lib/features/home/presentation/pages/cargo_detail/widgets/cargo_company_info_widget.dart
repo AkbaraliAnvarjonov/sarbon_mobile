@@ -8,65 +8,68 @@ class _CompanyInfoOfCargoWidget extends StatelessWidget {
   final CargoCompanyDetailsEntity? companyInfo;
 
   @override
-  Widget build(BuildContext context) => Row(
-        children: [
-          Container(
-            height: 50,
-            width: 50,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black.withOpacity(0.15)),
-              image: const DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(PngImage.absoluteLogo) as ImageProvider,
+  Widget build(BuildContext context) => Padding(
+        padding: AppUtils.kPaddingHorizontal16,
+        child: Row(
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black.withOpacity(0.15)),
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(PngImage.absoluteLogo) as ImageProvider,
+                ),
               ),
             ),
-          ),
-          AppUtils.kGap12,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'ABSOLUTE LOGISTICS',
-                    style: context.textStyle.size14Weight400Black,
-                  ),
-                  AppUtils.kGap4,
-                  SvgPicture.asset(SvgImage.verificationIcon),
-                ],
-              ),
-              AppUtils.kGap4,
-              InkWell(
-                onTap: () async {
-                  await UrlLauncher.switchPhoneNumber(companyInfo?.phoneNumber ?? '');
-                },
-                child: Text(
-                  companyInfo?.phoneNumber ?? '',
-                  style: context.textStyle.size14Weight500Black,
+            AppUtils.kGap12,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'ABSOLUTE LOGISTICS',
+                      style: context.textStyle.size14Weight400Black,
+                    ),
+                    AppUtils.kGap4,
+                    SvgPicture.asset(SvgImage.verificationIcon),
+                  ],
                 ),
-              )
-            ],
-          ),
-          AppUtils.kSpacer,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset(SvgImage.starIcon),
-                  AppUtils.kGap2,
-                  Text(
-                    (companyInfo?.rating ?? 0).toDouble().toString(),
+                AppUtils.kGap4,
+                InkWell(
+                  onTap: () async {
+                    await UrlLauncher.switchPhoneNumber(companyInfo?.phoneNumber ?? '');
+                  },
+                  child: Text(
+                    companyInfo?.phoneNumber ?? '',
                     style: context.textStyle.size14Weight500Black,
                   ),
-                ],
-              ),
-              AppUtils.kGap24,
-            ],
-          )
-        ],
+                )
+              ],
+            ),
+            AppUtils.kSpacer,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(SvgImage.starIcon),
+                    AppUtils.kGap2,
+                    Text(
+                      (companyInfo?.rating ?? 0).toDouble().toString(),
+                      style: context.textStyle.size14Weight500Black,
+                    ),
+                  ],
+                ),
+                AppUtils.kGap24,
+              ],
+            )
+          ],
+        ),
       );
 }
 

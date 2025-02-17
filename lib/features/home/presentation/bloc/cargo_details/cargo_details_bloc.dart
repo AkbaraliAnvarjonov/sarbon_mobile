@@ -1,13 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../router/app_routes.dart';
 import '../../../../../services/api_status.dart';
 import '../../../../orders/domain/usecases/get_orders_usecase.dart';
+import '../../../data/models/favourites/put_favourite_request_home.dart';
 import '../../../domain/entities/cargo_details/address_position_cargo_entity.dart';
 import '../../../domain/entities/cargo_details/get_cargo_details_response_entity.dart';
 import '../../../domain/usecases/address_position_cargo_usecase.dart';
 import '../../../domain/usecases/get_addresses_point_usecase.dart';
 import '../../../domain/usecases/get_cargo_details_usecase.dart';
+import '../../../domain/usecases/put_favourite_cargo_home_usecase.dart';
 
 part 'cargo_details_event.dart';
 
@@ -18,16 +21,19 @@ class CargoDetailsBloc extends Bloc<CargoDetailsEvent, CargoDetailsState> {
     required this.getCargoDetailsUseCase,
     required this.getAddressesUseCase,
     required this.fetchAddressesPositionsByCargoUseCase,
+    required this.putFavouriteCargoUseCase,
     required this.getOrdersUseCase,
   }) : super(const CargoDetailsState()) {
     on<GetCargoDetailsEvent>(_getCargoDetails);
-
+    on<DeleteLikeCargoEvent>(_deleteLikeCargo);
+    on<PushLikeCargoEvent>(_pushLikeCargo);
     on<GetCargoAddressesPointEvent>(_getAddressesPositions);
     on<GetDriverOrdersEvent>(_getDriverOrdersEvent);
   }
 
   final GetCargoDetailsUseCase getCargoDetailsUseCase;
   final GetOrdersUseCase getOrdersUseCase;
+  final PutFavouriteCargoHomeUseCase putFavouriteCargoUseCase;
   final GetCargoAddressesPointUseCase getAddressesUseCase;
   final FetchAddressesPositionsByCargoUseCase fetchAddressesPositionsByCargoUseCase;
 
@@ -142,42 +148,52 @@ class CargoDetailsBloc extends Bloc<CargoDetailsEvent, CargoDetailsState> {
     emit(state.copyWith(addresses: addresses));
   }
 
-// Future<void> _getAddressesData(
-//   GetCargoAddressesPointEvent event,
-//   Emitter<CargoDetailsState> emit,
-// ) async {
-//   emit(state.copyWith(cargoPointStatus: ApiStatus.loading));
-//   final response = await getAddressesUseCase(
-//     GetAddressesPointParams(
-//       guids: state.details?.addressIds ?? [],
-//     ),
-//   );
-//   response.fold(
-//     (l) => emit(state.copyWith(cargoPointStatus: ApiStatus.error)),
-//     (r) {
-//       final List<CargoAddressesPoint> addresses = [
-//         ...state.addresses,
-//       ];
-//       for (int i = 0; i < r.addresses.length; i++) {
-//         addresses.add(
-//           CargoAddressesPoint(
-//             addressName: r.addresses[i].addressName,
-//             addressType: r.addresses[i].addressType,
-//             cargoStatus: r.addresses[i].cargoStatus,
-//           ),
-//         );
-//       }
-//       if (addresses.length >= 2) {
-//         final CargoAddressesPoint valueAtIndex1 = addresses.removeAt(1);
-//         addresses.add(valueAtIndex1);
-//       }
-//       emit(
-//         state.copyWith(
-//           addresses: addresses,
-//           cargoPointStatus: ApiStatus.success,
-//         ),
-//       );
-//     },
-//   );
-// }
+  Future<void> _deleteLikeCargo(
+    DeleteLikeCargoEvent event,
+    Emitter<CargoDetailsState> emit,
+  ) async {
+    final List<String> favouriteCargoesGuids = [
+      ...localSource.favouriteCargoes,
+    ];
+
+    final Set<String> setFavourite = favouriteCargoesGuids.toSet();
+    setFavourite.remove(event.cargoId);
+    await localSource.setFavouriteCargoes(setFavourite.toList());
+    final result = state.details!;
+    result.isLiked = false;
+    emit(state.copyWith(details: result));
+    await putFavouriteCargoUseCase(
+      PutFavouriteRequestHome(
+        data: Data(
+          guid: localSource.userId,
+          cargoIds: setFavourite.toList(),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pushLikeCargo(
+    PushLikeCargoEvent event,
+    Emitter<CargoDetailsState> emit,
+  ) async {
+    final List<String> favouriteCargoesGuids = [
+      ...localSource.favouriteCargoes,
+    ];
+
+    final Set<String> setFavourite = favouriteCargoesGuids.toSet();
+    setFavourite.add(event.cargoId);
+
+    await localSource.setFavouriteCargoes(setFavourite.toList());
+    final result = state.details!;
+    result.isLiked = true;
+    emit(state.copyWith(details: result));
+    await putFavouriteCargoUseCase(
+      PutFavouriteRequestHome(
+        data: Data(
+          guid: localSource.userId,
+          cargoIds: setFavourite.toList(),
+        ),
+      ),
+    );
+  }
 }

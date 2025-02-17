@@ -21,8 +21,11 @@ class _AddressesPointWidget extends StatelessWidget {
                 isFirstItem: index == 0,
                 onTap: () async {
                   await launchMapOnDeviceMap(
-                    Points(latitude: addressPositions[index].lat, longitude: addressPositions[index].long),
-                    context,
+                    startPoint: Points(
+                      latitude: addressPositions[index].lat,
+                      longitude: addressPositions[index].long,
+                    ),
+                    context: context,
                   );
                 },
               ),

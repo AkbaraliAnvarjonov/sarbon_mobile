@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../../../../constants/image_constants.dart';
 import '../../../../../../../core/extension/extension.dart';
@@ -34,7 +31,7 @@ class ConfirmPhoneNumberPage extends StatefulWidget {
 
 class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) => BlocListener<ConfirmationUserBloc, ConfirmationUserState>(
@@ -82,15 +79,6 @@ class _ConfirmPhoneNumberPageState extends State<ConfirmPhoneNumberPage> {
                     fontWeight: FontWeight.w500,
                     color: context.colorScheme.onPrimary,
                   ),
-                ),
-                leading: IconButton(
-                  icon: Icon(
-                    Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    context.pop();
-                  },
                 ),
                 centerTitle: false,
                 systemOverlayStyle: systemUiOverlayStyle,

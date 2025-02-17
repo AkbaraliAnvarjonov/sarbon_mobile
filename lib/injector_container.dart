@@ -472,6 +472,7 @@ void cargoDetailsFeature() {
       getAddressesUseCase: sl(),
       getOrdersUseCase: sl(),
       fetchAddressesPositionsByCargoUseCase: sl(),
+      putFavouriteCargoUseCase: sl(),
     ),
   );
 

@@ -37,15 +37,14 @@ Future<void> notificationInitialize() async {
 }
 
 Future<void> setupFlutterNotifications() async {
-  print('--->> setupFlutterNotifications');
   if (Platform.isIOS) {
     await FirebaseMessaging.instance.requestPermission(announcement: true);
   }
   channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.', // description
-    importance: Importance.high,
+    'notification_channel', // id
+    'notification_channel_title', // title
+    description: 'This channel is used for notifications.', // description
+    importance: Importance.max,
   );
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -61,7 +60,6 @@ Future<void> setupFlutterNotifications() async {
 }
 
 Future<void> showFlutterNotification(RemoteMessage message) async {
-  print('--->> showFlutterNotification');
   final RemoteNotification? notification = message.notification;
   if (!kIsWeb) {
     await flutterLocalNotificationsPlugin.show(
@@ -81,6 +79,7 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
           priority: Priority.high,
           importance: Importance.high,
           visibility: NotificationVisibility.public,
+          sound: const UriAndroidNotificationSound("assets/sounds/android_notification.mp3"),
         ),
         iOS: const DarwinNotificationDetails(
           presentAlert: true,
@@ -102,7 +101,6 @@ Future<void> foregroundNotification() async {
     onDidReceiveNotificationResponse: (response) async {
       debugPrint('--->> foreground RESPONSE: ${response.payload}');
       if (response.payload != null && response.payload!.isNotEmpty) {
-        print(response.payload);
         await router.pushNamed(
           Routes.orderByNotification,
           extra: response.payload,

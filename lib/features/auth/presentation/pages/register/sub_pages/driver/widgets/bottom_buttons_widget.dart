@@ -90,7 +90,6 @@ class _BottomButtonsWidget extends StatelessWidget {
                                       clientTypeId: Constants.clientTypeDriverId,
                                       roleId: Constants.roleDriverId,
                                       vehicleId: state.selectedTypeItem!.guid,
-                                      // companyId: state.selectedCompany!.guid,
                                       photo: 'photo',
                                       passportScan: '',
                                       passportCode: '',

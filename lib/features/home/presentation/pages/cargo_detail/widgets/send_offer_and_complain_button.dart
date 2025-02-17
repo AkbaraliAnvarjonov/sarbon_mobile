@@ -12,7 +12,8 @@ class _SendOfferAndComplainButtonState extends State<_SendOfferAndComplainButton
   Widget build(BuildContext context) => BlocBuilder<CargoDetailsBloc, CargoDetailsState>(
         buildWhen: (previous, current) =>
             previous.status != current.status || previous.signedOrdersStatus != current.signedOrdersStatus,
-        builder: (context, state) => SafeArea(
+        builder: (context, state) => Padding(
+          padding: AppUtils.kPaddingHorizontal16,
           child: Row(
             children: [
               Expanded(
@@ -68,10 +69,10 @@ class _SendOfferAndComplainButtonState extends State<_SendOfferAndComplainButton
               AppUtils.kGap24,
               GestureDetector(
                 onTap: () async {
-                  // await Share.share(
-                  //   '''${Constants.deepLink}${state.cargoItems[index].guid ?? ''}\n${(context.locale.languageCode == 'ru' ? state.cargoItems[index].cityNameRu : state.cargoItems[index].cityNameEn) ?? ''} - ${(context.locale.languageCode == 'ru' ? state.cargoItems[index].city2NameRu : state.cargoItems[index].city2NameEn) ?? ''}; ${state.cargoItems[index].cardoTypeName ?? ''} (${'cargo'.tr()})\n${state.cargoItems[index].vehicleTypeName ?? ''} (${'vehicle_view'.tr()})''',
-                  //   subject: 'share_cargo'.tr(),
-                  // );
+                  await Share.share(
+                    '''${Constants.deepLink}${state.details?.guid ?? ''}\n${state.details?.cityName ?? ''} - ${state.details?.city2Name ?? ''}; ${state.details?.cargoTypeDetailsData?.name ?? ''} (${'cargo'.tr()})\n${state.details?.vehicleDataEntity?.name ?? ''} (${'vehicle_view'.tr()})''',
+                    subject: 'share_cargo'.tr(),
+                  );
                 },
                 child: Container(
                   height: 35,
@@ -90,21 +91,19 @@ class _SendOfferAndComplainButtonState extends State<_SendOfferAndComplainButton
               if (localSource.userId.isNotEmpty)
                 GestureDetector(
                   onTap: () {
-                    // if (widget.cargoItem?.isLiked ?? false) {
-                    //   context.read<CargoDetailsBloc>().add(
-                    //         DeleteLikeCargoEvent(
-                    //           cargo: widget.cargoItem!,
-                    //         ),
-                    //       );
-                    //   widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
-                    // } else {
-                    //   context.read<CargoDetailsBloc>().add(
-                    //         PushLikeCargoEvent(
-                    //           cargo: widget.cargoItem!,
-                    //         ),
-                    //       );
-                    //   widget.cargoItem?.isLiked = !(widget.cargoItem?.isLiked ?? false);
-                    // }
+                    if (state.details?.isLiked ?? false) {
+                      context.read<CargoDetailsBloc>().add(
+                            DeleteLikeCargoEvent(
+                              cargoId: state.details?.guid ?? '',
+                            ),
+                          );
+                    } else {
+                      context.read<CargoDetailsBloc>().add(
+                            PushLikeCargoEvent(
+                              cargoId: state.details?.guid ?? '',
+                            ),
+                          );
+                    }
                     setState(() {});
                   },
                   child: Container(
@@ -119,9 +118,7 @@ class _SendOfferAndComplainButtonState extends State<_SendOfferAndComplainButton
                       child: SvgPicture.asset(
                         SvgImage.likeIcon,
                         colorFilter: ColorFilter.mode(
-                          // (widget.cargoItem?.isLiked ?? false) ?
-                          context.colorScheme.error ,
-                              // : const Color(0xFF7E7B86),
+                          (state.details?.isLiked ?? false) ? context.colorScheme.error : const Color(0xFF7E7B86),
                           BlendMode.srcIn,
                         ),
                       ),

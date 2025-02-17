@@ -61,11 +61,11 @@ class _TimerWidgetState extends State<_TimerWidget> {
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-            text: 'resend_sms_code'.tr(),
+            text: 'Отправить снова',
             style: context.textStyle.regularCallout.copyWith(
-              color: context.colorScheme.onSurface,
+              color: context.colorScheme.primary,
               fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
@@ -76,9 +76,9 @@ class _TimerWidgetState extends State<_TimerWidget> {
       text: TextSpan(
         text: '00:$_timerText',
         style: context.textStyle.regularCallout.copyWith(
-          color: context.colorScheme.onSurface,
+          color: context.colorScheme.primary,
           fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );

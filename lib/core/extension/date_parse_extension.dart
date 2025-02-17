@@ -1,15 +1,11 @@
 part of 'extension.dart';
 
 extension ParseString on DateTime {
-  String get formatDate =>
-      DateFormat('dd.MM.yyyy', localSource.localeName).format(this);
+  String get formatDate => DateFormat('dd.MM.yyyy', localSource.localeName).format(this);
 
-  String get formatDateTime =>
-      DateFormat("yyyy-MM-dd'T'HH:mm:ss'.263Z'", localSource.localeName)
-          .format(this);
+  String get formatDateTime => DateFormat("yyyy-MM-dd'T'HH:mm:ss'.263Z'", localSource.localeName).format(this);
 
-  String get formatDateHour =>
-      DateFormat('dd.MM.yyyy HH:mm', localSource.localeName).format(this);
+  String get formatDateHour => DateFormat('dd.MM.yyyy HH:mm', localSource.localeName).format(this);
 
   String timeZone() {
     var date = toIso8601String().split('.')[0];
@@ -33,9 +29,7 @@ extension ParseExtension on String {
   String Function() get date => () {
         if (isEmpty) return '';
         final int duration = DateTime.now().hour - DateTime.now().toUtc().hour;
-        final DateTime date =
-            DateFormat('yyyy-MM-ddTHH:mm:ssZ', localSource.localeName)
-                .parse(this);
+        final DateTime date = DateFormat('yyyy-MM-ddTHH:mm:ssZ', localSource.localeName).parse(this);
         return DateFormat('dd.MM.yyyy', localSource.localeName).format(
           date.add(Duration(hours: duration)),
         );
@@ -52,10 +46,9 @@ extension ParseExtension on String {
 
   String Function() get timeParseHourMinute => () {
         if (isEmpty) return '';
-        final int duration = DateTime.now().hour - DateTime.now().toUtc().hour;
         final DateTime date = DateFormat('yyyy-MM-ddTHH:mm:ssZ', localSource.localeName).parse(this);
         return DateFormat('HH:mm', localSource.localeName).format(
-          date.add(Duration(hours: duration)),
+          date.toLocal(),
         );
       };
 

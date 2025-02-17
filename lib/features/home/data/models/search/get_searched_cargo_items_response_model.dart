@@ -91,6 +91,7 @@ class SearchedCargoItem {
   String? addressId2;
   String? fullName;
   String? countryCodeFrom;
+  String? paymentType;
   String? countryCodeTo;
   int? currencyPersentage;
   AddressIdData? addressIdData;
@@ -134,6 +135,7 @@ class SearchedCargoItem {
     this.addressId,
     this.addressFull,
     this.addressId2,
+    this.paymentType,
     this.fullName,
     this.addressIdData,
     this.addressId2Data,
@@ -176,6 +178,7 @@ class SearchedCargoItem {
   SearchedCargoItem.fromJson(Map<String, dynamic> json) {
     addressId = json['address_id'];
     addressId2 = json['address_id_2'];
+    paymentType = json['payment_type'];
     countryCodeTo = json['country_code_to'];
     countryCodeFrom = json['country_code_from'];
     currencyPersentage = json['prepayment_percentage'];

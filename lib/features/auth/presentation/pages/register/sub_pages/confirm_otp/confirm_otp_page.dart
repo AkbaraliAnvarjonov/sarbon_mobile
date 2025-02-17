@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../../../core/extension/extension.dart';
+import '../../../../../../../core/theme/themes.dart';
 import '../../../../../../../core/utils/utils.dart';
 import '../../../../../../../core/widgets/loading/modal_progress_hud.dart';
 import '../../../../bloc/confirmation_user/confirmation_user_bloc.dart';
@@ -17,7 +16,6 @@ import 'widgets/error_register_dialog.dart';
 part 'mixin/confirm_otp_mixin.dart';
 
 part 'widgets/resend_code.dart';
-
 
 part 'widgets/pinput_register_widget.dart';
 
@@ -78,8 +76,7 @@ class _ConfirmOtpPahState extends State<ConfirmOtpPage> with ConfirmOtpMixin {
           );
         },
         child: BlocListener<ConfirmationUserBloc, ConfirmationUserState>(
-          listenWhen: (previous, current) =>
-              previous.verifyOtpStatus != current.verifyOtpStatus,
+          listenWhen: (previous, current) => previous.verifyOtpStatus != current.verifyOtpStatus,
           listener: (context, state) async {
             if (state.verifyOtpStatus.isSuccess) {
               await widget.pageArguments.pageController.nextPage(
@@ -102,17 +99,39 @@ class _ConfirmOtpPahState extends State<ConfirmOtpPage> with ConfirmOtpMixin {
           },
           child: Scaffold(
             backgroundColor: context.colorScheme.onPrimary,
-            appBar: AppBar(
-              leading: IconButton(
-                icon: Icon(
-                  Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(60),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(16), // Adjust the radius as needed
+                  bottomRight: Radius.circular(16),
                 ),
-                onPressed: () async {
-                  await widget.pageArguments.pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
+                child: AppBar(
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      await widget.pageArguments.pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                  ),
+                  centerTitle: false,
+                  title: Text(
+                    'Код подтверждения',
+                    style: context.textStyle.regularTitle2.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: context.colorScheme.onPrimary,
+                    ),
+                  ),
+                  systemOverlayStyle: systemUiOverlayStyle,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                  backgroundColor: context.colorScheme.primary,
+                ),
               ),
             ),
             body: ModalProgressHUD(
@@ -120,49 +139,29 @@ class _ConfirmOtpPahState extends State<ConfirmOtpPage> with ConfirmOtpMixin {
                 (ConfirmationUserBloc bloc) => bloc.state.verifyOtpStatus.isLoading,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: AppUtils.kPaddingAll16,
-                    child: Text(
-                      'confirmation_code'.tr(),
-                      style: context.textStyle.headline,
+                  AppUtils.kGap48,
+                  Text(
+                    'enter_sms_code'.tr(),
+                    style: context.textStyle.buttonStyle.copyWith(
+                      color: const Color(0xFF211F26),
                     ),
                   ),
                   AppUtils.kGap8,
-                  Padding(
-                    padding: AppUtils.kPaddingHorizontal16,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'enter_sms_code'.tr(),
-                        children: [
-                          TextSpan(
-                            text: '\n+998 ${widget.pageArguments.phoneNumber}',
-                            style: context.textStyle.regularSubheadline,
-                          ),
-                        ],
-                        style: context.textStyle.regularSubheadline.copyWith(
-                          color: context.color.triarity,
-                        ),
-                      ),
+                  Text(
+                    '+998 ${widget.pageArguments.phoneNumber}',
+                    style: context.textStyle.buttonStyle.copyWith(
+                      color: const Color(0xFF211F26),
                     ),
                   ),
-                  AppUtils.kGap40,
-                  Padding(
-                    padding: AppUtils.kPaddingHorizontal16,
-                    child: Text(
-                      'sms_code'.tr(),
-                      style: context.textStyle.size14Weight400Black,
-                    ),
-                  ),
-                  AppUtils.kGap6,
+                  AppUtils.kGap18,
                   _PinPutRegisterWidget(
                     pinPutController: pinPutController,
                     defaultPinTheme: defaultPinTheme,
                     pinPutFocusNode: pinPutFocusNode,
                     phoneNumber: widget.pageArguments.phoneNumber,
                   ),
-                  AppUtils.kSpacer,
+                  AppUtils.kGap24,
                   Center(
                     child: _TimerWidget(
                       phoneNumber: widget.pageArguments.phoneNumber,
@@ -171,10 +170,10 @@ class _ConfirmOtpPahState extends State<ConfirmOtpPage> with ConfirmOtpMixin {
                 ],
               ),
             ),
-            bottomNavigationBar: _ContinueRegisterButtonWidget(
-              pinPutController: pinPutController,
-              phoneNumber: widget.pageArguments.phoneNumber,
-            ),
+            // bottomNavigationBar: _ContinueRegisterButtonWidget(
+            //   pinPutController: pinPutController,
+            //   phoneNumber: widget.pageArguments.phoneNumber,
+            // ),
           ),
         ),
       );

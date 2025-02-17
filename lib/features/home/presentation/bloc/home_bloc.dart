@@ -437,7 +437,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             fetchCargoAndPaymentStatus: ApiStatus.success,
           ),
         );
-        add(const FetchPaymentTypesEvent());
+        // add(const FetchPaymentTypesEvent());
       },
     );
   }

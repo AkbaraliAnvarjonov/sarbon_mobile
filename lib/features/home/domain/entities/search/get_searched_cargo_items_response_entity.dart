@@ -21,6 +21,7 @@ class SearchedCargoItemEntity {
   String? addressId;
   String? addressId2;
   String? fullName;
+  String? paymentType;
   String? addressFull;
   String? countryCodeFrom;
   String? countryCodeTo;
@@ -69,6 +70,7 @@ class SearchedCargoItemEntity {
   SearchedCargoItemEntity({
     this.addressId,
     this.addressFull,
+    this.paymentType,
     this.addressId2,
     this.fullName,
     this.vehicleId,
@@ -194,6 +196,7 @@ extension GetSearchedCargoItemsResponseEntityX on GetSearchedCargoItemsResponseM
                   (cargo) => SearchedCargoItemEntity(
                     countryCodeFrom: cargo.countryCodeFrom ?? '',
                     countryCodeTo: cargo.countryCodeTo ?? '',
+                    paymentType: cargo.paymentType ?? '',
                     addressFull: cargo.addressFull ?? '',
                     currencyPersentage: cargo.currencyPersentage ?? 0,
                     vehicleId: cargo.vehicleTypeIdData?.guid ?? '',
@@ -293,6 +296,8 @@ extension GetSearchedCargoItemsResponseEntityY on FilteredCargoResponseModel {
                 currencyPersentage: 0,
                 vehicleId: cargo.vehicleTypeId,
                 addressId: '',
+                paymentType: cargo.paymentType,
+
                 // fullName: cargo.fullName ?? '',
                 // addressId2: cargo.addressId2 ?? '',
                 // isLiked: localSource.favouriteCargoes.contains(cargo.guid),

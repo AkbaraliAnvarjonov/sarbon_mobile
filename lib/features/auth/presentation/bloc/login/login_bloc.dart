@@ -96,7 +96,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with CacheMixin {
   Future<void> _loginUser(
     Emitter<LoginState> emit,
   ) async {
-    final String? fcmToken = kDebugMode ? '' : await FirebaseMessaging.instance.getToken();
+    final String? fcmToken = (kDebugMode && Platform.isIOS) ? '' : await FirebaseMessaging.instance.getToken();
     final String? deviceId = await _getId();
     final result = await loginUseCase(
       LoginRequestEntity(

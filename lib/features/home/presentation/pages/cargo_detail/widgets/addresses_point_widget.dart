@@ -13,22 +13,21 @@ class _AddressesPointWidget extends StatelessWidget {
   final GetCargoDetailsResponseEntity? details;
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: List.generate(
-          addressPositions.length,
-          (index) => CargoDirectionWithDiagramInfoWidget(
-            details: addressPositions[index],
-            isLastItem: index == addressPositions.length - 1,
-            isFirstItem: index == 0,
-            from: details?.countryCodeFrom ?? '',
-            to: details?.countryCodeTo ?? '',
-            distance: details?.distance ?? '',
-            onTap: () async {
-              await launchMapOnDeviceMap(
-                Points(latitude: addressPositions[index].lat, longitude: addressPositions[index].long),
-                context,
-              );
-            },
+  Widget build(BuildContext context) => Padding(
+        padding: AppUtils.kPaddingHorizontal16,
+        child: Column(
+          children: List.generate(
+            addressPositions.length,
+            (index) => CargoDirectionWithDiagramInfoWidget(
+              details: addressPositions[index],
+              isLastItem: index == addressPositions.length - 1,
+              isFirstItem: index == 0,
+              from: details?.countryCodeFrom ?? '',
+              to: details?.countryCodeTo ?? '',
+              distance: details?.distance ?? '',
+              cargoDetails: details,
+              onTap: () {},
+            ),
           ),
         ),
       );

@@ -439,6 +439,7 @@ sealed class TableSlugs {
   static const String logistikaDriverGpsTracking = 'logistika-driver-gps-tracking';
   static const String logistikaGetCurrentLocation = 'logistika-get-current-location';
   static const String gpsHistory = 'gps_history';
+  static const String logistikaSendOfferFromCustomer = '/logistika-send-offer-from-customer';
 }
 
 class Validations {

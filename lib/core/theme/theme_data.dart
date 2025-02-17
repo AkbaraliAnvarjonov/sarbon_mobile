@@ -88,6 +88,14 @@ final ThemeData lightTheme = appTheme.copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
+      overlayColor: WidgetStateProperty.resolveWith(
+        (states) {
+          if (states.contains(WidgetState.disabled)) {
+            return const Color(0xFF003399).withOpacity(0.12);
+          }
+          return const Color(0xFF597FCB);
+        },
+      ),
       foregroundColor: WidgetStateProperty.resolveWith(
         (states) {
           if (states.contains(WidgetState.disabled)) {
@@ -211,7 +219,7 @@ final ThemeData lightTheme = appTheme.copyWith(
     elevation: 0,
     scrolledUnderElevation: 1,
     systemOverlayStyle: systemUiOverlayStyle,
-    iconTheme: const IconThemeData(color: Color(0xFF26BD49)),
+    iconTheme: const IconThemeData(color: Colors.white),
     shadowColor: Colors.black45,
     titleTextStyle: const TextStyle(
       fontSize: 18,

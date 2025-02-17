@@ -7,6 +7,7 @@ mixin HomeMixin on State<HomePage> {
   void initState() {
     context.read<HomeBloc>().add(const InitialEvent());
     context.read<HomeBloc>().add(const GetAllCargosEvent());
+    context.read<HomeBloc>().add(const FetchPaymentTypesEvent());
     context.read<HomeBloc>().add(const GetVehicleType());
     context.read<HomeBloc>().add(const GetUserCarType());
     Future.delayed(const Duration(minutes: 2), () {

@@ -6,8 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sarbon_mobile/core/widgets/app_bar/custom_appbar.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
+import '../../../../../constants/constants.dart';
 import '../../../../../constants/icons_constants.dart';
 import '../../../../../constants/image_constants.dart';
 import '../../../../../core/extension/extension.dart';
@@ -23,6 +25,7 @@ import '../../bloc/cargo_details/cargo_details_bloc.dart';
 import '../opposite_offer_for_cargo/page_arguments/page_arguments.dart';
 import 'widgets/already_order_bottom_sheet.dart';
 import 'widgets/cargo_info_item_widget.dart';
+import 'widgets/map_text_info_widget.dart';
 import 'widgets/vertical_dashed_divider.dart';
 
 part '../mixin/cargo_detail_mixin.dart';
@@ -64,10 +67,8 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
   Widget build(BuildContext context) => BlocConsumer<CargoDetailsBloc, CargoDetailsState>(
         listener: (context, state) {
           if (state.status.isSuccess && state.cargoPointStatus.isSuccess && sessions == null) {
-            print('keldi');
             routes();
           }
-          ;
         },
         builder: (context, state) {
           return Scaffold(
@@ -84,62 +85,132 @@ class _CargoDetailPageState extends State<CargoDetailPage> with CargoDetailMixin
                         ),
                         slivers: [
                           SliverSafeArea(
-                            minimum: AppUtils.kPaddingAll16,
+                            minimum: AppUtils.kPaddingVertical16,
                             sliver: SliverMainAxisGroup(
                               slivers: [
                                 SliverList.list(
                                   children: [
-                                    // _CargoDirectionShortInfoWidget(
-                                    //   details: state.details,
-                                    //   addressPositions: state.addressPositions.toList(),
-                                    // ),
                                     AppUtils.kGap8,
                                     _AddressesPointWidget(
                                       addresses: state.addresses,
                                       addressPositions: state.addressPositions.toList(),
                                       details: state.details,
                                     ),
+                                    AppUtils.kGap24,
                                     SizedBox(
-                                      height: 240,
+                                      height: 370,
                                       width: context.kSize.width,
-                                      child: YandexMap(
-                                        mapObjects: mapObjects,
-                                        onMapCreated: (YandexMapController controller) async {
-                                          final middlePoint = findMidpoint(
-                                            Point(
-                                              latitude:
-                                                  context.read<CargoDetailsBloc>().state.addressPositions.first.lat,
-                                              longitude:
-                                                  context.read<CargoDetailsBloc>().state.addressPositions.first.long,
-                                            ),
-                                            Point(
-                                              latitude:
-                                                  context.read<CargoDetailsBloc>().state.addressPositions.last.lat,
-                                              longitude:
-                                                  context.read<CargoDetailsBloc>().state.addressPositions.last.long,
-                                            ),
-                                          );
-                                          await controller.moveCamera(
-                                            CameraUpdate.newCameraPosition(
-                                              CameraPosition(
-                                                target: Point(
-                                                  latitude: middlePoint.latitude,
-                                                  longitude: middlePoint.longitude,
+                                      child: Stack(
+                                        children: [
+                                          YandexMap(
+                                            onMapTap: (point) async {
+                                              await launchMapOnDeviceMap(
+                                                startPoint: Points(
+                                                  latitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.first.lat,
+                                                  longitude: context
+                                                      .read<CargoDetailsBloc>()
+                                                      .state
+                                                      .addressPositions
+                                                      .first
+                                                      .long,
                                                 ),
-                                                zoom: 3,
+                                                endPoint: Points(
+                                                  latitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.lat,
+                                                  longitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.long,
+                                                ),
+                                                context: context,
+                                              );
+                                            },
+                                            rotateGesturesEnabled: false,
+                                            zoomGesturesEnabled: false,
+                                            scrollGesturesEnabled: false,
+                                            tiltGesturesEnabled: false,
+                                            mapObjects: mapObjects,
+                                            onMapCreated: (YandexMapController controller) async {
+                                              final middlePoint = findMidpoint(
+                                                Point(
+                                                  latitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.first.lat,
+                                                  longitude: context
+                                                      .read<CargoDetailsBloc>()
+                                                      .state
+                                                      .addressPositions
+                                                      .first
+                                                      .long,
+                                                ),
+                                                Point(
+                                                  latitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.lat,
+                                                  longitude:
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.long,
+                                                ),
+                                              );
+                                              await controller.moveCamera(
+                                                CameraUpdate.newCameraPosition(
+                                                  CameraPosition(
+                                                    target: Point(
+                                                      latitude: middlePoint.latitude,
+                                                      longitude: middlePoint.longitude,
+                                                    ),
+                                                    zoom: getYandexZoom(
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.first.lat,
+                                                      context
+                                                          .read<CargoDetailsBloc>()
+                                                          .state
+                                                          .addressPositions
+                                                          .first
+                                                          .long,
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.lat,
+                                                      context.read<CargoDetailsBloc>().state.addressPositions.last.long,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            child: Container(
+                                              margin: AppUtils.kPaddingAll20,
+                                              padding: AppUtils.kPaddingHorizontal24,
+                                              height: 50,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: context.color.textColor2.withOpacity(0.8),
+                                                borderRadius: AppUtils.kBorderRadius6,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  MapTextInfoWidget(
+                                                    title: 'Расстояние',
+                                                    info: '\n${state.details?.distance ?? ''}',
+                                                  ),
+                                                  MapTextInfoWidget(
+                                                    title: 'Общая сумма',
+                                                    info: state.details?.bidCash?.toInt() == 0
+                                                        ? '\nДоговорная'
+                                                        : '\n${state.details?.bidCash?.toInt().moneyFormat} ${state.details?.currencyDataEntity?.code}',
+                                                  ),
+                                                  MapTextInfoWidget(
+                                                    title: 'Цена 1 км',
+                                                    info: state.details?.bidCash?.toInt() == 0
+                                                        ? '\n--'
+                                                        : '\n${calculateMoneyPerKm(state.details?.distance ?? '', state.details?.bidCash?.toInt() ?? 0)} ${state.details?.currencyDataEntity?.code}',
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          );
-                                        },
+                                          )
+                                        ],
                                       ),
                                     ),
-                                    // AppUtils.kGap24,
-                                    // _CargoDetailInfoTitleWidget(
-                                    //   isCmr: state.details?.cmr ?? false,
-                                    //   isT1: state.details?.t1 ?? false,
-                                    //   isTir: state.details?.tir ?? false,
-                                    //   adr: state.details?.permission ?? [],
-                                    // ),
+                                    AppUtils.kGap24,
                                     _CargoDetailInfoWidget(
                                       details: state.details,
                                     ),

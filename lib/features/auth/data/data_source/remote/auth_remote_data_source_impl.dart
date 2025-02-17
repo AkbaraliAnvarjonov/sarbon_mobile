@@ -348,4 +348,33 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw const ServerException(message: Validations.somethingWentWrong);
     }
   }
+
+  @override
+  Future<bool> checkRegisterUser({required String phoneNumber}) async {
+    try {
+      final Response response = await dio.post(
+        Constants.baseUrl + Urls.openFunction + TableSlugs.logistikaSendOfferFromCustomer,
+        options: Constants.requestOptionsWithoutIds,
+        data: {
+          'data': {
+            'object_data': {
+              'email': '',
+              'phone': phoneNumber,
+              'type': 'register',
+              'register_type': "phone",
+            },
+          },
+        },
+      );
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return UserCheckModel.fromJson(response.data).data.data.response.isEmpty ? true : false;
+      } else {
+        throw ServerException.fromJson(response.data);
+      }
+    } on DioException catch (e) {
+      throw ServerException.fromJson(e.response?.data);
+    } on FormatException {
+      throw const ServerException(message: Validations.somethingWentWrong);
+    }
+  }
 }

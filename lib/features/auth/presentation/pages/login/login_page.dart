@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,15 +70,16 @@ class _LoginPageState extends State<LoginPage> with LoginMixin {
                       color: context.colorScheme.onPrimary,
                     ),
                   ),
-                  leading: IconButton(
-                    icon: Icon(
-                      Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      context.pop();
-                    },
-                  ),
+                  // leading: IconButton(
+                  //   icon: Icon(
+                  //     Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
+                  //     color: Colors.white,
+                  //   ),
+                  //   onPressed: () {
+                  //     context.pop();
+                  //   },
+                  // ),
+                  // automaticallyImplyLeading: false,
                   centerTitle: false,
                   systemOverlayStyle: systemUiOverlayStyle,
                   elevation: 0,

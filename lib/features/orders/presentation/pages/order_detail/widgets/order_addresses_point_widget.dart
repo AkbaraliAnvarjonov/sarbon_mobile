@@ -27,11 +27,11 @@ class _OrderAddressesPointWidget extends StatelessWidget {
                   isFirstItem: index == 0,
                   onTap: () async {
                     await launchMapOnDeviceMap(
-                      Points(
+                      startPoint: Points(
                         latitude: addresses[index].lat,
                         longitude: addresses[index].long,
                       ),
-                      context,
+                      context: context,
                     );
                   },
                 ),

@@ -8,151 +8,158 @@ class _CargoDetailInfoWidget extends StatelessWidget {
   final GetCargoDetailsResponseEntity? details;
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          // _RowInfoWidget(
-          //   title: 'date'.tr(),
-          //   info: '${details?.loadTime?.day()}${details?.date?.dateMoth()}',
-          // ),
-          Padding(
-            padding: AppUtils.kPaddingVertical16,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset(SvgImage.icTruckFilled),
-                AppUtils.kGap16,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      details?.vehicleDataEntity?.name ?? '',
-                      style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
-                    ),
-                    AppUtils.kGap4,
-                    Text(
-                      '${details?.numberOfCars.toString() ?? ''} машина',
-                      style: context.textStyle.size14Weight400Black,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          AppUtils.kDivider,
-          Padding(
-            padding: AppUtils.kPaddingVertical16,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset(SvgImage.icBox),
-                AppUtils.kGap16,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          SvgImage.dumbellIcon,
-                          height: 16,
-                          width: 16,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.black,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        AppUtils.kGap2,
-                        Text(
-                          '${details?.weight} т',
-                          style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
-                        ),
-                        AppUtils.kGap6,
-                        SvgPicture.asset(
-                          SvgImage.kubIcon,
-                          height: 16,
-                          width: 16,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.black,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        AppUtils.kGap2,
-                        Text(
-                          '${details?.volumeM3} м³',
-                          style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    AppUtils.kGap4,
-                    Text(
-                      '${details?.cargoTypeDetailsData?.name ?? ''}, ${(details?.hasAdditionalLoad ?? false) ? 'additional_loading_possible'.tr() : 'additional_loading_not_possible'.tr()} ',
-                      style: context.textStyle.size14Weight400Black,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          AppUtils.kDivider,
-          Padding(
-            padding: AppUtils.kPaddingVertical16,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SvgPicture.asset(SvgImage.icPrice),
-                AppUtils.kGap16,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${details?.bidCash?.toInt().moneyFormat} ${details?.currencyDataEntity?.code}',
-                      style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
-                    ),
-                    AppUtils.kGap4,
-                    Text(
-                      details?.companyDataEntity?.paymentType ?? '',
-                      style: context.textStyle.size14Weight400Black,
-                    )
-                  ],
-                ),
-                AppUtils.kSpacer,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'prepayment'.tr(),
-                      style: context.textStyle.size14Weight400Black.copyWith(
-                        color: const Color(0xFF7E7B86),
-                      ),
-                    ),
-                    AppUtils.kGap4,
-                    Text(
-                      '${details?.companyDataEntity?.rateInterest.toString() ?? ''} ${details?.currencyDataEntity?.code ?? ''}',
-                      style: context.textStyle.size14Weight400Black,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          AppUtils.kDivider,
-          if ((details?.comment ?? '').isNotEmpty)
+  Widget build(BuildContext context) => Padding(
+        padding: AppUtils.kPaddingHorizontal16,
+        child: Column(
+          children: [
+            // _RowInfoWidget(
+            //   title: 'date'.tr(),
+            //   info: '${details?.loadTime?.day()}${details?.date?.dateMoth()}',
+            // ),
             Padding(
               padding: AppUtils.kPaddingVertical16,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(SvgImage.icComment),
+                  SvgPicture.asset(SvgImage.icTruckFilled),
                   AppUtils.kGap16,
-                  Expanded(
-                    child: HtmlWidget(
-                      details?.comment ?? '',
-                      textStyle: context.textStyle.size14Weight400Black,
-                    ),
-                  )
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        details?.vehicleDataEntity?.name ?? '',
+                        style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
+                      ),
+                      AppUtils.kGap4,
+                      Text(
+                        '${details?.numberOfCars.toString() ?? ''} машина',
+                        style: context.textStyle.size14Weight400Black,
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
-        ],
+            AppUtils.kDivider,
+            Padding(
+              padding: AppUtils.kPaddingVertical16,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(SvgImage.icBox),
+                  AppUtils.kGap16,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            SvgImage.dumbellIcon,
+                            height: 16,
+                            width: 16,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.black,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          AppUtils.kGap2,
+                          Text(
+                            '${details?.weight} т',
+                            style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
+                          ),
+                          AppUtils.kGap6,
+                          SvgPicture.asset(
+                            SvgImage.kubIcon,
+                            height: 16,
+                            width: 16,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.black,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          AppUtils.kGap2,
+                          Text(
+                            '${details?.volumeM3} м³',
+                            style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
+                          ),
+                        ],
+                      ),
+                      AppUtils.kGap4,
+                      Text(
+                        '${details?.cargoTypeDetailsData?.name ?? ''}, ${(details?.hasAdditionalLoad ?? false) ? 'additional_loading_possible'.tr() : 'additional_loading_not_possible'.tr()} ',
+                        style: context.textStyle.size14Weight400Black,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            AppUtils.kDivider,
+            Padding(
+              padding: AppUtils.kPaddingVertical16,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(SvgImage.icPrice),
+                  AppUtils.kGap16,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        details?.bidCash?.toInt() == 0
+                            ? 'Договорная'
+                            : '${details?.bidCash?.toInt().moneyFormat} ${details?.currencyDataEntity?.code}',
+                        style: context.textStyle.size15Weight500Black.copyWith(fontSize: 17),
+                      ),
+                      AppUtils.kGap4,
+                      Text(
+                        details?.companyDataEntity?.paymentType ?? '',
+                        style: context.textStyle.size14Weight400Black,
+                      )
+                    ],
+                  ),
+                  AppUtils.kSpacer,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'prepayment'.tr(),
+                        style: context.textStyle.size14Weight400Black.copyWith(
+                          color: const Color(0xFF7E7B86),
+                        ),
+                      ),
+                      AppUtils.kGap4,
+                      Text(
+                        details?.companyDataEntity?.rateInterest == 0
+                            ? 'Нет'
+                            : '${details?.companyDataEntity?.rateInterest.toString() ?? ''} ${details?.currencyDataEntity?.code ?? ''}',
+                        style: context.textStyle.size14Weight400Black,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            AppUtils.kDivider,
+            if ((details?.comment ?? '').isNotEmpty)
+              Padding(
+                padding: AppUtils.kPaddingVertical16,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(SvgImage.icComment),
+                    AppUtils.kGap16,
+                    Expanded(
+                      child: HtmlWidget(
+                        details?.comment ?? '',
+                        textStyle: context.textStyle.size14Weight400Black,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+          ],
+        ),
       );
 }
 

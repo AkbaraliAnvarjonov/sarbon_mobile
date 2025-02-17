@@ -10,9 +10,11 @@ class CargoDirectionWithDiagramInfoWidget extends StatefulWidget {
     required this.from,
     required this.to,
     required this.distance,
+    required this.cargoDetails,
   });
 
   final FetchListPositionsEntity details;
+  final GetCargoDetailsResponseEntity? cargoDetails;
   final bool isLastItem;
   final bool isFirstItem;
   final VoidCallback onTap;
@@ -44,9 +46,9 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
         onTap: widget.onTap,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
@@ -75,7 +77,7 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: context.kSize.width - 72,
+                  width: context.kSize.width - 76,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -83,10 +85,11 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: widget.details.addressType.checkStringLength(24),
+                              text: widget.details.addressType.checkStringLength(18),
                               style: context.textStyle.buttonStyle.copyWith(
                                 color: const Color(0xFF211F26),
                                 fontWeight: FontWeight.w500,
+                                fontSize: 16,
                               ),
                             ),
                             if (widget.isFirstItem || widget.isLastItem)
@@ -99,32 +102,43 @@ class _CargoDirectionWithDiagramInfoWidgetState extends State<CargoDirectionWith
                           ],
                         ),
                       ),
-                      if (widget.isLastItem)
-                        Text(
-                          '~ ${widget.distance}',
-                          style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
-                        ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: context.kSize.width - 72,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: context.kSize.width * 0.6,
-                        child: Text(
-                          widget.details.addressType.afterFirstComma,
-                          style: context.textStyle.size14Weight400Black.copyWith(
-                            color: context.color.midGray,
-                          ),
-                          overflow: TextOverflow.fade,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (widget.isLastItem)
+                            Text(
+                              '~ ${widget.distance}',
+                              style: context.textStyle.size14Weight400Black.copyWith(color: const Color(0xFF7E7B86)),
+                            ),
+                          if (widget.isLastItem)
+                            Text(
+                              '${(widget.cargoDetails?.asSoonAsB ?? false) ? 'as_soon_as_possible'.tr() : widget.cargoDetails?.date?.dateMothWeek()}',
+                              style: context.textStyle.size14Weight400Black.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                          if (widget.isFirstItem)
+                            Text(
+                              '${(widget.cargoDetails?.asSoonAsA ?? false) ? 'ready_for_loading'.tr() : widget.cargoDetails?.loadTime?.dateMothWeek()}',
+                              style: context.textStyle.size14Weight400Black.copyWith(
+                                fontSize: 12,
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                AppUtils.kGap12,
+                SizedBox(
+                  width: context.kSize.width * 0.53,
+                  child: Text(
+                    widget.details.addressType.afterFirstComma,
+                    style: context.textStyle.size14Weight400Black.copyWith(
+                      color: context.color.midGray,
+                    ),
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
               ],
             ),
           ],

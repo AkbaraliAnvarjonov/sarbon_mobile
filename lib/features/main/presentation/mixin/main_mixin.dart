@@ -15,10 +15,10 @@ mixin MainMixin on State<MainPage> {
   }
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     if (!mounted) return;
-    print('mana men');
+
     if (localSource.userId.isNotEmpty) {
       foregroundNotificationConfig();
       getUserCurrentLocation();
@@ -29,6 +29,8 @@ mixin MainMixin on State<MainPage> {
     if (localSource.dispatcherId.isEmpty) {
       bloc.add(const GetDispatcherIdEvent());
     }
+    final String? fcmToken = await FirebaseMessaging.instance.getToken();
+    debugPrint('FCM TOKEN $fcmToken');
   }
 
   void didChangeAppLifecycleState(AppLifecycleState state) {

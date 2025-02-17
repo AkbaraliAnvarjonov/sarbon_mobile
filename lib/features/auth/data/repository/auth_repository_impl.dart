@@ -71,10 +71,17 @@ class AuthRepositoryImpl implements AuthRepository {
   ) async {
     if (await networkInfo.isConnected) {
       try {
-        final response = await authRemoteDataSource.registerDriver(
-          requestEntity.toModel,
+        final userCheck = await authRemoteDataSource.checkRegisterUser(
+          phoneNumber: requestEntity.phone?.substring(1) ?? '',
         );
-        return Right(response.toEntity());
+        if (userCheck) {
+          final response = await authRemoteDataSource.registerDriver(
+            requestEntity.toModel,
+          );
+          return Right(response.toEntity());
+        } else {
+          return const Left(ServerFailure(message: 'This user already exists'));
+        }
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
